@@ -15,9 +15,9 @@ import {
     Plus,
     ShoppingBag,
     Terminal,
-    Twitter,
     User
 } from 'lucide-react';
+import {SiGithub} from "react-icons/si";
 
 const App: React.FC = () => {
     return (
@@ -50,7 +50,6 @@ const App: React.FC = () => {
                 <main className="bg-white rounded-[32px] sm:rounded-[40px] px-5 sm:px-8 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white">
                     {/* --- Hero Section --- */}
                     <section className="mb-10 sm:mb-14 relative">
-                        {/* 상단 Developer 텍스트는 좌측 정렬 유지 */}
                         <div className="flex justify-between items-center mb-8">
                             <div className="flex items-center gap-2 text-[13px] sm:text-[14px] text-gray-400 font-medium">
                                 <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
@@ -58,14 +57,11 @@ const App: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* 메인 컨텐츠 영역: 모바일에서는 위아래로, 데스크탑에서는 좌우로 배치 */}
                         <div className="flex flex-col-reverse sm:flex-row justify-between items-center sm:items-start gap-8 sm:gap-4 text-center sm:text-left">
-
-                            {/* 좌측: 텍스트 및 버튼 섹션 */}
                             <div className="space-y-6 w-full">
                                 <div className="space-y-3">
                                     <h1 className="text-[32px] sm:text-[42px] font-bold tracking-tight text-[#1A1A1A] leading-tight">
-                                        I'm Daekyoung KIM
+                                        HI,<br/> I’m Daekyoung KIM
                                     </h1>
                                     <p className="text-gray-500 text-[15px] sm:text-[17px] leading-[1.6] max-w-[380px] mx-auto sm:mx-0">
                                         Software Engineer focused on turning complex problems into simple, functional code.
@@ -86,7 +82,6 @@ const App: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* 우측: 아바타 + RUNTIME 뱃지 (수직 정렬) */}
                             <div className="flex flex-col items-center gap-4 flex-shrink-0">
                                 {/* 아바타 이미지 */}
                                 <div className="relative">
@@ -95,7 +90,7 @@ const App: React.FC = () => {
                                     </div>
                                 </div>
 
-                                {/* RUNTIME 뱃지: 아바타 바로 밑으로 이동 */}
+                                {/* RUNTIME 뱃지 */}
                                 <div className="bg-[#F5F3FF] text-[#7C3AED] px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide flex items-center gap-1.5 border border-[#EDE9FE] shadow-sm">
                                     <div className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-bounce" />
                                     RUNTIME: WORKING🔥
@@ -170,7 +165,7 @@ const App: React.FC = () => {
 
                     {/* --- Footer CTA --- */}
                     <div className="text-center space-y-6 mb-12 px-2">
-                        <h2 className="text-[28px] sm:text-[36px] font-bold text-[#1A1A1A] tracking-tight px-4">Let’s work together.</h2>
+                        <h2 className="text-[28px] sm:text-[36px] font-bold text-[#1A1A1A] tracking-tight px-4">Do you like me? <br/> I’m always prepared😎</h2>
                         <div className="flex flex-col sm:flex-row justify-center gap-3 px-4">
                             <button className="bg-[#1A1A1A] text-white px-6 py-3 rounded-[16px] sm:rounded-[18px] text-[13px] font-bold flex items-center justify-center gap-2 shadow-xl shadow-black/10 hover:scale-105 transition-transform">
                                 <div className="bg-white/20 rounded-full p-0.5"><Plus size={10} strokeWidth={4} /></div> Hire Me
@@ -187,7 +182,7 @@ const App: React.FC = () => {
                             Follow Me
                         </div>
                         <div className="flex gap-2">
-                            {[Twitter, Instagram, Globe, Linkedin].map((Icon, idx) => (
+                            {[SiGithub, Instagram, Globe, Linkedin].map((Icon, idx) => (
                                 <button key={idx} className="w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center text-gray-400 hover:text-black hover:shadow-md transition-all duration-300 border border-transparent hover:border-gray-100"><Icon size={18} /></button>
                             ))}
                         </div>
@@ -195,7 +190,7 @@ const App: React.FC = () => {
 
                     <div className="mt-10 sm:mt-12 text-center space-y-2 pb-4 px-4">
                         <p className="text-[11px] sm:text-[12px] text-gray-400 font-medium">© Made by DAEKYOUNG KIM</p>
-                        <p className="text-[11px] sm:text-[12px] text-gray-300">by <span className="underline decoration-gray-300">Gemini Flash 2.0</span></p>
+                        <p className="text-[11px] sm:text-[12px] text-gray-300">Designed by <span className="underline decoration-gray-300">Gemini (Thank you)</span></p>
                     </div>
                 </main>
             </div>
