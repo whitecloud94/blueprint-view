@@ -12,20 +12,20 @@
     "framer": "unframer 6aa5104bffb3d5f4 --outDir src/framer"
   },
   "dependencies": {
-    "lucide-react": "^0.562.0",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-icons": "^5.5.0",
-    "unframer": "latest"
+    "lucide-react": "^0.473.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
+    "unframer": "^3.2.18"
   },
   "devDependencies": {
-    "@types/react": "^19.2.8",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "latest",
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.0",
-    "tailwindcss": "^3.4.0",
-    "typescript": "latest",
-    "vite": "latest"
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.7.3",
+    "vite": "^6.1.0"
   }
 }
