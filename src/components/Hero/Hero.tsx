@@ -1,4 +1,3 @@
-import React from 'react';
 import {Plus, Copy} from 'lucide-react';
 
 const STYLES = {
@@ -21,7 +20,7 @@ const STYLES = {
     dot: "w-1.5 h-1.5 rounded-full bg-gray-300",
 };
 
-export const HeroSection = () => (
+export const Hero = () => (
     <section className={STYLES.wrapper}>
         <div className="flex justify-between items-center mb-8">
             <div className={STYLES.sectionHeader}>

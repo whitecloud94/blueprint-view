@@ -1,5 +1,4 @@
-import React from 'react';
-import {Plus, Copy} from 'lucide-react';
+import {Copy, Plus} from 'lucide-react';
 
 const STYLES = {
     wrapper: "text-center space-y-6 mb-12 px-2",

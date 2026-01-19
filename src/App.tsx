@@ -1,10 +1,10 @@
 import React from 'react';
 import {Navigation} from "./components/Navigation/Navigation.tsx";
-import {HeroSection} from "./components/HeroSection/HeroSection.tsx";
-import {ProjectsSection} from "./components/ProjectsSection/ProjectsSection.tsx";
-import {ProductsSection} from "./components/ProductsSection/ProductsSection.tsx";
+import {Hero} from "./components/Hero/Hero.tsx";
+import {Projects} from "./components/Projects/Projects.tsx";
+import {Skills} from "./components/Skills/Skills.tsx";
 import {FooterCTA} from "./components/FooterCTA/FooterCTA.tsx";
-import {SocialSection} from "./components/SocialSection/SocialSection.tsx";
+import {Social} from "./components/Social/Social.tsx";
 import {FooterInfo} from "./components/FooterInfo/FooterInfo.tsx";
 
 const STYLES = {
@@ -19,11 +19,11 @@ const App: React.FC = () => {
             <div className={STYLES.container}>
                 <Navigation/>
                 <main className={STYLES.main}>
-                    <HeroSection/>
-                    <ProjectsSection/>
-                    <ProductsSection/>
+                    <Hero/>
+                    <Projects/>
+                    <Skills/>
                     <FooterCTA/>
-                    <SocialSection/>
+                    <Social/>
                     <FooterInfo/>
                 </main>
             </div>
