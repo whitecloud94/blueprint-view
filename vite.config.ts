@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
     plugins: [react()],
     server: {
-        host: '0.0.0.0', // 모든 네트워크 인터페이스 허용
+        // host: '0.0.0.0', // 모든 네트워크 인터페이스 허용
         port: 5173,      // 포트 번호 (기본값 5173)
     },
 })
