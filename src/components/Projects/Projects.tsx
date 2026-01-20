@@ -47,37 +47,37 @@ const projects = [
     },
     {
         title: 'IBK 기업은행 업무지원 시스템',
-        sub: 'Sub Context1',
+        sub: '2025.05 - 2025.12',
         icon: <Briefcase size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'IBK 기업은행 상시감시 시스템',
-        sub: 'Sub Context2',
+        sub: '2024.10 - 2025.04',
         icon: <ShieldCheck size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'IBK 기업은행 ESG 탄소중립 HUB',
-        sub: 'Sub Context2',
+        sub: '2024.02 - 2024.06',
         icon: <Leaf size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'BNK 경남은행 시니어 뱅킹 및 모바일 뱅킹 메인화면 개편',
-        sub: 'Sub Context3',
+        sub: '2023.12 - 2024.02',
         icon: <Smartphone size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'IBK 기업은행 투자상품 통합관리 시스템',
-        sub: 'Sub Context2',
+        sub: '2023.04 - 2023.11',
         icon: <LineChart size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'BNK 경남은행 비대면 제증명서 발급 서비스',
-        sub: 'Sub Context2',
+        sub: '2022.04 - 2022.09',
         icon: <FileText size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
