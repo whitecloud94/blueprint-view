@@ -50,12 +50,12 @@ export const Skills = () => (
             My available skills
         </div>
         {[
-            {name: 'Spring boot - Batch', tag: 'Batch', icon: <SiSpringboot className="text-[#6DB33F]"/>},
-            {name: 'Spring boot - MVC', tag: 'mvc', icon: <SiSpringboot className="text-[#6DB33F]"/>},
-            {name: 'Oracle', tag: 'RDBMS', icon: <SiOracle className="text-[#F80000]"/>},
-            {name: 'React', tag: 'Front', icon: <SiReact className="text-[#61DAFB]"/>},
-            {name: 'TypeScript', tag: 'Script', icon: <SiTypescript className="text-[#3178C6]"/>},
-            {name: 'Java', tag: 'Server', icon: <BiLogoJava className="text-[#007396]"/>},
+            {name: 'Spring boot - Batch', tag: 'Job Optimization', icon: <SiSpringboot className="text-[#6DB33F]"/>},
+            {name: 'Spring boot - MVC', tag: 'Robust Architecture', icon: <SiSpringboot className="text-[#6DB33F]"/>},
+            {name: 'Oracle', tag: 'ACID', icon: <SiOracle className="text-[#F80000]"/>},
+            {name: 'React', tag: 'Component', icon: <SiReact className="text-[#61DAFB]"/>},
+            {name: 'TypeScript', tag: 'Type Safety', icon: <SiTypescript className="text-[#3178C6]"/>},
+            {name: 'Java', tag: 'LTS Support', icon: <BiLogoJava className="text-[#007396]"/>},
             {name: 'Etc', tag: 'Keep learning🔥', icon: '📖'},
         ].map((prod, j) => (
             <div key={j} className={STYLES.SkilItem}>
