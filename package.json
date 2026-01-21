@@ -12,6 +12,7 @@
     "framer": "unframer 6aa5104bffb3d5f4 --outDir src/framer"
   },
   "dependencies": {
+    "framer-motion": "^12.28.1",
     "lucide-react": "^0.473.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
