@@ -8,42 +8,35 @@ import {
     ShieldCheck,
     Smartphone
 } from 'lucide-react';
-import { ProjectItem } from "./ProjectItem.tsx";
+import {ProjectItem} from "./ProjectItem.tsx";
+import {Modal} from "../popup/Modal.tsx";
+import {useState} from "react";
+import { COMMON_STYLES } from "../../constants/styles";
+import {AnimatePresence} from "framer-motion";
 
 const STYLES = {
-    wrapper: `
-        bg-white/40 backdrop-blur-2xl 
-        rounded-[28px] sm:rounded-[32px] 
-        p-1.5 sm:p-2 space-y-1 
-        border border-white/40 
-        shadow-[0_8px_32px_rgba(0,0,0,0.03)]
-    `,
-
+    wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
     header: "flex justify-between items-center px-4 sm:px-6 py-4",
-
-    viewAllBtn: `
-        bg-white/60 backdrop-blur-md 
-        border border-white/60 
-        px-3 py-1 rounded-full 
-        text-[10px] sm:text-[11px] font-bold text-gray-600 
-        flex items-center gap-1 
-        hover:bg-white/80 transition-all shadow-sm
-    `,
-
+    viewAllBtn: `bg-white/60 backdrop-blur-md border border-white/60 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold text-gray-600 flex items-center gap-1 hover:bg-white/80 transition-all shadow-sm`,
     listWrapper: "flex flex-col gap-1.5",
-
-    activeBadge: "hidden xs:inline-block text-[8px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-black animate-pulse",
-
-    sectionHeader: "flex items-center gap-2 text-[13px] sm:text-[14px] text-gray-400 font-medium",
+    sectionHeader: COMMON_STYLES.sectionHeader,
+    dot: COMMON_STYLES.dot,
 };
 
 const projects = [
     {
+        id: 1, // 모달 연동을 위해 고유 ID 추가를 추천합니다
         title: 'Toyota Financial Core',
         sub: "Core시스템 운영관리",
         icon: <CarFront size={20} className="sm:w-[22px]"/>,
         bg: 'bg-indigo-600',
-        active: true
+        active: true,
+        achievements: [
+            "여신 계정계 코어 시스템 운영 및 유지보수",
+            "대량 데이터 처리 및 배치 프로세스 최적화",
+            "금융 규제 준수를 위한 시스템 로직 수정"
+        ],
+        tech: ["Java", "Spring Boot", "Oracle", "JEUS"]
     },
     {
         title: 'IBK 기업은행 업무지원 시스템',
@@ -83,29 +76,51 @@ const projects = [
     },
 ]
 
-export const Projects = () => (
-    <section className={`${STYLES.wrapper} mb-6`}>
-        <div className={STYLES.header}>
-            <div className={STYLES.sectionHeader}>
-                <div className="w-2 h-2 rounded-full bg-gray-300"/>
-                Projects
-            </div>
-            <button className={STYLES.viewAllBtn}>
-                View All <ArrowUpRight size={12}/>
-            </button>
-        </div>
+export const Projects = () => {
+    // 1. 현재 어떤 프로젝트가 선택되었는지 관리하는 상태
+    const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
-        <div className={STYLES.listWrapper}>
-            {projects.map((item, i) => (
-                <ProjectItem
-                    key={i}
-                    title={item.title}
-                    sub={item.sub}
-                    icon={item.icon}
-                    bg={item.bg}
-                    active={item.active}
-                />
-            ))}
-        </div>
-    </section>
-);
+    // 2. 모달을 닫는 콜백 함수
+    const handleCloseModal = () => {
+        setSelectedProject(null);
+    };
+
+    return (
+        <section className={`${STYLES.wrapper} mb-6`}>
+            <div className={STYLES.header}>
+                <div className={STYLES.sectionHeader}>
+                    <div className={STYLES.dot}/>
+                    Projects
+                </div>
+                <button className={STYLES.viewAllBtn}>
+                    View All <ArrowUpRight size={12}/>
+                </button>
+            </div>
+
+            <div className={STYLES.listWrapper}>
+                {projects.map((item, i) => (
+                    <ProjectItem
+                        key={i}
+                        title={item.title}
+                        sub={item.sub}
+                        icon={item.icon}
+                        bg={item.bg}
+                        active={item.active}
+                        // 3. 클릭 시 해당 아이템 데이터를 상태에 저장
+                        onClick={() => setSelectedProject(item)}
+                    />
+                ))}
+            </div>
+
+            {/* 4. 선택된 프로젝트가 있을 때만 모달 렌더링 */}
+            <AnimatePresence>
+                {selectedProject && (
+                    <Modal
+                        project={selectedProject}
+                        onClose={handleCloseModal}
+                    />
+                )}
+            </AnimatePresence>
+        </section>
+    );
+};

@@ -1,11 +1,12 @@
 import {Copy, Plus} from 'lucide-react';
+import { COMMON_STYLES } from "../../constants/styles";
 
 const STYLES = {
     wrapper: "text-center space-y-6 mb-12 px-2",
-    title: "text-[28px] sm:text-[36px] font-bold text-[#1A1A1A] tracking-tight px-4",
+    title: `text-[28px] sm:text-[36px] px-4 leading-tight ${COMMON_STYLES.title}`,
     buttonGroup: "flex flex-col sm:flex-row justify-center gap-3 px-4",
-    primaryButton: "bg-[#1A1A1A] text-white px-6 py-3 rounded-[16px] sm:rounded-[18px] text-[13px] font-bold flex items-center justify-center gap-2 shadow-xl shadow-black/10 hover:scale-105 transition-transform",
-    secondaryButton: "bg-white border border-gray-200 text-[#1A1A1A] px-5 py-3 rounded-[16px] sm:rounded-[18px] text-[13px] font-bold flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors"
+    primaryButton: `${COMMON_STYLES.primaryButton} px-6 py-3 text-[13px]`,
+    secondaryButton: `${COMMON_STYLES.secondaryButton} px-5 py-3 text-[13px]`
 };
 
 export const FooterCTA = () => (

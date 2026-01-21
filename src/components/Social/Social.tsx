@@ -1,16 +1,9 @@
 import { SiGithub, SiGmail } from "react-icons/si";
+import { COMMON_STYLES } from "../../constants/styles";
 
 const STYLES = {
-    wrapper: `
-        bg-white/40 backdrop-blur-2xl 
-        rounded-[24px] sm:rounded-[28px] 
-        p-2 flex flex-col xs:flex-row items-center justify-between 
-        px-4 sm:pl-6 sm:pr-3 gap-4 py-4 sm:py-2
-        border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.03)]
-    `,
-
+    wrapper: `${COMMON_STYLES.glass} rounded-[24px] sm:rounded-[28px] p-2 flex flex-col xs:flex-row items-center justify-between px-4 sm:pl-6 sm:pr-3 gap-4 py-4 sm:py-2`,
     buttonGroup: "flex gap-2",
-
     iconButton: (hoverColor: string) => `
         w-9 h-9 sm:w-10 sm:h-10 
         bg-white/70 backdrop-blur-md 
@@ -19,9 +12,8 @@ const STYLES = {
         transition-all duration-300 
         ${hoverColor} hover:shadow-lg hover:scale-110 active:scale-95
     `,
-
-    sectionHeader: "flex items-center gap-2 text-[13px] sm:text-[14px] text-gray-400 font-medium",
-    dot: "w-1.5 h-1.5 rounded-full bg-gray-300",
+    sectionHeader: COMMON_STYLES.sectionHeader,
+    dot: COMMON_STYLES.dot,
 };
 
 const SOCIAL_DATA = [

@@ -1,73 +1,56 @@
 import { ArrowUpRight } from 'lucide-react';
 import { SiOracle, SiReact, SiSpringboot, SiTypescript } from "react-icons/si";
 import { BiLogoJava } from "react-icons/bi";
+import { COMMON_STYLES } from "../../constants/styles";
+import { MarqueeText } from "../common/MarqueeText";
 
 const STYLES = {
-    // 1. 부모 컨테이너: 네비게이션과 동일한 투명도와 블러 적용
-    wrapper: `
-        bg-white/40 backdrop-blur-2xl 
-        rounded-[28px] sm:rounded-[32px] 
-        p-1.5 sm:p-2 space-y-1 
-        border border-white/40 
-        shadow-[0_8px_32px_rgba(0,0,0,0.03)]
-    `,
-
-    // 2. 스킬 아이템: ProjectItem과 동일하게 밀도를 높여(70%) 경계를 뚜렷하게 함
-    SkilItem: `
-        group bg-white/70 backdrop-blur-xl 
-        rounded-[20px] sm:rounded-[24px] 
-        p-3 sm:p-4 pl-4 sm:pl-5 
-        flex items-center justify-between 
-        transition-all duration-300 cursor-pointer 
-        border border-white/60 
-        hover:bg-white/90 hover:border-white hover:scale-[1.01] hover:shadow-lg
-    `,
-
-    // 3. 아이콘 박스: 내부가 비치는 맑은 유리 느낌 추가
-    SkillIcon: `
-        w-9 h-9 sm:w-10 sm:h-10 
-        bg-white/40 backdrop-blur-md 
-        border border-white/60 
-        rounded-full flex items-center justify-center 
-        text-lg sm:text-xl shadow-sm
-    `,
-
-    // 4. 태그: 반투명한 유리 배지 스타일
-    SkillTag: `
-        text-[9px] sm:text-[10px] font-bold text-gray-400 
-        bg-black/5 backdrop-blur-sm 
-        px-2 py-1 rounded-md tracking-wider 
-        border border-black/5
-    `,
-
-    dot: "w-1.5 h-1.5 rounded-full bg-gray-300",
+    wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
+    skillItem: `${COMMON_STYLES.innerCard} p-3 sm:p-4 pl-4 sm:pl-5 flex items-center justify-between cursor-pointer group hover:bg-white/90 hover:border-white hover:scale-[1.01] hover:shadow-lg`,
+    skillIcon: `w-9 h-9 sm:w-10 sm:h-10 bg-white/40 backdrop-blur-md border border-white/60 rounded-full flex items-center justify-center text-lg sm:text-xl shadow-sm`,
+    skillTag: `text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 backdrop-blur-sm px-2 py-1 rounded-md tracking-wider border border-black/5`,
+    header: `${COMMON_STYLES.sectionHeader} px-4 sm:px-6 py-4`,
+    dot: COMMON_STYLES.dot,
 };
+
+interface SkillItemProps {
+    name: string;
+    tag: string;
+    icon: React.ReactNode;
+}
+
+const SkillItem = ({ name, tag, icon }: SkillItemProps) => (
+    <div className={STYLES.skillItem}>
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-1">
+            <div className={STYLES.skillIcon}>{icon}</div>
+            <MarqueeText
+                text={name}
+                className="text-[14px] sm:text-[15px] font-bold text-gray-900"
+            />
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 ml-2 shrink-0">
+            <span className={STYLES.skillTag}>{tag}</span>
+            <ArrowUpRight size={16} className="text-gray-300 group-hover:text-black transition-colors" />
+        </div>
+    </div>
+);
 
 export const Skills = () => (
     <section className={`${STYLES.wrapper} mb-12 sm:mb-16`}>
-        <div className="flex items-center gap-2 px-4 sm:px-6 py-4 text-xs sm:text-sm font-medium text-gray-400">
-            <div className={STYLES.dot}/>
+        <div className={STYLES.header}>
+            <div className={STYLES.dot} />
             My available skills
         </div>
         {[
-            {name: 'Spring boot - Batch', tag: 'Job Optimization', icon: <SiSpringboot className="text-[#6DB33F]"/>},
-            {name: 'Spring boot - MVC', tag: 'Robust Architecture', icon: <SiSpringboot className="text-[#6DB33F]"/>},
-            {name: 'Oracle', tag: 'ACID', icon: <SiOracle className="text-[#F80000]"/>},
-            {name: 'React', tag: 'Component', icon: <SiReact className="text-[#61DAFB]"/>},
-            {name: 'TypeScript', tag: 'Type Safety', icon: <SiTypescript className="text-[#3178C6]"/>},
-            {name: 'Java', tag: 'LTS Support', icon: <BiLogoJava className="text-[#007396]"/>},
-            {name: 'Etc', tag: 'Keep learning🔥', icon: '📖'},
+            { name: 'Spring boot - Batch', tag: 'Job Optimization', icon: <SiSpringboot className="text-[#6DB33F]" /> },
+            { name: 'Spring boot - MVC', tag: 'Robust Architecture', icon: <SiSpringboot className="text-[#6DB33F]" /> },
+            { name: 'Oracle', tag: 'ACID', icon: <SiOracle className="text-[#F80000]" /> },
+            { name: 'React', tag: 'Component', icon: <SiReact className="text-[#61DAFB]" /> },
+            { name: 'TypeScript', tag: 'Type Safety', icon: <SiTypescript className="text-[#3178C6]" /> },
+            { name: 'Java', tag: 'LTS Support', icon: <BiLogoJava className="text-[#007396]" /> },
+            { name: 'Etc', tag: 'Keep learning🔥', icon: '📖' },
         ].map((prod, j) => (
-            <div key={j} className={STYLES.SkilItem}>
-                <div className="flex items-center gap-3 sm:gap-5">
-                    <div className={STYLES.SkillIcon}>{prod.icon}</div>
-                    <span className="text-[14px] sm:text-[15px] font-bold text-gray-900">{prod.name}</span>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3">
-                    <span className={STYLES.SkillTag}>{prod.tag}</span>
-                    <ArrowUpRight size={16} className="text-gray-300 group-hover:text-black transition-colors"/>
-                </div>
-            </div>
+            <SkillItem key={j} name={prod.name} tag={prod.tag} icon={prod.icon} />
         ))}
     </section>
 );
