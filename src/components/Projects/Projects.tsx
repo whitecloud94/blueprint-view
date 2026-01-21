@@ -40,44 +40,44 @@ const STYLES = {
 const projects = [
     {
         title: 'Toyota Financial Core',
-        sub: "Now I'm here!",
+        sub: "Core시스템 운영관리",
         icon: <CarFront size={20} className="sm:w-[22px]"/>,
         bg: 'bg-indigo-600',
         active: true
     },
     {
         title: 'IBK 기업은행 업무지원 시스템',
-        sub: '2025.05 - 2025.12',
+        sub: '실시간 연계(EAI) 인터페이스 설계 및 구현',
         icon: <Briefcase size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'IBK 기업은행 상시감시 시스템',
-        sub: '2024.10 - 2025.04',
+        sub: 'Spring Batch 기반 데이터 처리 및 공통 모듈 구현',
         icon: <ShieldCheck size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'IBK 기업은행 ESG 탄소중립 HUB',
-        sub: '2024.02 - 2024.06',
+        sub: '실시간 연계(EAI) 로직 구현 및 관리자 화면 구현',
         icon: <Leaf size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'BNK 경남은행 시니어 뱅킹 및 모바일 뱅킹 메인화면 개편',
-        sub: '2023.12 - 2024.02',
+        sub: '메인이체, 거래내역조회 등 다수 화면 및 관리자 화면 구현',
         icon: <Smartphone size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'IBK 기업은행 투자상품 통합관리 시스템',
-        sub: '2023.04 - 2023.11',
+        sub: '비즈니스 로직 구현 및 Spring Batch 기반의 DW 데이터 처리 로직 구현',
         icon: <LineChart size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
     {
         title: 'BNK 경남은행 비대면 제증명서 발급 서비스',
-        sub: '2022.04 - 2022.09',
+        sub: '레포트 레이아웃 작성 및 비즈니스 로직 구현',
         icon: <FileText size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]'
     },
