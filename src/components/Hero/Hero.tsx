@@ -58,7 +58,7 @@ export const Hero = () => (
             <div className={STYLES.avatarWrapper}>
                 <div className={STYLES.avatarContainer}>
                     <div className={STYLES.avatarImage}>
-                        <img src="/src/resource/img/MyPhoto.jpg" alt="Profile"
+                        <img src="/MyPhoto.jpg" alt="Profile"
                              className="w-full h-full object-cover object-center"/>
                     </div>
                 </div>
