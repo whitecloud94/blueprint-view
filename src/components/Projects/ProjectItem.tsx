@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import type { ReactNode } from "react";
+import {ReactNode, useEffect, useRef, useState} from "react";
 
 const STYLES = {
   item: (active?: boolean) =>
@@ -37,40 +37,53 @@ export interface ProjectItemProps {
   rightIcon?: ReactNode;
 }
 
-export const ProjectItem = ({
-                              title,
-                              sub,
-                              icon,
-                              bg,
-                              active = false,
-                              onClick,
-                              className = "",
-                              rightIcon,
-                            }: ProjectItemProps) => {
-  return (
-      <div className={`${STYLES.item(active)} ${className}`} onClick={onClick}>
-        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
-          {/* 아이콘 박스 */}
-          <div className={STYLES.iconBox(bg)}>{icon}</div>
+export const ProjectItem = ({ title, sub, icon, bg, active = false, onClick, className = "", rightIcon }: ProjectItemProps) => {
+    const [isOverflowing, setIsOverflowing] = useState(false);
+    const textRef = useRef<HTMLParagraphElement>(null);
 
-          {/* 텍스트 영역 */}
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <h3 className="text-[14px] sm:text-[16px] font-bold text-gray-900 truncate">
-                {title}
-              </h3>
-              {active && <span className={STYLES.activeBadge}>ACTIVE</span>}
+    useEffect(() => {
+        const checkOverflow = () => {
+            if (textRef.current) {
+                // 실제 텍스트 너비가 부모 너비보다 크면 overflow 상태로 설정
+                setIsOverflowing(textRef.current.scrollWidth > textRef.current.clientWidth);
+            }
+        };
+
+        checkOverflow();
+        window.addEventListener('resize', checkOverflow); // 화면 크기 변경 대응
+        return () => window.removeEventListener('resize', checkOverflow);
+    }, [sub]);
+
+    return (
+        <div className={`${STYLES.item(active)} ${className}`} onClick={onClick}>
+            <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-1">
+                <div className={STYLES.iconBox(bg)}>{icon}</div>
+
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                        <h3 className="text-[14px] sm:text-[16px] font-bold text-gray-900 truncate">
+                            {title}
+                        </h3>
+                        {active && <span className={STYLES.activeBadge}>ACTIVE</span>}
+                    </div>
+
+                    <div className="relative w-full overflow-hidden">
+                        <p
+                            ref={textRef}
+                            className={`
+                text-[12px] sm:text-[14px] text-gray-500 font-medium whitespace-nowrap
+                ${isOverflowing ? 'truncate group-hover:animate-marquee group-hover:overflow-visible group-hover:truncate-none' : ''}
+              `}
+                        >
+                            {sub}
+                        </p>
+                    </div>
+                </div>
             </div>
-            <p className="text-[12px] sm:text-[14px] text-gray-500 font-medium truncate">
-              {sub}
-            </p>
-          </div>
-        </div>
 
-        {/* 우측 아이콘 */}
-        <div className={STYLES.chevron(active)}>
-          {rightIcon ?? <ChevronRight size={18} />}
+            <div className={STYLES.chevron(active)}>
+                {rightIcon ?? <ChevronRight size={18} />}
+            </div>
         </div>
-      </div>
-  );
+    );
 };
