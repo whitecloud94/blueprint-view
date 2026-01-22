@@ -71,9 +71,15 @@ export const Modal = ({project, onClose}: ModalProps) => {
     }, [onClose]);
 
     useEffect(() => {
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        if (scrollbarWidth > 0) {
+            document.body.style.paddingRight = `${scrollbarWidth}px`;
+        }
         document.body.style.overflow = 'hidden';
+
         return () => {
             document.body.style.overflow = 'unset';
+            document.body.style.paddingRight = '0px';
         };
     }, []);
 
