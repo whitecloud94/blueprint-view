@@ -25,54 +25,67 @@ const STYLES = {
 
 const projects = [
     {
-        id: 1, // 모달 연동을 위해 고유 ID 추가를 추천합니다
+        id: 1,
         title: 'Toyota Financial Core',
+        period: '2026.01 - Present',
         sub: "Core시스템 운영관리",
         icon: <CarFront size={20} className="sm:w-[22px]"/>,
         bg: 'bg-indigo-600',
         active: true,
         achievements: [
             "여신 계정계 코어 시스템 운영 및 유지보수",
-            "대량 데이터 처리 및 배치 프로세스 최적화",
+            "대량 데이터 처리 및 프로세스 최적화",
             "금융 규제 준수를 위한 시스템 로직 수정"
         ],
-        tech: ["Java", "Spring Boot", "Oracle", "JEUS"]
+        tech: ["Java", "iFramwork", "Tibero", "JEUS"]
     },
     {
         title: 'IBK 기업은행 업무지원 시스템',
+        period: '2023.10 - 2023.12',
         sub: '실시간 연계(EAI) 인터페이스 설계 및 구현',
         icon: <Briefcase size={20} className="sm:w-[22px]"/>,
-        bg: 'bg-[#1A1A1A]'
+        bg: 'bg-[#1A1A1A]',
+        tech: ["Java", "Spring", "EAI", "Oracle"]
     },
     {
         title: 'IBK 기업은행 상시감시 시스템',
+        period: '2023.05 - 2023.09',
         sub: 'Spring Batch 기반 데이터 처리 및 공통 모듈 구현',
         icon: <ShieldCheck size={20} className="sm:w-[22px]"/>,
-        bg: 'bg-[#1A1A1A]'
+        bg: 'bg-[#1A1A1A]',
+        tech: ["Java", "Spring Batch", "Oracle"]
     },
     {
         title: 'IBK 기업은행 ESG 탄소중립 HUB',
+        period: '2023.01 - 2023.04',
         sub: '실시간 연계(EAI) 로직 구현 및 관리자 화면 구현',
         icon: <Leaf size={20} className="sm:w-[22px]"/>,
-        bg: 'bg-[#1A1A1A]'
+        bg: 'bg-[#1A1A1A]',
+        tech: ["Java", "Spring", "Vue.js", "Oracle"]
     },
     {
         title: 'BNK 경남은행 시니어 뱅킹 및 모바일 뱅킹 메인화면 개편',
+        period: '2022.08 - 2022.12',
         sub: '메인이체, 거래내역조회 등 다수 화면 및 관리자 화면 구현',
         icon: <Smartphone size={20} className="sm:w-[22px]"/>,
-        bg: 'bg-[#1A1A1A]'
+        bg: 'bg-[#1A1A1A]',
+        tech: ["Java", "Android", "Webview", "Oracle"]
     },
     {
         title: 'IBK 기업은행 투자상품 통합관리 시스템',
+        period: '2022.01 - 2022.07',
         sub: '비즈니스 로직 구현 및 Spring Batch 기반의 DW 데이터 처리 로직 구현',
         icon: <LineChart size={20} className="sm:w-[22px]"/>,
-        bg: 'bg-[#1A1A1A]'
+        bg: 'bg-[#1A1A1A]',
+        tech: ["Java", "Spring Batch", "Oracle"]
     },
     {
         title: 'BNK 경남은행 비대면 제증명서 발급 서비스',
+        period: '2021.09 - 2021.12',
         sub: '레포트 레이아웃 작성 및 비즈니스 로직 구현',
         icon: <FileText size={20} className="sm:w-[22px]"/>,
-        bg: 'bg-[#1A1A1A]'
+        bg: 'bg-[#1A1A1A]',
+        tech: ["Java", "OZ Report", "Oracle"]
     },
 ]
 
