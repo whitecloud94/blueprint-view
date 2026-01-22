@@ -16,6 +16,14 @@ export default {
             animation: {
                 marquee: 'marquee 10s linear infinite',
             },
+            fontFamily: {
+                // 기본 본문용 (Pretendard 기반)
+                sans: ['Pretendard', 'ui-sans-serif', 'system-ui'],
+                // 제목용 (영문 Inter + 국문 Gmarket Sans 조합 추천)
+                title: ['Inter', 'GmarketSansBold', 'Pretendard', 'sans-serif'],
+                // 개발자 포인트용 (JetBrains Mono)
+                mono: ['"JetBrains Mono"', 'monospace'],
+            },
         },
     },
     plugins: [],
