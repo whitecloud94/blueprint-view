@@ -14,6 +14,11 @@ export const COMMON_STYLES = {
     sectionHeader: "flex items-center gap-2 text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.2em] text-indigo-500",
     dot: "w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]",
 
+    // Typography
+    modalTitle: "text-[28px] sm:text-[36px] font-black text-white leading-[1.1] tracking-tight",
+    modalBody: "text-[16px] sm:text-[17px] text-white/80 leading-[1.85] font-medium tracking-tight",
+    badgeText: "text-[11px] font-black tracking-widest",
+
     // Buttons
     primaryButton: "bg-gray-900 text-white rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-xl hover:shadow-gray-900/20 active:scale-95",
     secondaryButton: "bg-white/80 backdrop-blur-md border border-gray-200 text-gray-900 rounded-full font-bold flex items-center justify-center gap-2 transition-all duration-300 hover:bg-white hover:border-gray-300 active:scale-95 shadow-sm",

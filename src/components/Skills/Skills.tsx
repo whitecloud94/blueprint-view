@@ -8,8 +8,12 @@ import React from "react";
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
     skillItem: `${COMMON_STYLES.innerCard} p-3 sm:p-4 pl-4 sm:pl-5 flex items-center justify-between cursor-pointer group hover:bg-white/90 hover:border-white hover:scale-[1.01] hover:shadow-lg`,
+    skillInfo: "flex items-center gap-3 sm:gap-5 min-w-0 flex-1",
     skillIcon: `${COMMON_STYLES.iconButton} text-lg sm:text-xl shadow-sm text-gray-900`,
+    skillName: "text-[14px] sm:text-[15px] font-bold text-gray-900",
+    skillAction: "flex items-center gap-2 sm:gap-3 ml-2 shrink-0",
     skillTag: `text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 backdrop-blur-sm px-2 py-1 rounded-md tracking-wider border border-black/5`,
+    skillArrow: "text-gray-300 group-hover:text-black transition-colors",
     header: `${COMMON_STYLES.sectionHeader} px-4 sm:px-6 py-4`,
     dot: COMMON_STYLES.dot,
 };
@@ -22,16 +26,16 @@ interface SkillItemProps {
 
 const SkillItem = ({ name, tag, icon }: SkillItemProps) => (
     <div className={STYLES.skillItem}>
-        <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-1">
+        <div className={STYLES.skillInfo}>
             <div className={STYLES.skillIcon}>{icon}</div>
             <MarqueeText
                 text={name}
-                className="text-[14px] sm:text-[15px] font-bold text-gray-900"
+                className={STYLES.skillName}
             />
         </div>
-        <div className="flex items-center gap-2 sm:gap-3 ml-2 shrink-0">
+        <div className={STYLES.skillAction}>
             <span className={STYLES.skillTag}>{tag}</span>
-            <ArrowUpRight size={16} className="text-gray-300 group-hover:text-black transition-colors" />
+            <ArrowUpRight size={16} className={STYLES.skillArrow} />
         </div>
     </div>
 );

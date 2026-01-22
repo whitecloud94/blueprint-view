@@ -49,6 +49,8 @@ const STYLES = {
     profileImg: "w-full h-full object-cover object-center",
     statusWrapper: "flex flex-col items-center gap-2",
     badge: "group px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide flex items-center justify-center gap-1.5 border shadow-sm transition-all duration-500 ease-in-out cursor-help overflow-hidden min-w-[110px] max-w-[130px] sm:hover:max-w-[280px]",
+    badgeLayout: "flex flex-col items-center gap-2 w-full",
+    badgeContainer: "h-8 flex items-center justify-center w-full",
     statusIndicator: "relative flex items-center justify-center w-2.5 h-2.5",
     statusPing: "absolute w-full h-full rounded-full opacity-75 animate-ping",
     statusDot: "relative w-1.5 h-1.5 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.2)]",
@@ -129,8 +131,8 @@ export const Hero = () => {
                     </div>
 
                     {/* 배지 영역 레이아웃 격리 */}
-                    <div className="flex flex-col items-center gap-2 w-full">
-                        <div className="h-8 flex items-center justify-center w-full">
+                    <div className={STYLES.badgeLayout}>
+                        <div className={STYLES.badgeContainer}>
                             <div
                                 className={`
                                     ${STYLES.badge} ${status.badgeClass} 

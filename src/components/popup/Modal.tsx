@@ -16,12 +16,20 @@ const MODAL_STYLES = {
     `,
 
     header: `sticky top-0 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/10 backdrop-blur-2xl border-b border-white/20`,
+    headerLeft: "flex-1 pr-6",
+    badgeWrapper: "flex items-center gap-2 mb-2",
+    badgeDot: "w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.8)]",
+    badgeLabel: `${COMMON_STYLES.badgeText} text-white/40`,
+    title: COMMON_STYLES.modalTitle,
+    closeButton: "w-9 h-9 sm:w-10 sm:h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white/60 border border-white/20 transition-all duration-300 hover:bg-white/20 hover:scale-110 active:scale-95 p-3 group",
 
     content: "px-8 sm:px-12 py-10 sm:py-14 space-y-12",
-
+    section: "relative",
     sectionTitle: `${COMMON_STYLES.sectionHeader} mb-5 text-white/90`,
-
-    bodyText: "text-[16px] sm:text-[17px] text-white/80 leading-[1.85] font-medium tracking-tight",
+    bodyText: COMMON_STYLES.modalBody,
+    achievementList: "space-y-5",
+    achievementItem: "flex gap-4 group",
+    achievementDot: "mt-2.5 w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-white/60 transition-colors shrink-0",
 
     tagWrapper: "flex flex-wrap gap-2.5 mt-4",
     tag: `bg-white/30 backdrop-blur-xl border border-white/40 px-4 py-2 rounded-2xl text-white text-[11px] sm:text-[12px] font-bold cursor-default`,
@@ -84,18 +92,18 @@ export const Modal = ({project, onClose}: ModalProps) => {
 
                 {/* Header: 제목 및 닫기 버튼 */}
                 <header className={MODAL_STYLES.header}>
-                    <div className="flex-1 pr-6">
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.8)]"/>
-                            <span className="text-[11px] font-black text-white/40 tracking-widest">PROJECT CASE STUDY</span>
+                    <div className={MODAL_STYLES.headerLeft}>
+                        <div className={MODAL_STYLES.badgeWrapper}>
+                            <span className={MODAL_STYLES.badgeDot}/>
+                            <span className={MODAL_STYLES.badgeLabel}>PROJECT CASE STUDY</span>
                         </div>
-                        <h2 className="text-[28px] sm:text-[36px] font-black text-white leading-[1.1] tracking-tight">
+                        <h2 className={MODAL_STYLES.title}>
                             {project.title}
                         </h2>
                     </div>
                     <button 
                         onClick={onClose} 
-                        className="w-9 h-9 sm:w-10 sm:h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white/60 border border-white/20 transition-all duration-300 hover:bg-white/20 hover:scale-110 active:scale-95 p-3 group"
+                        className={MODAL_STYLES.closeButton}
                     >
                         <X size={22} className="group-hover:text-white transition-colors"/>
                     </button>
@@ -104,7 +112,7 @@ export const Modal = ({project, onClose}: ModalProps) => {
                 {/* Content Area */}
                 <div className={MODAL_STYLES.content}>
                     {/* 1. Overview 섹션 */}
-                    <section className="relative">
+                    <section className={MODAL_STYLES.section}>
                         <div className={MODAL_STYLES.sectionTitle}>
                             <div className={MODAL_STYLES.dot}/>
                             Briefing
@@ -120,10 +128,10 @@ export const Modal = ({project, onClose}: ModalProps) => {
                             <div className={MODAL_STYLES.dot}/>
                             Key Solutions
                         </div>
-                        <ul className="space-y-5">
+                        <ul className={MODAL_STYLES.achievementList}>
                             {project.achievements?.map((item: string, i: number) => (
-                                <li key={i} className="flex gap-4 group">
-                                    <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-white/60 transition-colors shrink-0"/>
+                                <li key={i} className={MODAL_STYLES.achievementItem}>
+                                    <div className={MODAL_STYLES.achievementDot}/>
                                     <span className={MODAL_STYLES.bodyText}>{item}</span>
                                 </li>
                             ))}

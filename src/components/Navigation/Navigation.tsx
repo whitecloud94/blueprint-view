@@ -11,6 +11,8 @@ const STYLES = {
     themeButton: `text-gray-400 hover:text-black transition-transform p-2 hover:rotate-12 duration-300`,
     hireButton: `${COMMON_STYLES.glassDark} px-3 sm:px-5 py-2 sm:py-2.5 rounded-[14px] sm:rounded-[16px] text-[11px] sm:text-[13px] font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-black hover:scale-105 active:scale-95 transition-all`,
     plusIconWrapper: `bg-white/20 rounded-full p-0.5`,
+    hireMeLabel: "hidden xs:inline",
+    hireLabel: "xs:hidden",
 };
 
 export const Navigation = () => {
@@ -41,8 +43,8 @@ export const Navigation = () => {
                         <div className={STYLES.plusIconWrapper}>
                             <Plus size={10} strokeWidth={4} />
                         </div>
-                        <span className="hidden xs:inline">Hire Me</span>
-                        <span className="xs:hidden">Hire</span>
+                        <span className={STYLES.hireMeLabel}>Hire Me</span>
+                        <span className={STYLES.hireLabel}>Hire</span>
                     </button>
                 </div>
             </div>

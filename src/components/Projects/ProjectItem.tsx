@@ -21,6 +21,11 @@ const STYLES = {
         `flex-shrink-0 w-8 h-8 flex items-center justify-center transition-colors ${
             active ? "text-indigo-600" : "text-gray-300 group-hover:text-black"
         }`,
+    contentWrapper: "flex items-center gap-3 sm:gap-5 min-w-0 flex-1",
+    infoWrapper: "flex-1 min-w-0 flex flex-col justify-center gap-0.5",
+    titleWrapper: "flex items-center gap-2 w-full",
+    title: "text-[14px] sm:text-[16px] font-bold text-gray-900",
+    subTitle: "text-[12px] sm:text-[14px] text-gray-500 font-medium",
 };
 
 export interface ProjectItemProps {
@@ -46,14 +51,14 @@ export const ProjectItem = ({
                             }: ProjectItemProps) => {
     return (
         <div className={`${STYLES.item(active)} ${className}`} onClick={onClick}>
-            <div className="flex items-center gap-3 sm:gap-5 min-w-0 flex-1">
+            <div className={STYLES.contentWrapper}>
                 <div className={STYLES.iconBox(bg)}>{icon}</div>
 
-                <div className="flex-1 min-w-0 flex flex-col justify-center gap-0.5">
-                    <div className="flex items-center gap-2 w-full">
+                <div className={STYLES.infoWrapper}>
+                    <div className={STYLES.titleWrapper}>
                         <MarqueeText 
                             text={title} 
-                            className="text-[14px] sm:text-[16px] font-bold text-gray-900"
+                            className={STYLES.title}
                         />
                         {active && <span className={STYLES.activeBadge + " shrink-0"}>ACTIVE</span>}
                     </div>
@@ -61,7 +66,7 @@ export const ProjectItem = ({
                     <MarqueeText 
                         text={sub} 
                         containerHeight="h-5"
-                        className="text-[12px] sm:text-[14px] text-gray-500 font-medium"
+                        className={STYLES.subTitle}
                     />
                 </div>
             </div>
