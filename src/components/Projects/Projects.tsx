@@ -17,7 +17,7 @@ import {AnimatePresence} from "framer-motion";
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
     header: "flex justify-between items-center px-4 sm:px-6 py-4",
-    viewAllBtn: `bg-white/60 backdrop-blur-md border border-white/60 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold text-gray-600 flex items-center gap-1 hover:bg-white/80 transition-all shadow-sm`,
+    viewAllBtn: `${COMMON_STYLES.secondaryButton} px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold text-gray-600 flex items-center gap-1 hover:bg-white/80 transition-all shadow-sm`,
     listWrapper: "flex flex-col gap-1.5",
     sectionHeader: COMMON_STYLES.sectionHeader,
     dot: COMMON_STYLES.dot,

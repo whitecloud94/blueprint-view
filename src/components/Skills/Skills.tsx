@@ -3,11 +3,12 @@ import { SiOracle, SiReact, SiSpringboot, SiTypescript } from "react-icons/si";
 import { BiLogoJava } from "react-icons/bi";
 import { COMMON_STYLES } from "../../constants/styles";
 import { MarqueeText } from "../common/MarqueeText";
+import React from "react";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
     skillItem: `${COMMON_STYLES.innerCard} p-3 sm:p-4 pl-4 sm:pl-5 flex items-center justify-between cursor-pointer group hover:bg-white/90 hover:border-white hover:scale-[1.01] hover:shadow-lg`,
-    skillIcon: `w-9 h-9 sm:w-10 sm:h-10 bg-white/40 backdrop-blur-md border border-white/60 rounded-full flex items-center justify-center text-lg sm:text-xl shadow-sm`,
+    skillIcon: `${COMMON_STYLES.iconButton} text-lg sm:text-xl shadow-sm text-gray-900`,
     skillTag: `text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 backdrop-blur-sm px-2 py-1 rounded-md tracking-wider border border-black/5`,
     header: `${COMMON_STYLES.sectionHeader} px-4 sm:px-6 py-4`,
     dot: COMMON_STYLES.dot,

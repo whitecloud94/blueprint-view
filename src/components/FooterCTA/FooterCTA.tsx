@@ -14,7 +14,7 @@ export const FooterCTA = () => (
         <h2 className={STYLES.title}>Do you like me? <br/> I’m always prepared😎</h2>
         <div className={STYLES.buttonGroup}>
             <button className={STYLES.primaryButton}>
-                <div className="bg-white/20 rounded-full p-0.5"><Plus size={10} strokeWidth={4}/></div>
+                <div className={COMMON_STYLES.innerCard.replace('rounded-[20px] sm:rounded-[24px]', 'rounded-full') + " p-0.5"}><Plus size={10} strokeWidth={4}/></div>
                 Hire Me
             </button>
             <button className={STYLES.secondaryButton}>

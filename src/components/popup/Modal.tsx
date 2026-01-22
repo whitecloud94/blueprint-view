@@ -14,17 +14,17 @@ const MODAL_STYLES = {
         flex flex-col scrollbar-hide
     `,
 
-    header: "sticky top-0 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/20 backdrop-blur-2xl border-b border-white/40",
+    header: `sticky top-0 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start ${COMMON_STYLES.liquidGlass} border-b border-white/40`,
 
     content: "px-8 sm:px-12 py-10 sm:py-14 space-y-12",
 
-    sectionTitle: "text-[11px] sm:text-[12px] font-black text-indigo-600 uppercase tracking-[0.25em] mb-5 flex items-center gap-2.5 opacity-80",
+    sectionTitle: `${COMMON_STYLES.sectionHeader} mb-5 opacity-80`,
 
     bodyText: "text-[16px] sm:text-[17px] text-gray-700 leading-[1.85] font-medium tracking-tight",
 
     tagWrapper: "flex flex-wrap gap-2.5 mt-4",
-    tag: "px-4 py-2 rounded-2xl bg-white/50 text-indigo-700 text-[11px] sm:text-[12px] font-bold border border-white/80 shadow-sm backdrop-blur-md hover:bg-indigo-50/50 transition-colors cursor-default",
-    dot: "w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.4)]"
+    tag: `${COMMON_STYLES.innerCard} px-4 py-2 rounded-2xl text-indigo-700 text-[11px] sm:text-[12px] font-bold cursor-default`,
+    dot: COMMON_STYLES.dot
 };
 
 interface ModalProps {
@@ -94,7 +94,7 @@ export const Modal = ({project, onClose}: ModalProps) => {
                     </div>
                     <button 
                         onClick={onClose} 
-                        className="p-3 bg-white/40 hover:bg-white/80 border border-white/60 rounded-2xl transition-all duration-300 shadow-sm group active:scale-95"
+                        className={COMMON_STYLES.iconButton + " p-3 rounded-2xl group active:scale-95"}
                     >
                         <X size={22} className="text-gray-500 group-hover:text-black transition-colors"/>
                     </button>
