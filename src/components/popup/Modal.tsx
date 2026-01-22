@@ -5,26 +5,27 @@ import {motion} from "framer-motion";
 import {COMMON_STYLES} from "../../constants/styles";
 
 const MODAL_STYLES = {
-    overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/30 backdrop-blur-[6px]",
+    overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/40 backdrop-blur-[2px]",
 
     container: `
         relative w-full max-w-2xl max-h-[90vh] overflow-y-auto
-        ${COMMON_STYLES.liquidGlass}
+        bg-white/35 backdrop-blur-[40px] border border-white/40
         rounded-[40px] sm:rounded-[48px]
-        flex flex-col scrollbar-hide
+        flex flex-col scrollbar-hide 
+        shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_0_0_1px_rgba(255,255,255,0.2)]
     `,
 
-    header: `sticky top-0 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start ${COMMON_STYLES.liquidGlass} border-b border-white/40`,
+    header: `sticky top-0 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/10 backdrop-blur-2xl border-b border-white/20`,
 
     content: "px-8 sm:px-12 py-10 sm:py-14 space-y-12",
 
-    sectionTitle: `${COMMON_STYLES.sectionHeader} mb-5 opacity-80`,
+    sectionTitle: `${COMMON_STYLES.sectionHeader} mb-5 text-white/90`,
 
-    bodyText: "text-[16px] sm:text-[17px] text-gray-700 leading-[1.85] font-medium tracking-tight",
+    bodyText: "text-[16px] sm:text-[17px] text-white/80 leading-[1.85] font-medium tracking-tight",
 
     tagWrapper: "flex flex-wrap gap-2.5 mt-4",
-    tag: `${COMMON_STYLES.innerCard} px-4 py-2 rounded-2xl text-indigo-700 text-[11px] sm:text-[12px] font-bold cursor-default`,
-    dot: COMMON_STYLES.dot
+    tag: `bg-white/30 backdrop-blur-xl border border-white/40 px-4 py-2 rounded-2xl text-white text-[11px] sm:text-[12px] font-bold cursor-default`,
+    dot: "w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]"
 };
 
 interface ModalProps {
@@ -85,18 +86,18 @@ export const Modal = ({project, onClose}: ModalProps) => {
                 <header className={MODAL_STYLES.header}>
                     <div className="flex-1 pr-6">
                         <div className="flex items-center gap-2 mb-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse shadow-[0_0_10px_rgba(99,102,241,0.8)]"/>
-                            <span className="text-[11px] font-black text-gray-400 tracking-widest">PROJECT CASE STUDY</span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.8)]"/>
+                            <span className="text-[11px] font-black text-white/40 tracking-widest">PROJECT CASE STUDY</span>
                         </div>
-                        <h2 className="text-[28px] sm:text-[36px] font-black text-gray-900 leading-[1.1] tracking-tight">
+                        <h2 className="text-[28px] sm:text-[36px] font-black text-white leading-[1.1] tracking-tight">
                             {project.title}
                         </h2>
                     </div>
                     <button 
                         onClick={onClose} 
-                        className={COMMON_STYLES.iconButton + " p-3 rounded-2xl group active:scale-95"}
+                        className="w-9 h-9 sm:w-10 sm:h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white/60 border border-white/20 transition-all duration-300 hover:bg-white/20 hover:scale-110 active:scale-95 p-3 group"
                     >
-                        <X size={22} className="text-gray-500 group-hover:text-black transition-colors"/>
+                        <X size={22} className="group-hover:text-white transition-colors"/>
                     </button>
                 </header>
 
@@ -122,7 +123,7 @@ export const Modal = ({project, onClose}: ModalProps) => {
                         <ul className="space-y-5">
                             {project.achievements?.map((item: string, i: number) => (
                                 <li key={i} className="flex gap-4 group">
-                                    <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover:bg-indigo-500 transition-colors shrink-0"/>
+                                    <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-white/60 transition-colors shrink-0"/>
                                     <span className={MODAL_STYLES.bodyText}>{item}</span>
                                 </li>
                             ))}
