@@ -34,8 +34,8 @@ const STYLES = {
     content: "flex flex-col-reverse sm:flex-row justify-between items-center sm:items-start gap-8 sm:gap-4 text-center sm:text-left",
     mainContent: "space-y-6 w-full",
     textGroup: "space-y-3",
-    title: `text-[32px] sm:text-[42px] leading-tight ${COMMON_STYLES.title}`,
-    description: `${COMMON_STYLES.body} text-[15px] sm:text-[17px] leading-[1.6] max-w-[380px] mx-auto sm:mx-0`,
+    title: `text-[32px] sm:text-[42px] leading-tight ${COMMON_STYLES.title} font-title text-[#1A1A1A]`,
+    description: `${COMMON_STYLES.body} text-[15px] sm:text-[17px] leading-[1.6] max-w-[380px] mx-auto sm:mx-0 font-sans font-medium`,
     highlight: "relative ml-1.5 inline-block",
     highlightText: "relative z-10 text-indigo-600 font-bold italic",
     highlightBg: "absolute bottom-0.5 left-0 w-full h-[8px] bg-indigo-50 -rotate-1",
@@ -43,21 +43,21 @@ const STYLES = {
     primaryButton: `${COMMON_STYLES.primaryButton} px-5 py-3 text-[12px] sm:text-[13px] hover:-translate-y-0.5`,
     primaryButtonIcon: "bg-white/20 rounded-full p-0.5",
     secondaryButton: `${COMMON_STYLES.secondaryButton} px-5 py-3 text-[12px] sm:text-[13px]`,
-    avatarWrapper: "flex flex-col items-center gap-4 flex-shrink-0 w-[140px] sm:w-[220px]",
+    avatarWrapper: "flex flex-col items-center gap-4 flex-shrink-0 w-[160px] sm:w-[220px]",
     avatarContainer: "relative",
     avatarImage: "w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#F2F2F2] border-[4px] sm:border-[6px] border-[#FAFAFA] overflow-hidden shadow-inner",
     profileImg: "w-full h-full object-cover object-center",
     statusWrapper: "flex flex-col items-center gap-2",
-    badge: "group px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide flex items-center justify-center gap-1.5 border shadow-sm transition-all duration-500 ease-in-out cursor-help overflow-hidden min-w-[110px] max-w-[130px] sm:hover:max-w-[280px]",
-    badgeLayout: "flex flex-col items-center gap-2 w-full",
+    badge: "group px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide flex items-center justify-center gap-1.5 border shadow-sm transition-all duration-500 ease-in-out cursor-help overflow-hidden min-w-[120px] max-w-[140px] sm:hover:max-w-[280px]",
+    badgeLayout: "flex flex-col items-center gap-2 w-full font-mono tracking-tight",
     badgeContainer: "h-8 flex items-center justify-center w-full",
     statusIndicator: "relative flex items-center justify-center w-2.5 h-2.5",
     statusPing: "absolute w-full h-full rounded-full opacity-75 animate-ping",
     statusDot: "relative w-1.5 h-1.5 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.2)]",
     statusCode: "shrink-0 uppercase",
-    statusDetail: "flex items-center gap-1.5 max-w-0 opacity-0 sm:group-hover:max-w-[150px] sm:group-hover:opacity-100 transition-all duration-500 ease-in-out overflow-hidden whitespace-nowrap",
+    statusDetail: "flex items-center gap-1.5 max-w-0 opacity-0 transition-all duration-500 ease-in-out overflow-hidden whitespace-nowrap sm:group-hover:max-w-[160px] sm:group-hover:opacity-100",
     statusCommentPrefix: "text-current opacity-30 ml-1",
-    statusComment: "font-medium",
+    statusComment: "font-medium text-[9px] sm:text-[11px] text-[#629755]",
     statusDesc: "text-[10px] text-gray-400 font-medium tracking-tight",
 };
 
@@ -136,7 +136,7 @@ export const Hero = () => {
                             <div
                                 className={`
                                     ${STYLES.badge} ${status.badgeClass} 
-                                    ${isExpanded ? 'max-w-[280px]' : ''}
+                                    ${isExpanded ? '!max-w-[320px]' : ''}
                                 `}
                                 onClick={() => setIsExpanded(!isExpanded)}
                             >
@@ -149,7 +149,7 @@ export const Hero = () => {
 
                                 <div className={`
                                     ${STYLES.statusDetail}
-                                    ${isExpanded ? 'max-w-[150px] opacity-100' : ''}
+                                    ${isExpanded ? '!max-w-[180px] !opacity-100' : ''}
                                 `}>
                                     <span className={STYLES.statusCommentPrefix}>//</span>
                                     <span className={STYLES.statusComment}>{status.comment}</span>
