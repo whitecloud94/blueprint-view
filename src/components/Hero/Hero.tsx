@@ -1,6 +1,7 @@
 import {Copy, Plus} from 'lucide-react';
 import {useState} from "react";
 import { COMMON_STYLES } from "../../constants/styles";
+import {LiquidToast} from "../popup/LiquidToast.tsx";
 
 const STATUS_CONFIG = {
     RUNTIME: {
@@ -65,6 +66,14 @@ export const Hero = () => {
     // 현재 상태 TODO - (추후 useState 등으로 관리)
     const status = STATUS_CONFIG.RUNTIME;
     const [isExpanded, setIsExpanded] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
+    const handleCopyEmail = () => {
+        navigator.clipboard.writeText('ajemfld1@gmail.com').then(() => {
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 2500); // 2.5초 후 자동 소멸
+        });
+    };
 
     const getPingColor = (code: string) => {
         switch (code) {
@@ -112,10 +121,11 @@ export const Hero = () => {
                         </button>
                         <button
                             className={STYLES.secondaryButton}
-                            onClick={() => navigator.clipboard.writeText('your-email@example.com')}
+                            onClick={handleCopyEmail}
                         >
                             <Copy size={14}/> Copy Email
                         </button>
+                        <LiquidToast isVisible={showToast} message="이메일 주소가 복사되었습니다" />
                     </div>
                 </div>
 
