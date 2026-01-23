@@ -1,21 +1,22 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 const TOAST_STYLES = {
     container: `
-    fixed bottom-10 left-1/2 -translate-x-1/2 z-[200]
+    fixed bottom-20 left-0 right-0 mx-auto z-[200]
     flex items-center gap-3 px-6 py-4
     bg-white/50 backdrop-blur-3xl
     rounded-[24px] border border-white/40
     shadow-[0_20px_50px_rgba(0,0,0,0.1)]
-    min-w-[280px] justify-center
+    w-fit min-w-[280px] justify-center
   `,
-    iconBox: "w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200",
-    text: "font-sans font-bold text-gray-900 text-[14px] tracking-tight",
+    iconBox: "w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200 flex-shrink-0",
+    text: "font-sans font-bold text-gray-900 text-[14px] tracking-tight whitespace-nowrap",
 };
 
 export const LiquidToast = ({ isVisible, message }: { isVisible: boolean, message: string }) => {
-    return (
+    return createPortal(
         <AnimatePresence>
             {isVisible && (
                 <motion.div
@@ -33,6 +34,7 @@ export const LiquidToast = ({ isVisible, message }: { isVisible: boolean, messag
                     <div className="absolute inset-0 rounded-[24px] pointer-events-none border-t border-white/60" />
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
     );
 };
