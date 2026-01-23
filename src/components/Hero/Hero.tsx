@@ -6,7 +6,7 @@ import {LiquidToast} from "../popup/LiquidToast.tsx";
 const STATUS_CONFIG = {
     RUNTIME: {
         code: "RUNTIME",
-        comment: "프로젝트 참여 중",
+        comment: "재직 중",
         description: "2025.01.02 ~",
         dotClass: "bg-indigo-500 animate-pulse",
         badgeClass: "bg-indigo-50 text-indigo-600 border-indigo-100",
