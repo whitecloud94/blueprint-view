@@ -6,6 +6,7 @@ import {Skills} from "./components/Skills/Skills.tsx";
 import {FooterCTA} from "./components/FooterCTA/FooterCTA.tsx";
 import {Social} from "./components/Social/Social.tsx";
 import {FooterInfo} from "./components/FooterInfo/FooterInfo.tsx";
+import {Notice} from "./components/popup/Notice.tsx";
 
 const STYLES = {
     layout: "min-h-screen bg-[#F3F3F3] text-[#1A1A1A] font-sans py-4 sm:py-8 px-4 flex justify-center items-start selection:bg-gray-200",
@@ -19,6 +20,7 @@ const App: React.FC = () => {
             <div className={STYLES.container}>
                 <Navigation/>
                 <main className={STYLES.main}>
+                    <Notice/>
                     <Hero/>
                     <Projects/>
                     <Skills/>

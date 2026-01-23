@@ -19,7 +19,6 @@ export const LiquidToast = ({ isVisible, message }: { isVisible: boolean, messag
         <AnimatePresence>
             {isVisible && (
                 <motion.div
-                    // IOS 특유의 쫀득한 팝업 효과 (Spring)
                     initial={{ opacity: 0, scale: 0.8, y: 40 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
