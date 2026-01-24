@@ -38,7 +38,7 @@ const STYLES = {
     title: `text-[32px] sm:text-[42px] leading-tight ${COMMON_STYLES.title} font-title text-[#1A1A1A]`,
     description: `${COMMON_STYLES.body} text-[15px] sm:text-[17px] leading-[1.6] max-w-[380px] mx-auto sm:mx-0 font-sans font-medium`,
     highlight: "relative ml-1.5 inline-block",
-    highlightText: "relative z-10 text-indigo-600 font-bold italic",
+    highlightText: "relative z-10 text-indigo-600 font-bold",
     highlightBg: "absolute bottom-0.5 left-0 w-full h-[8px] bg-indigo-50 -rotate-1",
     buttonGroup: "flex justify-center sm:justify-start gap-3 pt-2",
     primaryButton: `${COMMON_STYLES.primaryButton} px-5 py-3 text-[12px] sm:text-[13px] hover:-translate-y-0.5`,

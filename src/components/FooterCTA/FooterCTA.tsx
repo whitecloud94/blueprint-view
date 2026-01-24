@@ -1,7 +1,8 @@
-import {useState} from 'react';
-import {Plus, Copy} from 'lucide-react';
-import {COMMON_STYLES} from "../../constants/styles.ts";
-import {LiquidToast} from "../popup/LiquidToast.tsx";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Plus, Copy } from 'lucide-react';
+import { COMMON_STYLES } from "../../constants/styles.ts";
+import { LiquidToast } from "../popup/LiquidToast.tsx";
 
 const STYLES = {
     wrapper: "text-center space-y-6 mb-12 px-2",
@@ -14,29 +15,83 @@ const STYLES = {
 export const FooterCTA = () => {
     const [showToast, setShowToast] = useState(false);
 
+    // 한글로 변환된 문구
+    const text = "제 이력이 마음에 드셨나요? \n 저는 언제나 준비되어 있습니다.😎";
+
+    const sentenceVariants = {
+        hidden: { opacity: 1 },
+        visible: {
+            opacity: 1,
+            transition: {
+                delay: 0.3,
+                staggerChildren: 0.06,
+            },
+        },
+    };
+
+    const letterVariants = {
+        hidden: {
+            opacity: 0,
+            y: 8,
+            color: "#4F46E5",// 시작 컬러
+            filter: "blur(4px)"
+        },
+        visible: {
+            opacity: 1,
+            y: 0,
+            color: "#1A1A1A", // 최종 컬러
+            filter: "blur(0px)",
+            transition: {
+                type: "spring",
+                stiffness: 150,
+                damping: 15,
+                color: { duration: 1.0 } // 색상이 서서히 변하도록 설정
+            }
+        },
+    };
+
     const handleCopyEmail = () => {
         navigator.clipboard.writeText('ajemfld1@gmail.com').then(() => {
             setShowToast(true);
-            setTimeout(() => setShowToast(false), 2500); // 2.5초 후 자동 소멸
+            setTimeout(() => setShowToast(false), 2500);
         });
     };
+
     return (
         <div className={STYLES.wrapper}>
-            <h2 className={STYLES.title}>Do you like me? <br/> I’m always prepared😎</h2>
-            <div className={STYLES.buttonGroup}>
+            <motion.h2
+                className={STYLES.title}
+                variants={sentenceVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+            >
+                {text.split("").map((char, index) => (
+                    <motion.span key={index} variants={letterVariants}>
+                        {char === "\n" ? <br /> : char}
+                    </motion.span>
+                ))}
+            </motion.h2>
+
+            <motion.div
+                className={STYLES.buttonGroup}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 2.5, type: "spring", stiffness: 100 }}
+                viewport={{ once: true }}
+            >
+
                 <button className={STYLES.primaryButton}>
-                    <div
-                        className={COMMON_STYLES.innerCard.replace('rounded-[20px] sm:rounded-[24px]', 'rounded-full') + " p-0.5"}>
-                        <Plus size={10} strokeWidth={4}/></div>
+                    <div className={COMMON_STYLES.innerCard.replace('rounded-[20px] sm:rounded-[24px]', 'rounded-full') + " p-0.5"}>
+                        <Plus size={10} strokeWidth={4}/>
+                    </div>
                     Hire Me
                 </button>
-                <button className={STYLES.secondaryButton}
-                        onClick={handleCopyEmail}>
+                <button className={STYLES.secondaryButton} onClick={handleCopyEmail}>
                     <Copy size={14}/> Copy Email
                 </button>
                 <LiquidToast isVisible={showToast} message="이메일 주소가 복사되었습니다"/>
-            </div>
+            </motion.div>
         </div>
     );
-
 }
