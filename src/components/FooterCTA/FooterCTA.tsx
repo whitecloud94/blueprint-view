@@ -1,7 +1,7 @@
-import {Copy, Plus} from 'lucide-react';
-import {COMMON_STYLES} from "../../constants/styles";
+import {useState} from 'react';
+import {Plus, Copy} from 'lucide-react';
+import {COMMON_STYLES} from "../../constants/styles.ts";
 import {LiquidToast} from "../popup/LiquidToast.tsx";
-import {useState} from "react";
 
 const STYLES = {
     wrapper: "text-center space-y-6 mb-12 px-2",
