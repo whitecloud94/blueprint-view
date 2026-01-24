@@ -114,7 +114,6 @@ export const Modal = ({project, onClose}: ModalProps) => {
                 onClick={e => e.stopPropagation()}
             >
 
-                {/* Header: 제목 및 닫기 버튼 */}
                 <header className={MODAL_STYLES.header}>
                     <div className={MODAL_STYLES.headerLeft}>
                         <div className={MODAL_STYLES.badgeWrapper}>
@@ -141,9 +140,8 @@ export const Modal = ({project, onClose}: ModalProps) => {
                     </button>
                 </header>
 
-                {/* Content Area */}
+
                 <div className={MODAL_STYLES.content}>
-                    {/* 1. Overview 섹션 */}
                     <section className={MODAL_STYLES.section}>
                         <div className={MODAL_STYLES.sectionTitle}>
                             <div className={MODAL_STYLES.dot}/>
@@ -158,7 +156,7 @@ export const Modal = ({project, onClose}: ModalProps) => {
                     <section>
                         <div className={MODAL_STYLES.sectionTitle}>
                             <div className={MODAL_STYLES.dot}/>
-                            Key Solutions
+                            Achievements
                         </div>
                         <ul className={MODAL_STYLES.achievementList}>
                             {project.achievements?.map((item: string, i: number) => (

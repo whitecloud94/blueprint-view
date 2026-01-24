@@ -1,12 +1,12 @@
 import {Copy, Plus} from 'lucide-react';
 import {useState} from "react";
-import { COMMON_STYLES } from "../../constants/styles";
+import {COMMON_STYLES} from "../../constants/styles";
 import {LiquidToast} from "../popup/LiquidToast.tsx";
 
 const STATUS_CONFIG = {
     RUNTIME: {
         code: "RUNTIME",
-        comment: "프로젝트 참여 중",
+        comment: "재직 중",
         description: "2025.01.02 ~",
         dotClass: "bg-indigo-500 animate-pulse",
         badgeClass: "bg-indigo-50 text-indigo-600 border-indigo-100",
@@ -88,7 +88,6 @@ export const Hero = () => {
 
     return (
         <section className={STYLES.wrapper}>
-            {/* Section Header */}
             <div className={STYLES.sectionHeader}>
                 <div className={STYLES.sectionTitle}>
                     <div className={STYLES.dot}/>
@@ -100,15 +99,15 @@ export const Hero = () => {
                 <div className={STYLES.mainContent}>
                     <div className={STYLES.textGroup}>
                         <h1 className={STYLES.title}>
-                            Hi,<br/> I’m Daekyoung KIM
+                            안녕하세요,<br/> 김대경 입니다.
                         </h1>
                         <p className={STYLES.description}>
-                            Software Engineer focused on turning complex problems into simple, functional code.
-                            Currently crafting experiences as a
-                            <span className={STYLES.highlight}>
-                                <span className={STYLES.highlightText}>freelancer.</span>
+                            문제를 조우했을 때<span className={STYLES.highlight}>
+                                <span className={STYLES.highlightText}>본질 </span>
                                 <span className={STYLES.highlightBg}></span>
                             </span>
+                            이 무엇인지 깊이 고민하는 시간들을 즐깁니다. 또한,
+                            기술로 현재의 불편함을 차근차근 해소하는 과정에서 보람을 느끼며, 언제나 진심을 담아 개발에 임합니다.
                         </p>
                     </div>
 
@@ -125,7 +124,7 @@ export const Hero = () => {
                         >
                             <Copy size={14}/> Copy Email
                         </button>
-                        <LiquidToast isVisible={showToast} message="이메일 주소가 복사되었습니다" />
+                        <LiquidToast isVisible={showToast} message="이메일 주소가 복사되었습니다"/>
                     </div>
                 </div>
 

@@ -41,19 +41,29 @@ const projects = [
     },
     {
         title: 'IBK 기업은행 업무지원 시스템',
-        period: '2023.10 - 2023.12',
+        period: '2025.05 - 2025.12',
         sub: '실시간 연계(EAI) 인터페이스 설계 및 구현',
         icon: <Briefcase size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]',
-        tech: ["Java", "Spring", "EAI", "Oracle"]
+        achievements: [
+            "실시간 연계 인터페이스 약 32종 설계 및 구현",
+            "관리자용 배치 모니터링 화면 및 운영관리 메뉴 구현",
+            "시스템 레포트 레이아웃 약 100종 작성"
+        ],
+        tech: ["React", "TypeScript","Spring", "EAI", "EDB"]
     },
     {
         title: 'IBK 기업은행 상시감시 시스템',
-        period: '2023.05 - 2023.09',
+        period: '2024.09 - 2025.05',
         sub: 'Spring Batch 기반 데이터 처리 및 공통 모듈 구현',
         icon: <ShieldCheck size={20} className="sm:w-[22px]"/>,
         bg: 'bg-[#1A1A1A]',
-        tech: ["Java", "Spring Batch", "Oracle"]
+        achievements: [
+            "준실시간 데이터 및 DW 처리 프로그램 구현",
+            "배치 프로그램 공통 모듈 작성",
+            "스케줄링 관리 및 데이터 처리 모니터링"
+        ],
+        tech: ["Java", "Spring Batch", "PostgreSQL"]
     },
     {
         title: 'IBK 기업은행 ESG 탄소중립 HUB',
