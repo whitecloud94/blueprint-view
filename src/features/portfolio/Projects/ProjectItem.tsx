@@ -1,7 +1,7 @@
 import {ChevronRight} from "lucide-react";
 import {ReactNode} from "react";
 import { COMMON_STYLES } from "../../../constants/styles.ts";
-import { MarqueeText } from "../../common/MarqueeText.tsx";
+import { MarqueeText } from "../../../components/common/MarqueeText.tsx";
 
 const STYLES = {
     item: (active?: boolean) =>

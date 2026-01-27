@@ -1,7 +1,7 @@
 import {AnimatePresence, motion} from 'framer-motion';
 import {Monitor, X} from 'lucide-react';
 import {useEffect, useState} from 'react';
-import {useMobile} from "../../../hooks/useMobile.ts";
+import {useMobile} from "../../../hooks/useMobile";
 
 export const Notice = () => {
     const [isVisible, setIsVisible] = useState(false);

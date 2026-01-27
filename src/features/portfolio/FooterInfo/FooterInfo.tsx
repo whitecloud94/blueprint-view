@@ -8,7 +8,7 @@ const STYLES = {
 export const FooterInfo = () => (
     <div className={STYLES.wrapper}>
         <p className={STYLES.text}>© Made by DAEKYOUNG KIM</p>
-        <p className={STYLES.subText}>Designed by <span className={STYLES.link}>Gemini (Thank you)</span>
+        <p className={STYLES.subText}>Designed by <span className={STYLES.link}>Gemini</span>
         </p>
     </div>
 );

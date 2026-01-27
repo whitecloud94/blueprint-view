@@ -9,7 +9,7 @@ import {
     Smartphone
 } from 'lucide-react';
 import {ProjectItem} from "./ProjectItem.tsx";
-import {Modal} from "../popup/Modal.tsx";
+import {Modal} from "../../../components/common/feedback/Modal.tsx";
 import {useState} from "react";
 import { COMMON_STYLES } from "../../../constants/styles.ts";
 import {AnimatePresence} from "framer-motion";

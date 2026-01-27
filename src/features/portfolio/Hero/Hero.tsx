@@ -1,7 +1,7 @@
 import {Copy, Plus} from 'lucide-react';
 import {useState} from "react";
 import {COMMON_STYLES} from "../../../constants/styles.ts";
-import {LiquidToast} from "../popup/LiquidToast.tsx";
+import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
 
 const STATUS_CONFIG = {
     RUNTIME: {
