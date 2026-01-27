@@ -1,5 +1,5 @@
 import { SiGithub, SiGmail } from "react-icons/si";
-import { COMMON_STYLES } from "../../constants/styles";
+import { COMMON_STYLES } from "../../../constants/styles.ts";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} rounded-[24px] sm:rounded-[28px] p-2 flex flex-col xs:flex-row items-center justify-between px-4 sm:pl-6 sm:pr-3 gap-4 py-4 sm:py-2`,

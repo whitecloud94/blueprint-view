@@ -1,12 +1,12 @@
 import React from 'react';
 import {Navigation} from "./components/Navigation/Navigation.tsx";
-import {Hero} from "./components/Hero/Hero.tsx";
-import {Projects} from "./components/Projects/Projects.tsx";
-import {Skills} from "./components/Skills/Skills.tsx";
-import {FooterCTA} from "./components/FooterCTA/FooterCTA.tsx";
-import {Social} from "./components/Social/Social.tsx";
-import {FooterInfo} from "./components/FooterInfo/FooterInfo.tsx";
-import {Notice} from "./components/popup/Notice.tsx";
+import {Hero} from "./components/portfolio/Hero/Hero.tsx";
+import {Projects} from "./components/portfolio/Projects/Projects.tsx";
+import {Skills} from "./components/portfolio/Skills/Skills.tsx";
+import {FooterCTA} from "./components/portfolio/FooterCTA/FooterCTA.tsx";
+import {Social} from "./components/portfolio/Social/Social.tsx";
+import {FooterInfo} from "./components/portfolio/FooterInfo/FooterInfo.tsx";
+import {Notice} from "./components/portfolio/popup/Notice.tsx";
 
 const STYLES = {
     layout: "min-h-screen bg-[#F3F3F3] text-[#1A1A1A] font-sans py-4 sm:py-8 px-4 flex justify-center items-start selection:bg-gray-200",

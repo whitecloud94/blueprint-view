@@ -18,7 +18,6 @@ const STYLES = {
 };
 
 export const Navigation = () => {
-    // 현재 활성화된 탭 상태 (기본값: Home)
     const [activeTab, setActiveTab] = useState('Home');
 
     const navItems = [
@@ -32,7 +31,6 @@ export const Navigation = () => {
     return (
         <nav className={STYLES.wrapper}>
             <div className={STYLES.container}>
-                {/* 메인 메뉴 아이콘 */}
                 <div className={STYLES.iconGroup}>
                     {navItems.map(({ Icon, label }) => {
                         const isActive = activeTab === label;
@@ -43,7 +41,6 @@ export const Navigation = () => {
                                 className={`${STYLES.navIconButton} ${isActive ? 'text-indigo-600' : 'hover:text-black'}`}
                                 aria-label={label}
                             >
-                                {/* 물방울(Blob) 배경 효과 */}
                                 {isActive && (
                                     <motion.div
                                         layoutId="nav-blob"
@@ -54,7 +51,6 @@ export const Navigation = () => {
                                             damping: 30
                                         }}
                                     >
-                                        {/* 하단 인디고 포인트 점 */}
                                         <motion.div
                                             layoutId="nav-dot"
                                             className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-indigo-600 rounded-full"
@@ -68,7 +64,6 @@ export const Navigation = () => {
                     })}
                 </div>
 
-                {/* 우측 액션 영역 */}
                 <div className={STYLES.actionGroup}>
                     <button className={STYLES.themeButton} aria-label="Toggle Theme">
                         <Moon size={18} className={STYLES.navIcon} />

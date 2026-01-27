@@ -2,7 +2,7 @@ import {X} from "lucide-react";
 import {useEffect} from "react";
 import {createPortal} from "react-dom";
 import {motion} from "framer-motion";
-import {COMMON_STYLES} from "../../constants/styles";
+import {COMMON_STYLES} from "../../../constants/styles.ts";
 
 const MODAL_STYLES = {
     overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-[5px]",

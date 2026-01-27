@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Copy } from 'lucide-react';
-import { COMMON_STYLES } from "../../constants/styles.ts";
+import { COMMON_STYLES } from "../../../constants/styles.ts";
 import { LiquidToast } from "../popup/LiquidToast.tsx";
 
 const STYLES = {

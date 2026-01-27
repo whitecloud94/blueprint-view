@@ -11,7 +11,7 @@ import {
 import {ProjectItem} from "./ProjectItem.tsx";
 import {Modal} from "../popup/Modal.tsx";
 import {useState} from "react";
-import { COMMON_STYLES } from "../../constants/styles";
+import { COMMON_STYLES } from "../../../constants/styles.ts";
 import {AnimatePresence} from "framer-motion";
 
 const STYLES = {

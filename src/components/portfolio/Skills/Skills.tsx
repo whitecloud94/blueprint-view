@@ -1,8 +1,8 @@
 import { ArrowUpRight } from 'lucide-react';
 import { SiOracle, SiReact, SiSpringboot, SiTypescript } from "react-icons/si";
 import { BiLogoJava } from "react-icons/bi";
-import { COMMON_STYLES } from "../../constants/styles";
-import { MarqueeText } from "../common/MarqueeText";
+import { COMMON_STYLES } from "../../../constants/styles.ts";
+import { MarqueeText } from "../../common/MarqueeText.tsx";
 import React from "react";
 
 const STYLES = {
