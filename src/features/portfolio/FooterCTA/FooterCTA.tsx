@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import {Plus, Copy, Smile} from 'lucide-react';
-import { COMMON_STYLES } from "../../../constants/styles.ts";
-import { LiquidToast } from "../../../components/common/feedback/LiquidToast.tsx";
+import {useState} from 'react';
+import {motion, Variants} from 'framer-motion';
+import {Copy, Plus} from 'lucide-react';
+import {COMMON_STYLES} from "../../../constants/styles.ts";
+import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
 
 const STYLES = {
     wrapper: "text-center space-y-6 mb-12 px-2",
@@ -15,10 +15,8 @@ const STYLES = {
 export const FooterCTA = () => {
     const [showToast, setShowToast] = useState(false);
 
-    // 한글로 변환된 문구
-    const text = "제 이력이 마음에 드셨나요? \n 저는 언제나 준비되어 있습니다.";
-
-    const sentenceVariants = {
+    const text = "저의 기술적 여정이 귀사에 가치를 더할 수 있기를 기대합니다."
+    const sentenceVariants: Variants = {
         hidden: { opacity: 1 },
         visible: {
             opacity: 1,
@@ -29,7 +27,7 @@ export const FooterCTA = () => {
         },
     };
 
-    const letterVariants = {
+    const letterVariants: Variants = {
         hidden: {
             opacity: 0,
             y: 8,
