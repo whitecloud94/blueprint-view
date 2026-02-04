@@ -9,6 +9,7 @@ const STATUS_CONFIG = {
         comment: "재직 중",
         description: "2025.01.02 ~",
         dotClass: "bg-indigo-500 animate-pulse",
+        pingClass: "bg-indigo-400",
         badgeClass: "bg-indigo-50 text-indigo-600 border-indigo-100",
     },
     COMPILE: {
@@ -16,6 +17,7 @@ const STATUS_CONFIG = {
         comment: "구직 중",
         description: "새로운 도약을 위해 빌드 중 (Open to Work)",
         dotClass: "bg-emerald-500 animate-bounce",
+        pingClass: "bg-emerald-400",
         badgeClass: "bg-emerald-50 text-emerald-600 border-emerald-100",
     },
     DEBUG: {
@@ -23,6 +25,7 @@ const STATUS_CONFIG = {
         comment: "학습 중",
         description: "기존 로직 개선 및 새로운 기술 스택 학습 중",
         dotClass: "bg-amber-500",
+        pingClass: "bg-amber-400",
         badgeClass: "bg-amber-50 text-amber-600 border-amber-100",
     }
 };
@@ -64,7 +67,6 @@ const STYLES = {
 
 export const Hero = () => {
     // 현재 상태 TODO - (추후 useState 등으로 관리)
-    const status = STATUS_CONFIG.RUNTIME;
     const [isExpanded, setIsExpanded] = useState(false);
     const [showToast, setShowToast] = useState(false);
 
@@ -76,16 +78,7 @@ export const Hero = () => {
         });
     };
 
-    const getPingColor = (code: string) => {
-        switch (code) {
-            case 'RUNTIME':
-                return 'bg-indigo-400';
-            case 'COMPILE':
-                return 'bg-emerald-400';
-            default:
-                return 'bg-amber-400';
-        }
-    };
+    const status = STATUS_CONFIG.RUNTIME;
 
     return (
         <section id="about" className={STYLES.wrapper}>
@@ -151,7 +144,7 @@ export const Hero = () => {
                                 onClick={() => setIsExpanded(!isExpanded)}
                             >
                                 <div className={STYLES.statusIndicator}>
-                                    <div className={`${STYLES.statusPing} ${getPingColor(status.code)}`}/>
+                                    <div className={`${STYLES.statusPing} ${status.pingClass}`}/>
                                     <div className={`${STYLES.statusDot} ${status.dotClass}`}/>
                                 </div>
 

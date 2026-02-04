@@ -1,7 +1,7 @@
 import {ChevronRight} from "lucide-react";
-import {ReactNode} from "react";
 import { COMMON_STYLES } from "../../../constants/styles.ts";
 import { MarqueeText } from "../../../components/common/MarqueeText.tsx";
+import {ProjectItemProps} from "../../../types";
 
 const STYLES = {
     item: (active?: boolean) =>
@@ -27,17 +27,6 @@ const STYLES = {
     title: "text-[14px] sm:text-[16px] font-bold text-gray-900",
     subTitle: "text-[12px] sm:text-[14px] text-gray-500 font-medium",
 };
-
-export interface ProjectItemProps {
-    title: string;
-    sub: string;
-    icon: ReactNode;
-    bg: string;
-    active?: boolean;
-    onClick?: () => void;
-    className?: string;
-    rightIcon?: ReactNode;
-}
 
 export const ProjectItem = ({
                                 title,

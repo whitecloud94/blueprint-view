@@ -41,7 +41,7 @@
 }
 
 html, body {
-    overflow-x: hidden;
+    /* overflow-x: hidden; 제거: sticky 동작 방해 원인 */
 }
 
 html {

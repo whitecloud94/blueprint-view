@@ -1,11 +1,12 @@
 import {useMemo} from 'react'; // useMemo 추가
 import {useLocation, useNavigate} from 'react-router-dom'; // 라우터 훅 추가
 import {motion} from 'framer-motion';
-import {BookOpen, Briefcase, Home, Moon, Plus, ShoppingBag, User} from "lucide-react";
+import {Moon, Plus} from "lucide-react";
 import {COMMON_STYLES} from "../../constants/styles";
+import {NAV_ITEMS} from "../../data";
 
 const STYLES = {
-    wrapper: `transition-all duration-500`,
+    wrapper: `w-full transition-all duration-500`,
     container: `${COMMON_STYLES.glassMuted} rounded-[24px] p-2 pl-4 sm:pl-6 pr-2 flex justify-between items-center relative`,
     iconGroup: `flex gap-4 sm:gap-6 text-gray-400 relative z-10`,
     navIconButton: `relative px-1 py-2 transition-all duration-300 active:scale-95 flex items-center justify-center`,
@@ -24,15 +25,6 @@ export const Navigation = () => {
     const navigate = useNavigate(); // 페이지 이동 함수
     const location = useLocation(); // 현재 URL 정보
 
-    // 메뉴 아이템에 'path' 속성 추가
-    const navItems = useMemo(() => [
-        {Icon: Home, label: 'Home', path: '/'},
-        {Icon: User, label: 'About', path: '/#about'}, // 해시 링크 예시
-        {Icon: Briefcase, label: 'Projects', path: '/#projects'},
-        {Icon: BookOpen, label: 'Blog', path: '/blog'}, // 블로그 경로
-        {Icon: ShoppingBag, label: 'Products', path: '/#products'}
-    ], []);
-
     // 현재 URL(location.pathname)에 따라 활성화될 탭 자동 결정
     const activeTab = useMemo(() => {
         const currentPath = location.pathname;
@@ -44,9 +36,21 @@ export const Navigation = () => {
 
         // 2. 그 외의 경우 (나중에 해시 링크 로직 등을 정교화 할 수 있음)
         // 현재는 단순하게 path가 일치하는지 확인
-        const found = navItems.find(item => item.path === currentPath);
+        const found = NAV_ITEMS.find(item => item.path === currentPath);
         return found ? found.label : 'Home';
-    }, [location.pathname, navItems]);
+    }, [location.pathname]);
+
+    const scrollToElement = (targetId: string) => {
+        const element = document.getElementById(targetId);
+        if (element) {
+            const navOffset = 100; // 네비게이션 높이 고려
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({
+                top: elementPosition - navOffset,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     const handleNavClick = (path: string) => {
         if (path.startsWith('/#')) {
@@ -55,12 +59,9 @@ export const Navigation = () => {
                 navigate('/');
                 // 메인 페이지 이동 후 해당 아이디로 스크롤 하기 위해 약간의 지연시간 부여
                 // (페이지 전환 애니메이션 시간을 고려)
-                setTimeout(() => {
-                    const element = document.getElementById(targetId);
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                }, 500);
+                setTimeout(() => scrollToElement(targetId), 500);
             } else {
-                document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                scrollToElement(targetId);
             }
         } else {
             navigate(path);
@@ -68,10 +69,10 @@ export const Navigation = () => {
     };
 
     return (
-        <nav className={STYLES.wrapper}>
+        <nav className={`${STYLES.wrapper} sticky top-0`}>
             <div className={STYLES.container}>
                 <div className={STYLES.iconGroup}>
-                    {navItems.map(({Icon, label, path}) => {
+                    {NAV_ITEMS.map(({Icon, label, path}) => {
                         const isActive = activeTab === label;
                         return (
                             <button

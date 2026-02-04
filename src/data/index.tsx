@@ -1,13 +1,25 @@
 import {
+    BookOpen,
     Briefcase,
     CarFront,
     FileText,
+    Home,
     Leaf,
     LineChart,
     ShieldCheck,
-    Smartphone
+    ShoppingBag,
+    Smartphone,
+    User
 } from 'lucide-react';
 import { Project, BlogPost } from "../types";
+
+export const NAV_ITEMS = [
+    {Icon: Home, label: 'Home', path: '/'},
+    {Icon: User, label: 'About', path: '/#about'},
+    {Icon: Briefcase, label: 'Projects', path: '/#projects'},
+    {Icon: BookOpen, label: 'Blog', path: '/blog'},
+    {Icon: ShoppingBag, label: 'Products', path: '/#products'}
+];
 
 export const PROJECTS: Project[] = [
     {

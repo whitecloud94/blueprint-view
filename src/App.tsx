@@ -13,13 +13,13 @@ import {PageTransition} from "./components/layout/PageTransition.tsx";
 import {SharedLayout} from "./components/layout/SharedLayout.tsx";
 
 const STYLES = {
-    main: "w-full max-w-[640px] bg-white rounded-[32px] sm:rounded-[40px] px-5 sm:px-8 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white mt-0 mx-4",
+    main: "w-full max-w-[640px] bg-white rounded-[32px] sm:rounded-[40px] px-5 sm:px-8 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white mt-0",
 };
 
 const Portfolio: React.FC = () => {
     return (
-        <SharedLayout className="bg-[#F3F3F3] selection:bg-gray-200">
-            <PageTransition direction="left">
+        <PageTransition direction="left">
+            <div className="w-full flex justify-center">
                 <main className={STYLES.main}>
                     <Notice/>
                     <Hero/>
@@ -29,8 +29,8 @@ const Portfolio: React.FC = () => {
                     <Social/>
                     <FooterInfo/>
                 </main>
-            </PageTransition>
-        </SharedLayout>
+            </div>
+        </PageTransition>
     );
 };
 
@@ -50,7 +50,9 @@ const AnimatedRoutes = () => {
 const App: React.FC = () => {
     return (
         <Router>
-            <AnimatedRoutes />
+            <SharedLayout>
+                <AnimatedRoutes />
+            </SharedLayout>
         </Router>
     );
 };

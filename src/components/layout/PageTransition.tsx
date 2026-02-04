@@ -29,7 +29,7 @@ export const PageTransition = ({ children, direction = 'none' }: PageTransitionP
             exit="exit"
             variants={variants}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full flex flex-col items-center"
+            className="w-full"
         >
             {children}
         </motion.div>

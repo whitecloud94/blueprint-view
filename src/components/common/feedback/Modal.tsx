@@ -4,6 +4,7 @@ import {createPortal} from "react-dom";
 import {motion} from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {COMMON_STYLES} from "../../../constants/styles.ts";
+import {Project} from "../../../types";
 
 const MODAL_STYLES = {
     overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-[5px]",
@@ -56,7 +57,7 @@ const MODAL_STYLES = {
 };
 
 interface ModalProps {
-    project: any;
+    project: Project;
     onClose: () => void;
 }
 

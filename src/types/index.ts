@@ -22,3 +22,14 @@ export interface BlogPost {
     tags: string[];
     relatedProjectId?: number;
 }
+
+export interface ProjectItemProps {
+    title: string;
+    sub: string;
+    icon: ReactNode;
+    bg: string;
+    active?: boolean;
+    onClick?: () => void;
+    className?: string;
+    rightIcon?: ReactNode;
+}
