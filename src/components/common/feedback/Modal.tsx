@@ -1,7 +1,8 @@
-import {X} from "lucide-react";
+import {ExternalLink, X} from "lucide-react";
 import {useEffect} from "react";
 import {createPortal} from "react-dom";
 import {motion} from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {COMMON_STYLES} from "../../../constants/styles.ts";
 
 const MODAL_STYLES = {
@@ -60,7 +61,13 @@ interface ModalProps {
 }
 
 export const Modal = ({project, onClose}: ModalProps) => {
+    const navigate = useNavigate();
     if (!project) return null;
+
+    const handleBlogLink = () => {
+        onClose();
+        navigate(`/blog?post=${project.blogId}`);
+    };
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -186,6 +193,29 @@ export const Modal = ({project, onClose}: ModalProps) => {
                             ))}
                         </div>
                     </section>
+
+                    {/* 4. Related Blog Post (Conditional) */}
+                    {project.blogId && (
+                        <section>
+                            <button 
+                                onClick={handleBlogLink}
+                                className="w-full p-6 rounded-[24px] bg-indigo-600/10 border border-indigo-200/50 flex items-center justify-between group hover:bg-indigo-600 transition-all duration-300"
+                            >
+                                <div className="flex items-center gap-4 text-left">
+                                    <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-indigo-600 group-hover:text-white transition-colors">
+                                        <ExternalLink size={24} />
+                                    </div>
+                                    <div>
+                                        <p className="text-[11px] font-black text-indigo-600/60 group-hover:text-white/60 uppercase tracking-widest mb-0.5">Related Story</p>
+                                        <h4 className="text-[16px] font-bold text-indigo-900 group-hover:text-white transition-colors">이 프로젝트의 개발 비하인드 읽어보기</h4>
+                                    </div>
+                                </div>
+                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-indigo-600 group-hover:text-white group-hover:translate-x-1 transition-all">
+                                    <ExternalLink size={18} />
+                                </div>
+                            </button>
+                        </section>
+                    )}
                 </div>
             </motion.div>
         </motion.div>,

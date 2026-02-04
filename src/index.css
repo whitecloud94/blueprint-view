@@ -40,6 +40,10 @@
     scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 html {
     scroll-behavior: smooth;
 }

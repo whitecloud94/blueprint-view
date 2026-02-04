@@ -26,3 +26,30 @@ export const COMMON_STYLES = {
     // Interactive
     iconButton: "w-9 h-9 sm:w-10 sm:h-10 bg-white/70 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 border border-white/60 transition-all duration-300 hover:shadow-lg hover:scale-110 active:scale-95",
 };
+
+export const GLASS_STYLES = {
+    // 기본 배경 (밝은 그레이)
+    background: "bg-[#F3F3F3]",
+
+    // 유리 카드 (기본)
+    card: `
+        bg-white/40 backdrop-blur-xl 
+        border border-white/60 
+        shadow-[0_8px_30px_rgba(0,0,0,0.04)] 
+        rounded-[24px]
+    `,
+
+    // 유리 카드 (강조/호버 시)
+    cardHover: `
+        hover:bg-white/60 hover:shadow-[0_8px_30px_rgba(79,70,229,0.08)] 
+        hover:-translate-y-1 transition-all duration-300
+    `,
+
+    // 텍스트 스타일
+    heading: "text-gray-900 font-bold tracking-tight",
+    subtext: "text-gray-500 font-medium",
+
+    // 포인트 컬러
+    accent: "text-indigo-600",
+    accentBg: "bg-indigo-50",
+};

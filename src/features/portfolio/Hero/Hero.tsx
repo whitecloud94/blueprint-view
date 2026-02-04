@@ -69,9 +69,10 @@ export const Hero = () => {
     const [showToast, setShowToast] = useState(false);
 
     const handleCopyEmail = () => {
+        if (showToast) return; // 이미 토스트가 떠있으면 중복 방지
         navigator.clipboard.writeText('ajemfld1@gmail.com').then(() => {
             setShowToast(true);
-            setTimeout(() => setShowToast(false), 2500); // 2.5초 후 자동 소멸
+            setTimeout(() => setShowToast(false), 2500); 
         });
     };
 
@@ -87,7 +88,7 @@ export const Hero = () => {
     };
 
     return (
-        <section className={STYLES.wrapper}>
+        <section id="about" className={STYLES.wrapper}>
             <div className={STYLES.sectionHeader}>
                 <div className={STYLES.sectionTitle}>
                     <div className={STYLES.dot}/>

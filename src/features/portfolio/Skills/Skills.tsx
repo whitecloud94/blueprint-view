@@ -40,21 +40,23 @@ const SkillItem = ({ name, tag, icon }: SkillItemProps) => (
     </div>
 );
 
+const SKILLS = [
+    { name: 'Spring boot - Batch', tag: 'Job Optimization', icon: <SiSpringboot className="text-[#6DB33F]" /> },
+    { name: 'Spring boot - MVC', tag: 'Robust Architecture', icon: <SiSpringboot className="text-[#6DB33F]" /> },
+    { name: 'Oracle', tag: 'ACID', icon: <SiOracle className="text-[#F80000]" /> },
+    { name: 'React', tag: 'Component', icon: <SiReact className="text-[#61DAFB]" /> },
+    { name: 'TypeScript', tag: 'Type Safety', icon: <SiTypescript className="text-[#3178C6]" /> },
+    { name: 'Java', tag: 'LTS Support', icon: <BiLogoJava className="text-[#007396]" /> },
+    { name: 'Etc', tag: 'Keep learning🔥', icon: '📖' },
+];
+
 export const Skills = () => (
-    <section className={`${STYLES.wrapper} mb-12 sm:mb-16`}>
+    <section id="products" className={`${STYLES.wrapper} mb-12 sm:mb-16`}>
         <div className={STYLES.header}>
             <div className={STYLES.dot} />
             My available skills
         </div>
-        {[
-            { name: 'Spring boot - Batch', tag: 'Job Optimization', icon: <SiSpringboot className="text-[#6DB33F]" /> },
-            { name: 'Spring boot - MVC', tag: 'Robust Architecture', icon: <SiSpringboot className="text-[#6DB33F]" /> },
-            { name: 'Oracle', tag: 'ACID', icon: <SiOracle className="text-[#F80000]" /> },
-            { name: 'React', tag: 'Component', icon: <SiReact className="text-[#61DAFB]" /> },
-            { name: 'TypeScript', tag: 'Type Safety', icon: <SiTypescript className="text-[#3178C6]" /> },
-            { name: 'Java', tag: 'LTS Support', icon: <BiLogoJava className="text-[#007396]" /> },
-            { name: 'Etc', tag: 'Keep learning🔥', icon: '📖' },
-        ].map((prod, j) => (
+        {SKILLS.map((prod, j) => (
             <SkillItem key={j} name={prod.name} tag={prod.tag} icon={prod.icon} />
         ))}
     </section>
