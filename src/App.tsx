@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes, useLocation} from 'react-router-dom';
-import {Navigation} from "./components/layout/Navigation.tsx";
 import {Hero} from "./features/portfolio/Hero/Hero.tsx";
 import {Projects} from "./features/portfolio/Projects/Projects.tsx";
 import {Skills} from "./features/portfolio/Skills/Skills.tsx";
@@ -14,27 +13,24 @@ import {PageTransition} from "./components/layout/PageTransition.tsx";
 import {SharedLayout} from "./components/layout/SharedLayout.tsx";
 
 const STYLES = {
-    container: "w-full max-w-[640px] space-y-6",
-    main: "bg-white rounded-[32px] sm:rounded-[40px] px-5 sm:px-8 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white mt-6",
+    main: "w-full max-w-[640px] bg-white rounded-[32px] sm:rounded-[40px] px-5 sm:px-8 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white mt-0 mx-4",
 };
 
 const Portfolio: React.FC = () => {
     return (
-        <PageTransition direction="left">
-            <SharedLayout className="bg-[#F3F3F3] selection:bg-gray-200">
-                <div className={STYLES.container}>
-                    <main className={STYLES.main}>
-                        <Notice/>
-                        <Hero/>
-                        <Projects/>
-                        <Skills/>
-                        <FooterCTA/>
-                        <Social/>
-                        <FooterInfo/>
-                    </main>
-                </div>
-            </SharedLayout>
-        </PageTransition>
+        <SharedLayout className="bg-[#F3F3F3] selection:bg-gray-200">
+            <PageTransition direction="left">
+                <main className={STYLES.main}>
+                    <Notice/>
+                    <Hero/>
+                    <Projects/>
+                    <Skills/>
+                    <FooterCTA/>
+                    <Social/>
+                    <FooterInfo/>
+                </main>
+            </PageTransition>
+        </SharedLayout>
     );
 };
 

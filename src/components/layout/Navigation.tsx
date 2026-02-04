@@ -5,7 +5,7 @@ import {BookOpen, Briefcase, Home, Moon, Plus, ShoppingBag, User} from "lucide-r
 import {COMMON_STYLES} from "../../constants/styles";
 
 const STYLES = {
-    wrapper: `sticky top-4 sm:top-6 z-50 transition-all duration-500`,
+    wrapper: `transition-all duration-500`,
     container: `${COMMON_STYLES.glassMuted} rounded-[24px] p-2 pl-4 sm:pl-6 pr-2 flex justify-between items-center relative`,
     iconGroup: `flex gap-4 sm:gap-6 text-gray-400 relative z-10`,
     navIconButton: `relative px-1 py-2 transition-all duration-300 active:scale-95 flex items-center justify-center`,

@@ -6,10 +6,10 @@ import {PageTransition} from "../components/layout/PageTransition.tsx";
 
 export const BlogLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <PageTransition direction="right">
-            <SharedLayout className={GLASS_STYLES.background}>
+        <SharedLayout className={GLASS_STYLES.background} maxWidth="max-w-[1100px]">
+            <PageTransition direction="right">
                 {/* Main Grid Layout */}
-                <div className="max-w-[1100px] w-full mx-auto px-4 sm:px-6 py-12 flex gap-8">
+                <div className="max-w-[1100px] w-full flex gap-8 px-4 sm:px-6 py-12">
 
                     {/* Left Sidebar (Desktop Only) */}
                     <div className="hidden lg:block w-64 shrink-0">
@@ -21,7 +21,7 @@ export const BlogLayout = ({ children }: { children: ReactNode }) => {
                         {children}
                     </main>
                 </div>
-            </SharedLayout>
-        </PageTransition>
+            </PageTransition>
+        </SharedLayout>
     );
 };
