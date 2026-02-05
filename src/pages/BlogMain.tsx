@@ -2,11 +2,16 @@
 import {PostCard} from '../components/blog/PostCard';
 import {BlogLayout} from "./BlogLayout.tsx";
 import {MOCK_POSTS} from "../data";
+import {motion} from 'framer-motion';
+import {Pencil} from 'lucide-react';
+import {useNavigate} from 'react-router-dom';
+import {COMMON_STYLES} from '../constants/styles';
 
 export default function BlogMain() {
+    const navigate = useNavigate();
     return (
         <BlogLayout>
-            <div className="space-y-6">
+            <div className="space-y-6 relative">
                 {/* 헤더 영역 (선택사항) */}
                 <div className="mb-8 ml-2">
                     <h1 className="text-3xl font-black text-gray-900 mb-2">Latest Posts</h1>
@@ -20,6 +25,18 @@ export default function BlogMain() {
                         {...post}
                     />
                 ))}
+
+                {/* 플로팅 액션 버튼 (FAB) */}
+                <motion.button
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    whileHover={{ scale: 1.1, y: -5 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => navigate('/blog/write')}
+                    className={`fixed bottom-8 right-8 w-16 h-16 ${COMMON_STYLES.primaryButton} rounded-2xl shadow-2xl shadow-indigo-200 z-50`}
+                >
+                    <Pencil size={24} />
+                </motion.button>
             </div>
         </BlogLayout>
     );

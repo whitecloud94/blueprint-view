@@ -8,6 +8,7 @@ import {Social} from "./features/portfolio/Social/Social.tsx";
 import {FooterInfo} from "./features/portfolio/FooterInfo/FooterInfo.tsx";
 import {Notice} from "./components/common/feedback/Notice.tsx";
 import BlogMain from "./pages/BlogMain.tsx";
+import BlogEditor from "./pages/BlogEditor.tsx";
 import {AnimatePresence} from "framer-motion";
 import {PageTransition} from "./components/layout/PageTransition.tsx";
 import {SharedLayout} from "./components/layout/SharedLayout.tsx";
@@ -42,6 +43,7 @@ const AnimatedRoutes = () => {
             <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Portfolio/>}/>
                 <Route path="/blog" element={<BlogMain/>}/>
+                <Route path="/blog/write" element={<BlogEditor/>}/>
             </Routes>
         </AnimatePresence>
     );
