@@ -18,7 +18,7 @@
 /* 3. 스크롤바 핸들 (움직이는 막대) */
 ::-webkit-scrollbar-thumb {
     /* 네비바와 통일감을 주는 반투명 화이트/그레이 */
-    background-color: rgba(0, 0, 0, 1.8);
+    background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(8px); /* 핸들 자체에도 블러 효과 (일부 브라우저) */
 
     /* 둥근 모서리 */
@@ -31,7 +31,18 @@
 
 /* 4. 마우스를 올렸을 때 (Hover) */
 ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* 커스텀 스크롤바 클래스 (에디터/프리뷰용) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 /* 파이어폭스를 위한 설정 */
