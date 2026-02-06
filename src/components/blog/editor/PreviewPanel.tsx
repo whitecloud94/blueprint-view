@@ -15,7 +15,7 @@ interface PreviewPaneProps {
   showLiveBadge?: boolean;
 }
 
-const PreviewPane = ({
+const PreviewPanel = ({
   title,
   content,
   tags,
@@ -94,4 +94,4 @@ const PreviewPane = ({
   );
 };
 
-export default React.memo(PreviewPane);
+export default React.memo(PreviewPanel);

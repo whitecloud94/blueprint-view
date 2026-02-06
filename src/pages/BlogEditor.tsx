@@ -8,8 +8,8 @@ import {
 } from 'lucide-react';
 import {useNavigate} from 'react-router-dom';
 import {GLASS_STYLES, COMMON_STYLES} from '../constants/styles';
-import EditorPane from '../components/blog/editor/EditorPane';
-import PreviewPane from '../components/blog/editor/PreviewPane';
+import EditorPane from '../components/blog/editor/EditorPanel.tsx';
+import PreviewPane from '../components/blog/editor/PreviewPanel.tsx';
 
 const DRAFT_KEY = 'blog-draft';
 

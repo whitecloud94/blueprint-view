@@ -17,7 +17,7 @@ interface EditorPaneProps {
   isCompact?: boolean;
 }
 
-const EditorPane = ({
+const EditorPanel = ({
   title,
   setTitle,
   content,
@@ -128,4 +128,4 @@ const EditorPane = ({
   );
 };
 
-export default React.memo(EditorPane);
+export default React.memo(EditorPanel);
