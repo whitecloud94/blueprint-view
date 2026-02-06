@@ -1,15 +1,10 @@
-import {useState, useEffect, useCallback, useDeferredValue} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
-import {
-    Save,
-    Eye,
-    Edit3,
-    ArrowLeft,
-} from 'lucide-react';
+import {useCallback, useDeferredValue, useEffect, useState} from 'react';
+import {AnimatePresence, motion} from 'framer-motion';
+import {ArrowLeft, Edit3, Eye, Save,} from 'lucide-react';
 import {useNavigate} from 'react-router-dom';
-import {GLASS_STYLES, COMMON_STYLES} from '../constants/styles';
-import EditorPane from '../components/blog/editor/EditorPanel.tsx';
-import PreviewPane from '../components/blog/editor/PreviewPanel.tsx';
+import {COMMON_STYLES, GLASS_STYLES} from '../constants/styles';
+import EditorPanel from '../components/blog/editor/EditorPanel.tsx';
+import PreviewPanel from '../components/blog/editor/PreviewPanel.tsx';
 
 const DRAFT_KEY = 'blog-draft';
 
@@ -130,7 +125,7 @@ export default function BlogEditor() {
                             exit={{opacity: 0}}
                             className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[calc(100vh-140px)]"
                         >
-                            <EditorPane
+                            <EditorPanel
                                 title={title}
                                 setTitle={setTitle}
                                 content={content}
@@ -144,7 +139,7 @@ export default function BlogEditor() {
                                 className={`${GLASS_STYLES.card} bg-white/70`}
                                 isCompact
                             />
-                            <PreviewPane
+                            <PreviewPanel
                                 title={deferredTitle}
                                 content={deferredContent}
                                 tags={tags}
@@ -161,7 +156,7 @@ export default function BlogEditor() {
                             exit={{opacity: 0, y: -10}}
                             className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
                         >
-                            <EditorPane
+                            <EditorPanel
                                 title={title}
                                 setTitle={setTitle}
                                 content={content}
@@ -183,7 +178,7 @@ export default function BlogEditor() {
                             exit={{opacity: 0, y: -10}}
                             className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
                         >
-                            <PreviewPane
+                            <PreviewPanel
                                 title={deferredTitle}
                                 content={deferredContent}
                                 tags={tags}
