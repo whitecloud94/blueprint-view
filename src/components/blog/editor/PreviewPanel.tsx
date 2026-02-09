@@ -5,24 +5,19 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Link as LinkIcon } from 'lucide-react';
 import { PROJECTS } from '../../../data';
+import { useBlogStore } from '../../../store/useBlogStore';
 
 interface PreviewPaneProps {
-  title: string;
-  content: string;
-  tags: string[];
-  relatedProjectId: number | null;
   className?: string;
   showLiveBadge?: boolean;
 }
 
 const PreviewPanel = ({
-  title,
-  content,
-  tags,
-  relatedProjectId,
   className = '',
   showLiveBadge = false,
 }: PreviewPaneProps) => {
+  const { formData } = useBlogStore();
+  const { title, content, tags, relatedProjectId } = formData;
   return (
     <div className={`flex flex-col overflow-hidden ${className}`}>
       {showLiveBadge && (

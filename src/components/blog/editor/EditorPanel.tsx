@@ -1,36 +1,36 @@
 import React from 'react';
 import { Tag as TagIcon, X, Link as LinkIcon, ChevronDown } from 'lucide-react';
 import { PROJECTS } from '../../../data';
+import { useBlogStore } from '../../../store/useBlogStore';
 
 interface EditorPaneProps {
-  title: string;
-  setTitle: (title: string) => void;
-  content: string;
-  setContent: (content: string) => void;
-  tags: string[];
-  setTags: (tags: string[]) => void;
-  currentTag: string;
-  setCurrentTag: (tag: string) => void;
-  relatedProjectId: number | null;
-  setRelatedProjectId: (id: number | null) => void;
   className?: string;
   isCompact?: boolean;
 }
 
 const EditorPanel = ({
-  title,
-  setTitle,
-  content,
-  setContent,
-  tags,
-  setTags,
-  currentTag,
-  setCurrentTag,
-  relatedProjectId,
-  setRelatedProjectId,
   className = '',
   isCompact = false,
 }: EditorPaneProps) => {
+  const { formData, currentTag, setFormData, setCurrentTag, addTag, removeTag } = useBlogStore();
+  const { title, content, tags, relatedProjectId } = formData;
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ title: e.target.value });
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData({ content: e.target.value });
+  };
+
+  const handleProjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData({ relatedProjectId: Number(e.target.value) || null });
+  };
+
+  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentTag(e.target.value);
+  };
+
   const handleAddTag = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && currentTag.trim()) {
       const next = currentTag.trim();
@@ -43,15 +43,13 @@ const EditorPanel = ({
         alert('태그는 최대 10개까지 추가할 수 있습니다.');
         return;
       }
-      if (!tags.includes(next)) {
-        setTags([...tags, next]);
-      }
+      addTag(next);
       setCurrentTag('');
     }
   };
 
-  const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((t) => t !== tagToRemove));
+  const removeTagHandler = (tagToRemove: string) => {
+    removeTag(tagToRemove);
   };
 
   return (
@@ -61,7 +59,7 @@ const EditorPanel = ({
           type="text"
           placeholder="Enter post title..."
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleTitleChange}
           className={`w-full ${
             isCompact ? 'text-2xl' : 'text-4xl'
           } font-black bg-transparent border-none outline-none placeholder:text-gray-300 text-gray-900`}
@@ -74,7 +72,7 @@ const EditorPanel = ({
               <LinkIcon size={14} />
               <select
                 value={relatedProjectId || ''}
-                onChange={(e) => setRelatedProjectId(Number(e.target.value) || null)}
+                onChange={handleProjectChange}
                 className="bg-transparent outline-none cursor-pointer appearance-none pr-6"
               >
                 <option value="">No Related Project</option>
@@ -96,7 +94,7 @@ const EditorPanel = ({
                 type="text"
                 placeholder="Add tag..."
                 value={currentTag}
-                onChange={(e) => setCurrentTag(e.target.value)}
+                onChange={handleTagInputChange}
                 onKeyDown={handleAddTag}
                 className="bg-transparent outline-none text-sm font-bold w-20 placeholder:text-indigo-300"
               />
@@ -107,7 +105,7 @@ const EditorPanel = ({
                 className="flex items-center gap-1 bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-sm font-bold text-gray-600 shadow-sm"
               >
                 #{tag}
-                <button onClick={() => removeTag(tag)} className="hover:text-red-500">
+                <button onClick={() => removeTagHandler(tag)} className="hover:text-red-500">
                   <X size={12} />
                 </button>
               </span>
@@ -120,7 +118,7 @@ const EditorPanel = ({
         <textarea
           placeholder="Write your story using Markdown..."
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={handleContentChange}
           className="w-full h-full bg-transparent border-none outline-none resize-none text-lg leading-relaxed text-gray-700 placeholder:text-gray-300 min-h-[400px] font-mono"
         />
       </div>

@@ -103,6 +103,37 @@ export const MOCK_POSTS: BlogPost[] = [
         id: 1,
         title: "Building a Liquid Glass UI with React & Tailwind",
         excerpt: "현대적인 웹 디자인 트렌드인 리퀴드 글래스(Liquid Glass) 효과를 Tailwind CSS와 Framer Motion을 사용하여 구현하는 방법을 상세하게 알아봅니다.",
+        content: `
+# Building a Liquid Glass UI with React & Tailwind
+
+현대적인 웹 디자인 트렌드인 **리퀴드 글래스(Liquid Glass)** 효과를 Tailwind CSS와 Framer Motion을 사용하여 구현하는 방법을 상세하게 알아봅니다.
+
+## 리퀴드 글래스란?
+리퀴드 글래스는 기존의 글래스모피즘(Glassmorphism)에서 한 단계 더 나아가, 유동적이고 부드러운 애니메이션과 더 깊이 있는 블러 효과를 결합한 디자인 스타일입니다.
+
+### 주요 특징
+- **Backdrop Blur**: 배경을 흐릿하게 처리하여 전경의 가독성을 높입니다.
+- **Subtle Gradients**: 부드러운 그라데이션을 사용하여 입체감을 부여합니다.
+- **Glass Reflections**: 빛의 반사를 표현하는 미세한 테두리와 하이라이트를 추가합니다.
+
+\`\`\`tsx
+const GlassCard = ({ children }) => {
+  return (
+    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
+      {children}
+    </div>
+  );
+};
+\`\`\`
+
+## 구현 방법
+Tailwind CSS의 \`backdrop-blur\` 유틸리티 클래스를 사용하면 손쉽게 기본 효과를 낼 수 있습니다.
+
+1. **배경 설정**: 어두운 배경이나 패턴이 있는 배경이 효과적입니다.
+2. **반투명 레이어**: \`bg-white/10\`과 같은 반투명 배경색을 적용합니다.
+3. **블러 효과**: \`backdrop-blur-md\` 또는 \`backdrop-blur-xl\`을 사용합니다.
+4. **테두리 디테일**: \`border border-white/20\`으로 유리 조각의 끝부분을 표현합니다.
+        `,
         date: "2026.01.26",
         readTime: "5 min read",
         tags: ["React", "Design System", "Tailwind"],
@@ -112,6 +143,35 @@ export const MOCK_POSTS: BlogPost[] = [
         id: 2,
         title: "Spring Boot Transaction Management",
         excerpt: "금융권 프로젝트에서 경험한 트랜잭션 격리 수준과 전파 속성에 대한 심층 분석. 데이터 정합성을 지키기 위한 고군분투기.",
+        content: `
+# Spring Boot Transaction Management
+
+금융권 프로젝트에서 경험한 트랜잭션 격리 수준과 전파 속성에 대한 심층 분석. 데이터 정합성을 지키기 위한 고군분투기.
+
+## 트랜잭션의 ACID 원칙
+금융 시스템에서 데이터 정합성은 무엇보다 중요합니다.
+
+- **Atomicity (원자성)**: 트랜잭션 내의 모든 작업은 완벽히 수행되거나 전혀 수행되지 않아야 합니다.
+- **Consistency (일관성)**: 트랜잭션 완료 후 시스템은 일관된 상태를 유지해야 합니다.
+- **Isolation (격리성)**: 동시에 실행되는 트랜잭션들이 서로 영향을 주지 않아야 합니다.
+- **Durability (지속성)**: 성공한 트랜잭션 결과는 영구적으로 반영되어야 합니다.
+
+## @Transactional 설정
+Spring Boot에서는 어노테이션 기반으로 간편하게 트랜잭션을 관리할 수 있습니다.
+
+\`\`\`java
+@Service
+public class TransferService {
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+    public void transferMoney(Long from, Long to, BigDecimal amount) {
+        // 이체 로직
+    }
+}
+\`\`\`
+
+### 격리 수준 (Isolation Level)
+금융 시스템에서는 보통 \`READ_COMMITTED\`를 기본으로 사용하며, 특정 통계나 마감 작업 시 \`SERIALIZABLE\`을 고려하기도 합니다.
+        `,
         date: "2026.01.20",
         readTime: "12 min read",
         tags: ["Spring Boot", "Database", "Backend"]

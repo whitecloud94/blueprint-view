@@ -4,6 +4,7 @@ import {GLASS_STYLES} from '../../constants/styles';
 import {useNavigate} from "react-router-dom";
 
 interface PostProps {
+    id: number;
     title: string;
     excerpt: string;
     date: string;
@@ -12,7 +13,7 @@ interface PostProps {
     relatedProjectId?: number;
 }
 
-export const PostCard = ({title, excerpt, date, readTime, tags, relatedProjectId}: PostProps) => {
+export const PostCard = ({id, title, excerpt, date, readTime, tags, relatedProjectId}: PostProps) => {
     const navigate = useNavigate();
 
     const handleProjectClick = (e: React.MouseEvent) => {
@@ -20,8 +21,13 @@ export const PostCard = ({title, excerpt, date, readTime, tags, relatedProjectId
         navigate(`/#projects`);
     };
 
+    const handleCardClick = () => {
+        navigate(`/blog/${id}`);
+    };
+
     return (
         <article
+            onClick={handleCardClick}
             className={`${GLASS_STYLES.card} ${GLASS_STYLES.cardHover} p-6 sm:p-8 group cursor-pointer relative overflow-hidden`}>
             {/* 관련 프로젝트 배지 (있을 경우) */}
             {relatedProjectId && (

@@ -1,60 +1,69 @@
-import {useCallback, useDeferredValue, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import {ArrowLeft, Edit3, Eye, Save,} from 'lucide-react';
 import {useNavigate} from 'react-router-dom';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {COMMON_STYLES, GLASS_STYLES} from '../constants/styles';
 import EditorPanel from '../components/blog/editor/EditorPanel.tsx';
 import PreviewPanel from '../components/blog/editor/PreviewPanel.tsx';
+import {useBlogStore} from '../store/useBlogStore';
+import {blogPostSchema, BlogPostData} from '../schemas/blog';
 
 const DRAFT_KEY = 'blog-draft';
 
 export default function BlogEditor() {
     const navigate = useNavigate();
-    const [mode, setMode] = useState<'edit' | 'preview' | 'split'>('split');
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [tags, setTags] = useState<string[]>([]);
-    const [currentTag, setCurrentTag] = useState('');
-    const [relatedProjectId, setRelatedProjectId] = useState<number | null>(null);
+    const { formData, setFormData, reset } = useBlogStore();
+    
+    const {
+        handleSubmit,
+        formState: { errors },
+    } = useForm<BlogPostData>({
+        resolver: zodResolver(blogPostSchema),
+        values: formData,
+    });
 
-    // 성능 최적화: Preview 업데이트 지연
-    const deferredTitle = useDeferredValue(title);
-    const deferredContent = useDeferredValue(content);
+    const [mode, setMode] = useState<'edit' | 'preview' | 'split'>('split');
 
     // 로컬 스토리지에서 자동 저장된 내용 불러오기
     useEffect(() => {
         const saved = localStorage.getItem(DRAFT_KEY);
         if (saved) {
             try {
-                const {title, content, tags, relatedProjectId} = JSON.parse(saved);
-                setTitle(title || '');
-                setContent(content || '');
-                setTags(tags || []);
-                setRelatedProjectId(relatedProjectId || null);
+                const draft = JSON.parse(saved);
+                setFormData(draft);
             } catch (e) {
                 console.error('Failed to parse saved draft', e);
             }
         }
-    }, []);
+    }, [setFormData]);
 
     // 자동 저장 (데이터 변경 시, 디바운스)
     useEffect(() => {
         const handler = setTimeout(() => {
-            const draft = {title, content, tags, relatedProjectId};
-            localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(formData));
         }, 500);
         return () => clearTimeout(handler);
-    }, [title, content, tags, relatedProjectId]);
+    }, [formData]);
 
-    const handleSave = useCallback(() => {
-        if (!title.trim()) {
-            alert('제목을 입력해주세요.');
-            return;
-        }
+    const onSave = (data: BlogPostData) => {
+        console.log('Saving data:', data);
         alert('글이 성공적으로 저장되었습니다! (Mock)');
         localStorage.removeItem(DRAFT_KEY);
+        reset();
         navigate('/blog');
-    }, [navigate, title]);
+    };
+
+    const handleSaveClick = () => {
+        handleSubmit(onSave)();
+        if (Object.keys(errors).length > 0) {
+            const firstError = Object.values(errors)[0];
+            if (firstError?.message) {
+                alert(firstError.message);
+            }
+        }
+    };
 
     return (
         <div className="min-h-screen bg-[#F3F3F3] pb-20">
@@ -105,7 +114,7 @@ export default function BlogEditor() {
                                 </button>
                             </div>
                             <button
-                                onClick={handleSave}
+                                onClick={handleSaveClick}
                                 className={`${COMMON_STYLES.primaryButton} px-6 py-2 text-sm shadow-indigo-200`}
                             >
                                 <Save size={18}/> Publish
@@ -126,24 +135,10 @@ export default function BlogEditor() {
                             className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[calc(100vh-140px)]"
                         >
                             <EditorPanel
-                                title={title}
-                                setTitle={setTitle}
-                                content={content}
-                                setContent={setContent}
-                                tags={tags}
-                                setTags={setTags}
-                                currentTag={currentTag}
-                                setCurrentTag={setCurrentTag}
-                                relatedProjectId={relatedProjectId}
-                                setRelatedProjectId={setRelatedProjectId}
                                 className={`${GLASS_STYLES.card} bg-white/70`}
                                 isCompact
                             />
                             <PreviewPanel
-                                title={deferredTitle}
-                                content={deferredContent}
-                                tags={tags}
-                                relatedProjectId={relatedProjectId}
                                 className={`${GLASS_STYLES.card} bg-white/80`}
                                 showLiveBadge
                             />
@@ -157,16 +152,6 @@ export default function BlogEditor() {
                             className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
                         >
                             <EditorPanel
-                                title={title}
-                                setTitle={setTitle}
-                                content={content}
-                                setContent={setContent}
-                                tags={tags}
-                                setTags={setTags}
-                                currentTag={currentTag}
-                                setCurrentTag={setCurrentTag}
-                                relatedProjectId={relatedProjectId}
-                                setRelatedProjectId={setRelatedProjectId}
                                 className={`${GLASS_STYLES.card} bg-white/70 h-full`}
                             />
                         </motion.div>
@@ -179,10 +164,6 @@ export default function BlogEditor() {
                             className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
                         >
                             <PreviewPanel
-                                title={deferredTitle}
-                                content={deferredContent}
-                                tags={tags}
-                                relatedProjectId={relatedProjectId}
                                 className={`${GLASS_STYLES.card} bg-white/80 h-full`}
                             />
                         </motion.div>
