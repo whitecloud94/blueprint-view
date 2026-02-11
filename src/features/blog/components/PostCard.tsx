@@ -1,6 +1,6 @@
 // src/components/blog/PostCard.tsx
 import {ArrowUpRight, Briefcase, Calendar, Clock} from 'lucide-react';
-import {GLASS_STYLES} from '../../constants/styles';
+import {GLASS_STYLES} from '../../../constants/styles';
 import {useNavigate} from "react-router-dom";
 
 interface PostProps {

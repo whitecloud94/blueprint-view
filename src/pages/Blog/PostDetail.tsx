@@ -1,13 +1,13 @@
-// src/pages/PostDetail.tsx
+// src/pages/Blog/PostDetail.tsx
 import {useParams, useNavigate} from 'react-router-dom';
-import {MOCK_POSTS, PROJECTS} from '../data';
-import {BlogLayout} from "./BlogLayout.tsx";
+import {MOCK_POSTS, PROJECTS} from '../../data';
+import {BlogLayout} from "../../features/blog/components/BlogLayout";
 import {ArrowLeft, Calendar, Clock, Link as LinkIcon} from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism';
-import {GLASS_STYLES} from '../constants/styles';
+import {GLASS_STYLES} from '../../constants/styles';
 import {motion} from 'framer-motion';
 
 export default function PostDetail() {

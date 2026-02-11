@@ -1,11 +1,11 @@
-// src/pages/BlogMain.tsx
-import {PostCard} from '../components/blog/PostCard';
-import {BlogLayout} from "./BlogLayout.tsx";
-import {MOCK_POSTS} from "../data";
+// src/pages/Blog/BlogMain.tsx
+import {PostCard} from '../../features/blog/components/PostCard';
+import {BlogLayout} from "../../features/blog/components/BlogLayout";
+import {MOCK_POSTS} from "../../data";
 import {motion} from 'framer-motion';
 import {Pencil} from 'lucide-react';
 import {useNavigate} from 'react-router-dom';
-import {COMMON_STYLES} from '../constants/styles';
+import {COMMON_STYLES} from '../../constants/styles';
 
 export default function BlogMain() {
     const navigate = useNavigate();

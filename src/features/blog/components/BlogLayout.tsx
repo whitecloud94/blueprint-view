@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
-import {Sidebar} from "../components/blog/Sidebar.tsx";
-import {PageTransition} from "../components/layout/PageTransition.tsx";
+import {Sidebar} from "./Sidebar";
+import {PageTransition} from "../../../components/layout/PageTransition";
 
 const STYLES = {
     wrapper: "w-full flex justify-center",

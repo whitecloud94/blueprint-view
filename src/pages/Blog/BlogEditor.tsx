@@ -3,12 +3,12 @@ import {AnimatePresence, motion} from 'framer-motion';
 import {useNavigate} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {GLASS_STYLES} from '../constants/styles';
-import EditorPanel from '../components/blog/editor/EditorPanel.tsx';
-import PreviewPanel from '../components/blog/editor/PreviewPanel.tsx';
-import {EditorHeader} from '../components/blog/editor/EditorHeader.tsx';
-import {useBlogStore} from '../store/useBlogStore';
-import {blogPostSchema, BlogPostData} from '../schemas/blog';
+import {GLASS_STYLES} from '../../constants/styles';
+import EditorPanel from '../../features/blog/editor/EditorPanel';
+import PreviewPanel from '../../features/blog/editor/PreviewPanel';
+import {EditorHeader} from '../../features/blog/editor/EditorHeader';
+import {useBlogStore} from '../../store/useBlogStore';
+import {blogPostSchema, BlogPostData} from '../../schemas/blog';
 
 const DRAFT_KEY = 'blog-draft';
 

@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import {motion} from 'framer-motion';
 import {FolderOpen, Hash, Home, User} from 'lucide-react';
-import {GLASS_STYLES} from '../../constants/styles';
+import {GLASS_STYLES} from '../../../constants/styles';
 import {useNavigate} from "react-router-dom";
 
 const CATEGORIES = [
