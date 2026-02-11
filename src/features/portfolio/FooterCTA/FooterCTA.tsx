@@ -49,7 +49,7 @@ export const FooterCTA = () => {
     };
 
     const handleCopyEmail = () => {
-        navigator.clipboard.writeText('ajemfld1@gmail.com').then(() => {
+        navigator.clipboard.writeText(import.meta.env.VITE_CONTACT_EMAIL).then(() => {
             setShowToast(true);
             setTimeout(() => setShowToast(false), 2500);
         });

@@ -72,7 +72,7 @@ export const Hero = () => {
 
     const handleCopyEmail = () => {
         if (showToast) return; // 이미 토스트가 떠있으면 중복 방지
-        navigator.clipboard.writeText('ajemfld1@gmail.com').then(() => {
+        navigator.clipboard.writeText(import.meta.env.VITE_CONTACT_EMAIL).then(() => {
             setShowToast(true);
             setTimeout(() => setShowToast(false), 2500); 
         });
