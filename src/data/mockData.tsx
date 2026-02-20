@@ -15,7 +15,7 @@ import { Project, BlogPost } from "../types";
 
 export const NAV_ITEMS = [
     {Icon: Home, label: 'Home', path: '/'},
-    {Icon: User, label: 'About', path: '/#about'},
+    {Icon: User, label: 'About', path: '/about'},
     {Icon: Briefcase, label: 'Projects', path: '/#projects'},
     {Icon: BookOpen, label: 'Blog', path: '/blog'},
     {Icon: ShoppingBag, label: 'Products', path: '/#products'}
@@ -177,3 +177,86 @@ public class TransferService {
         tags: ["Spring Boot", "Database", "Backend"]
     }
 ];
+
+export const RESUME_CONTENT = `
+# 👋 안녕하세요, 김대경입니다.
+
+> **문제를 조우했을 때 본질이 무엇인지 깊이 고민하는 시간들을 즐깁니다. 기술로 현재의 불편함을 차근차근 해소하는 과정에서 보람을 느끼며, 언제나 진심을 담아 개발에 임합니다.**
+
+---
+
+## 💼 Work Experience
+
+### 🚗 **Toyota Financial Services Korea**
+*Core 시스템 운영관리 | 2025.01 - Present*
+
+-  **여신 계정계 코어 시스템 운영 및 유지보수**
+-  대량 데이터 처리 및 프로세스 최적화
+-  금융 규제 준수를 위한 시스템 로직 수정
+-  \`Java\`, \`iFramwork\`, \`Tibero\`, \`JEUS\`
+
+### 🏦 **IBK 기업은행 업무지원 시스템**
+*실시간 연계(EAI) 인터페이스 설계 및 구현 | 2025.05 - 2025.12*
+
+-  **실시간 연계 인터페이스 약 32종 설계 및 구현**
+- ️ 관리자용 배치 모니터링 화면 및 운영관리 메뉴 구현
+-  시스템 레포트 레이아웃 약 100종 작성
+-  \`React\`, \`TypeScript\`, \`Spring\`, \`EAI\`, \`EDB\`
+
+### 🛡️ **IBK 기업은행 상시감시 시스템**
+*Spring Batch 기반 데이터 처리 및 공통 모듈 구현 | 2024.09 - 2025.05*
+
+- **준실시간 데이터 및 DW 처리 프로그램 구현**
+- 배치 프로그램 공통 모듈 작성
+- ️ 스케줄링 관리 및 데이터 처리 모니터링
+-  \`Java\`, \`Spring Batch\`, \`PostgreSQL\`
+
+### 🌿 **IBK 기업은행 ESG 탄소중립 HUB**
+*실시간 연계(EAI) 로직 및 관리자 화면 구현 | 2023.01 - 2023.04*
+
+-  EAI 연계 로직 설계 및 구현
+-  관리자 대시보드 및 운영 메뉴 개발
+-  \`Java\`, \`Spring\`, \`Vue.js\`, \`Oracle\`
+
+---
+
+## 🛠️ Skills
+
+###  **Backend**
+- **Java / Spring Boot**: 대규모 금융 시스템 백엔드 개발 및 유지보수
+- **Spring Batch**: 대량 데이터 처리 및 배치 작업 최적화
+- **Database**: Oracle, PostgreSQL, Tibero, EDB 등 다양한 RDBMS 경험
+
+###  **Frontend**
+- **React / TypeScript**: 현대적인 UI/UX 구현 및 컴포넌트 기반 개발
+- **Vue.js**: 관리자 화면 및 인터랙티브 웹 개발
+
+---
+
+## 🏆 Certificates
+
+-  **정보처리기사** — 한국산업인력공단 (취득: YYYY.MM)
+  - 자격번호: XXXXXXXXXX
+-  **SQLD (SQL Developer)** — 한국데이터산업진흥원 (취득: YYYY.MM)
+  - 자격번호: XXXXXXXXXX
+- ️ **AWS Certified Cloud Practitioner** — Amazon Web Services (취득: YYYY.MM)
+  - Credential ID: XXXXXXXXXX
+
+> 필요한 경우 위 항목의 취득일/자격번호를 실제 정보로 업데이트하세요.
+
+---
+
+## 🎓 Education & Others
+
+- **OZ Report / iFramwork**: 금융권 특화 솔루션 활용 능력
+- **EAI (Enterprise Application Integration)**: 시스템 간 실시간 연계 설계 전문가
+- **Continuous Learning**: 새로운 기술 스택(React, TypeScript 등)에 대한 끊임없는 학습과 적용
+
+---
+
+## ✉️ Contact
+
+- **Email**: [daekyoung.kim@example.com](mailto:daekyoung.kim@example.com)
+- **GitHub**: [github.com/dkkim](https://github.com/dkkim)
+- **LinkedIn**: [linkedin.com/in/dkkim](https://linkedin.com/in/dkkim)
+`;

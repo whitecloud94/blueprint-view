@@ -50,7 +50,7 @@ const STYLES = {
     avatarWrapper: "flex flex-col items-center gap-4 flex-shrink-0 w-[160px] sm:w-[220px]",
     avatarContainer: "relative",
     avatarImage: "w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#F2F2F2] border-[4px] sm:border-[6px] border-[#FAFAFA] overflow-hidden shadow-inner",
-    profileImg: "w-full h-full object-cover object-center",
+    profileImg: "!block !w-full !h-full !max-w-none !m-0 object-cover object-top scale-150",
     statusWrapper: "flex flex-col items-center gap-2",
     badge: "group px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide flex items-center justify-center gap-1.5 border shadow-sm transition-all duration-500 ease-in-out cursor-help overflow-hidden min-w-[120px] max-w-[140px] sm:hover:max-w-[280px]",
     badgeLayout: "flex flex-col items-center gap-2 w-full font-mono tracking-tight",
