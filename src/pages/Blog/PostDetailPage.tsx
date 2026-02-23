@@ -1,4 +1,4 @@
-// src/pages/Blog/PostDetail.tsx
+// src/pages/Blog/PostDetailPage.tsx
 import {useParams, useNavigate} from 'react-router-dom';
 import {MOCK_POSTS, PROJECTS} from '../../data';
 import {BlogLayout} from "../../features/blog/components/BlogLayout";
@@ -10,7 +10,7 @@ import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {GLASS_STYLES} from '../../constants/styles';
 import {motion} from 'framer-motion';
 
-export default function PostDetail() {
+export default function PostDetailPage() {
     const {id} = useParams<{ id: string }>();
     const navigate = useNavigate();
     

@@ -15,7 +15,7 @@ import { Project, BlogPost } from "../types";
 
 export const NAV_ITEMS = [
     {Icon: Home, label: 'Home', path: '/'},
-    {Icon: User, label: 'About', path: '/about'},
+    {Icon: User, label: 'AboutPage', path: '/about'},
     {Icon: Briefcase, label: 'Projects', path: '/#projects'},
     {Icon: BookOpen, label: 'Blog', path: '/blog'},
     {Icon: ShoppingBag, label: 'Products', path: '/#products'}
@@ -39,6 +39,7 @@ export const PROJECTS: Project[] = [
         blogId: 1
     },
     {
+        id: 2,
         title: 'IBK 기업은행 업무지원 시스템',
         period: '2025.05 - 2025.12',
         sub: '실시간 연계(EAI) 인터페이스 설계 및 구현',
@@ -52,6 +53,7 @@ export const PROJECTS: Project[] = [
         tech: ["React", "TypeScript", "Spring", "EAI", "EDB"]
     },
     {
+        id: 3,
         title: 'IBK 기업은행 상시감시 시스템',
         period: '2024.09 - 2025.05',
         sub: 'Spring Batch 기반 데이터 처리 및 공통 모듈 구현',
@@ -65,6 +67,7 @@ export const PROJECTS: Project[] = [
         tech: ["Java", "Spring Batch", "PostgreSQL"]
     },
     {
+        id: 4,
         title: 'IBK 기업은행 ESG 탄소중립 HUB',
         period: '2023.01 - 2023.04',
         sub: '실시간 연계(EAI) 로직 구현 및 관리자 화면 구현',
@@ -73,6 +76,7 @@ export const PROJECTS: Project[] = [
         tech: ["Java", "Spring", "Vue.js", "Oracle"]
     },
     {
+        id: 5,
         title: 'BNK 경남은행 시니어 뱅킹 및 모바일 뱅킹 메인화면 개편',
         period: '2022.08 - 2022.12',
         sub: '메인이체, 거래내역조회 등 다수 화면 및 관리자 화면 구현',
@@ -81,6 +85,7 @@ export const PROJECTS: Project[] = [
         tech: ["Java", "Android", "Webview", "Oracle"]
     },
     {
+        id: 6,
         title: 'IBK 기업은행 투자상품 통합관리 시스템',
         period: '2022.01 - 2022.07',
         sub: '비즈니스 로직 구현 및 Spring Batch 기반의 DW 데이터 처리 로직 구현',
@@ -89,6 +94,7 @@ export const PROJECTS: Project[] = [
         tech: ["Java", "Spring Batch", "Oracle"]
     },
     {
+        id: 7,
         title: 'BNK 경남은행 비대면 제증명서 발급 서비스',
         period: '2021.09 - 2021.12',
         sub: '레포트 레이아웃 작성 및 비즈니스 로직 구현',

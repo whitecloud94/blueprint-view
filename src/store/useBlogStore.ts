@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { BlogPostData } from '../schemas/blog';
+import { BlogPostData } from '../features/blog/schemas/blog';
 
 interface BlogState {
   formData: BlogPostData;

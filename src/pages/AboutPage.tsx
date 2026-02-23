@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { PageTransition } from "../../components/layout/PageTransition.tsx";
-import { COMMON_STYLES } from "../../constants/styles.ts";
-import { RESUME_CONTENT } from "../../data";
+import { PageTransition } from "../components/layout/PageTransition.tsx";
+import { COMMON_STYLES } from "../constants/styles.ts";
+import { RESUME_CONTENT } from "../data";
 
 const STYLES = {
   main: "w-full max-w-[640px] bg-white rounded-[32px] sm:rounded-[40px] px-5 sm:px-10 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white mt-0",
@@ -19,7 +19,7 @@ const SectionHeader: React.FC<{ label: string }> = ({ label }) => (
   </div>
 );
 
-const About: React.FC = () => {
+const AboutPage: React.FC = () => {
   return (
     <PageTransition direction="left">
       <div className="w-full flex justify-center">
@@ -77,4 +77,4 @@ const About: React.FC = () => {
   );
 };
 
-export default About;
+export default AboutPage;

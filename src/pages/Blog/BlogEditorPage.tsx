@@ -5,14 +5,14 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {GLASS_STYLES} from '../../constants/styles';
 import EditorPanel from '../../features/blog/editor/EditorPanel';
-import PreviewPanel from '../../features/blog/editor/PreviewPanel';
+import EditorPreview from '../../features/blog/editor/EditorPreview.tsx';
 import {EditorHeader} from '../../features/blog/editor/EditorHeader';
 import {useBlogStore} from '../../store/useBlogStore';
-import {blogPostSchema, BlogPostData} from '../../schemas/blog';
+import {blogPostSchema, BlogPostData} from '../../features/blog/schemas/blog';
 
 const DRAFT_KEY = 'blog-draft';
 
-export default function BlogEditor() {
+export default function BlogEditorPage() {
     const navigate = useNavigate();
     const { formData, setFormData, reset } = useBlogStore();
     
@@ -84,7 +84,7 @@ export default function BlogEditor() {
                                 className={`${GLASS_STYLES.card} bg-white/70`}
                                 isCompact
                             />
-                            <PreviewPanel
+                            <EditorPreview
                                 className={`${GLASS_STYLES.card} bg-white/80`}
                                 showLiveBadge
                             />
@@ -109,7 +109,7 @@ export default function BlogEditor() {
                             exit={{opacity: 0, y: -10}}
                             className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
                         >
-                            <PreviewPanel
+                            <EditorPreview
                                 className={`${GLASS_STYLES.card} bg-white/80 h-full`}
                             />
                         </motion.div>

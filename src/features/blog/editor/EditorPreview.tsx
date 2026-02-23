@@ -12,7 +12,7 @@ interface PreviewPaneProps {
   showLiveBadge?: boolean;
 }
 
-const PreviewPanel = ({
+const EditorPreview = ({
   className = '',
   showLiveBadge = false,
 }: PreviewPaneProps) => {
@@ -89,4 +89,4 @@ const PreviewPanel = ({
   );
 };
 
-export default React.memo(PreviewPanel);
+export default React.memo(EditorPreview);

@@ -1,4 +1,4 @@
-// src/pages/Blog/BlogMain.tsx
+// src/pages/Blog/BlogListPage.tsx
 import {PostCard} from '../../features/blog/components/PostCard';
 import {BlogLayout} from "../../features/blog/components/BlogLayout";
 import {MOCK_POSTS} from "../../data";
@@ -7,7 +7,7 @@ import {Pencil} from 'lucide-react';
 import {useNavigate} from 'react-router-dom';
 import {COMMON_STYLES} from '../../constants/styles';
 
-export default function BlogMain() {
+export default function BlogListPage() {
     const navigate = useNavigate();
     return (
         <BlogLayout>

@@ -3,13 +3,13 @@ import {AnimatePresence} from "framer-motion";
 import { Suspense, lazy } from 'react';
 
 // Route-based code splitting (lazy-loaded pages)
-const Portfolio = lazy(() => import("../../pages/Portfolio/Portfolio"));
-const About = lazy(() => import("../../pages/About/About"));
-const BlogMain = lazy(() => import("../../pages/Blog/BlogMain"));
-const BlogEditor = lazy(() => import("../../pages/Blog/BlogEditor"));
-const PostDetail = lazy(() => import("../../pages/Blog/PostDetail"));
+const PortfolioPage = lazy(() => import("../pages/PortfolioPage"));
+const AboutPage = lazy(() => import("../pages/AboutPage"));
+const BlogListPage = lazy(() => import("../pages/Blog/BlogListPage"));
+const BlogEditorPage = lazy(() => import("../pages/Blog/BlogEditorPage"));
+const PostDetailPage = lazy(() => import("../pages/Blog/PostDetailPage"));
 
-export const AnimatedRoutes = () => {
+export const AppRouter = () => {
     const location = useLocation();
 
     return (
@@ -24,11 +24,11 @@ export const AnimatedRoutes = () => {
                 }
             >
                 <Routes location={location} key={location.pathname}>
-                    <Route path="/" element={<Portfolio/>}/>
-                    <Route path="/about" element={<About/>}/>
-                    <Route path="/blog" element={<BlogMain/>}/>
-                    <Route path="/blog/write" element={<BlogEditor/>}/>
-                    <Route path="/blog/:id" element={<PostDetail/>}/>
+                    <Route path="/" element={<PortfolioPage/>}/>
+                    <Route path="/about" element={<AboutPage/>}/>
+                    <Route path="/blog" element={<BlogListPage/>}/>
+                    <Route path="/blog/write" element={<BlogEditorPage/>}/>
+                    <Route path="/blog/:id" element={<PostDetailPage/>}/>
                 </Routes>
             </Suspense>
         </AnimatePresence>

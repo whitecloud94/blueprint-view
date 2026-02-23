@@ -1,7 +1,8 @@
-import React from 'react';
-import { Tag as TagIcon, X, Link as LinkIcon, ChevronDown } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { Tag as TagIcon, X, Link as LinkIcon } from 'lucide-react';
 import { PROJECTS } from '../../../data';
 import { useBlogStore } from '../../../store/useBlogStore';
+import Select, { SelectOption } from '../../../components/common/Select';
 
 interface EditorPaneProps {
   className?: string;
@@ -23,9 +24,16 @@ const EditorPanel = ({
     setFormData({ content: e.target.value });
   };
 
-  const handleProjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ relatedProjectId: Number(e.target.value) || null });
+  const handleProjectChange = (value: number | null) => {
+    setFormData({ relatedProjectId: value });
   };
+
+  const projectOptions = useMemo((): SelectOption[] => [
+    { value: 'none', label: 'No Related Project' },
+    ...PROJECTS.map((p) => ({ value: p.id!, label: p.title })),
+  ], []);
+
+  const selectedProjectId = relatedProjectId === null ? 'none' : relatedProjectId;
 
   const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentTag(e.target.value);
@@ -67,24 +75,13 @@ const EditorPanel = ({
 
         <div className="flex flex-wrap gap-4 items-center">
           {/* 프로젝트 연동 */}
-          <div className="relative group">
-            <div className="flex items-center gap-2 text-sm font-bold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
-              <LinkIcon size={14} />
-              <select
-                value={relatedProjectId || ''}
-                onChange={handleProjectChange}
-                className="bg-transparent outline-none cursor-pointer appearance-none pr-6"
-              >
-                <option value="">No Related Project</option>
-                {PROJECTS.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.title}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown size={14} className="absolute right-2 pointer-events-none" />
-            </div>
-          </div>
+          <Select
+            value={selectedProjectId}
+            onChange={(val) => handleProjectChange(val === 'none' ? null : Number(val))}
+            options={projectOptions}
+            icon={<LinkIcon size={14} />}
+            placeholder="Related Project"
+          />
 
           {/* 태그 입력 */}
           <div className="flex flex-wrap gap-2 items-center flex-1">
