@@ -187,7 +187,7 @@ public class TransferService {
 export const RESUME_CONTENT = `
 # 👋 안녕하세요, 김대경입니다.
 
-> **문제를 조우했을 때 본질이 무엇인지 깊이 고민하는 시간들을 즐깁니다. 기술로 현재의 불편함을 차근차근 해소하는 과정에서 보람을 느끼며, 언제나 진심을 담아 개발에 임합니다.**
+> **기술은 비즈니스 문제를 해결하기 위한 도구입니다. 복잡한 요구사항을 단순하고 효율적인 로직으로 구현해내는 프로세스 그 자체에 가치를 두고 작업에 임합니다.**
 
 ---
 
@@ -241,18 +241,21 @@ export const RESUME_CONTENT = `
 
 ## 🏆 Certificates
 
--  **정보처리기사** — 한국산업인력공단 (취득: YYYY.MM)
-  - 자격번호: XXXXXXXXXX
--  **SQLD (SQL Developer)** — 한국데이터산업진흥원 (취득: YYYY.MM)
-  - 자격번호: XXXXXXXXXX
-- ️ **AWS Certified Cloud Practitioner** — Amazon Web Services (취득: YYYY.MM)
-  - Credential ID: XXXXXXXXXX
-
-> 필요한 경우 위 항목의 취득일/자격번호를 실제 정보로 업데이트하세요.
+- **정보처리기사** — 한국산업인력공단 (취득: 2019.08)
+  - 자격번호: 19202210539L
 
 ---
 
-## 🎓 Education & Others
+## 🏫 Education
+
+- **부경대학교** - 2020.03 졸업
+  - IT융합응용공학과 [3.47/4.5]
+
+- **신정고등학교** - 2013.02 졸업
+
+---
+
+## 🎓 Others
 
 - **OZ Report / iFramwork**: 금융권 특화 솔루션 활용 능력
 - **EAI (Enterprise Application Integration)**: 시스템 간 실시간 연계 설계 전문가
@@ -262,7 +265,7 @@ export const RESUME_CONTENT = `
 
 ## ✉️ Contact
 
-- **Email**: [daekyoung.kim@example.com](mailto:daekyoung.kim@example.com)
-- **GitHub**: [github.com/dkkim](https://github.com/dkkim)
-- **LinkedIn**: [linkedin.com/in/dkkim](https://linkedin.com/in/dkkim)
+- **Email**: [ajemfld1@gmail.com](mailto:ajemfld1@gmail.com)
+- **GitHub**: [github.com/whitecloud94](https://github.com/whitecloud94)
+- **Phone**: 010-9706-8608
 `;
