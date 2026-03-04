@@ -2,6 +2,7 @@ import {Copy, Plus} from 'lucide-react';
 import {useState} from "react";
 import {COMMON_STYLES} from "../../../constants/styles.ts";
 import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
+import {useToast} from "../../../hooks/useToast.ts";
 
 const STATUS_CONFIG = {
     RUNTIME: {
@@ -68,13 +69,14 @@ const STYLES = {
 export const Hero = () => {
     // 현재 상태 TODO - (추후 useState 등으로 관리)
     const [isExpanded, setIsExpanded] = useState(false);
-    const [showToast, setShowToast] = useState(false);
+    const [showCopyToast, setShowCopyToast] = useState(false);
+    const {isVisible: isDevVisible, message: devMessage, showDevToast} = useToast();
 
     const handleCopyEmail = () => {
-        if (showToast) return; // 이미 토스트가 떠있으면 중복 방지
+        if (showCopyToast) return; // 이미 토스트가 떠있으면 중복 방지
         navigator.clipboard.writeText(import.meta.env.VITE_CONTACT_EMAIL).then(() => {
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 2500); 
+            setShowCopyToast(true);
+            setTimeout(() => setShowCopyToast(false), 2500); 
         });
     };
 
@@ -109,7 +111,7 @@ export const Hero = () => {
                     </div>
 
                     <div className={STYLES.buttonGroup}>
-                        <button className={STYLES.primaryButton}>
+                        <button className={STYLES.primaryButton} onClick={showDevToast}>
                             <div className={STYLES.primaryButtonIcon}>
                                 <Plus size={10} strokeWidth={4}/>
                             </div>
@@ -121,7 +123,8 @@ export const Hero = () => {
                         >
                             <Copy size={14}/> Copy Email
                         </button>
-                        <LiquidToast isVisible={showToast} message="이메일 주소가 복사되었습니다"/>
+                        <LiquidToast isVisible={showCopyToast} message="이메일 주소가 복사되었습니다"/>
+                        <LiquidToast isVisible={isDevVisible} message={devMessage}/>
                     </div>
                 </div>
 

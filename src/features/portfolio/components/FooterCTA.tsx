@@ -3,6 +3,7 @@ import {motion, Variants} from 'framer-motion';
 import {Copy, Plus} from 'lucide-react';
 import {COMMON_STYLES} from "../../../constants/styles.ts";
 import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
+import {useToast} from "../../../hooks/useToast.ts";
 
 const STYLES = {
     wrapper: "text-center space-y-6 mb-12 px-2",
@@ -13,7 +14,8 @@ const STYLES = {
 };
 
 export const FooterCTA = () => {
-    const [showToast, setShowToast] = useState(false);
+    const [showCopyToast, setShowCopyToast] = useState(false);
+    const {isVisible: isDevVisible, message: devMessage, showDevToast} = useToast();
 
     const text = "저의 기술적 여정이 귀사에 가치를 더할 수 있기를 기대합니다."
     const sentenceVariants: Variants = {
@@ -50,8 +52,8 @@ export const FooterCTA = () => {
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText(import.meta.env.VITE_CONTACT_EMAIL).then(() => {
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 2500);
+            setShowCopyToast(true);
+            setTimeout(() => setShowCopyToast(false), 2500);
         });
     };
 
@@ -79,7 +81,7 @@ export const FooterCTA = () => {
                 viewport={{ once: true }}
             >
 
-                <button className={STYLES.primaryButton}>
+                <button className={STYLES.primaryButton} onClick={showDevToast}>
                     <div className={COMMON_STYLES.innerCard.replace('rounded-[20px] sm:rounded-[24px]', 'rounded-full') + " p-0.5"}>
                         <Plus size={10} strokeWidth={4}/>
                     </div>
@@ -88,7 +90,8 @@ export const FooterCTA = () => {
                 <button className={STYLES.secondaryButton} onClick={handleCopyEmail}>
                     <Copy size={14}/> Copy Email
                 </button>
-                <LiquidToast isVisible={showToast} message="이메일 주소가 복사되었습니다"/>
+                <LiquidToast isVisible={showCopyToast} message="이메일 주소가 복사되었습니다"/>
+                <LiquidToast isVisible={isDevVisible} message={devMessage}/>
             </motion.div>
         </div>
     );

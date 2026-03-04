@@ -4,6 +4,8 @@ import { BiLogoJava } from "react-icons/bi";
 import { COMMON_STYLES } from "../../../constants/styles.ts";
 import { MarqueeText } from "../../../components/common/MarqueeText.tsx";
 import React from "react";
+import {useToast} from "../../../hooks/useToast.ts";
+import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
@@ -22,10 +24,11 @@ interface SkillItemProps {
     name: string;
     tag: string;
     icon: React.ReactNode;
+    onClick?: () => void;
 }
 
-const SkillItem = ({ name, tag, icon }: SkillItemProps) => (
-    <div className={STYLES.skillItem}>
+const SkillItem = ({ name, tag, icon, onClick }: SkillItemProps) => (
+    <div className={STYLES.skillItem} onClick={onClick}>
         <div className={STYLES.skillInfo}>
             <div className={STYLES.skillIcon}>{icon}</div>
             <MarqueeText
@@ -50,14 +53,18 @@ const SKILLS = [
     { name: 'Etc', tag: 'Keep learning🔥', icon: '📖' },
 ];
 
-export const Skills = () => (
-    <section id="products" className={`${STYLES.wrapper} mb-12 sm:mb-16`}>
-        <div className={STYLES.header}>
-            <div className={STYLES.dot} />
-            My available skills
-        </div>
-        {SKILLS.map((prod, j) => (
-            <SkillItem key={j} name={prod.name} tag={prod.tag} icon={prod.icon} />
-        ))}
-    </section>
-);
+export const Skills = () => {
+    const {isVisible, message, showDevToast} = useToast();
+    return (
+        <section id="products" className={`${STYLES.wrapper} mb-12 sm:mb-16`}>
+            <div className={STYLES.header}>
+                <div className={STYLES.dot} />
+                My available skills
+            </div>
+            {SKILLS.map((prod, j) => (
+                <SkillItem key={j} name={prod.name} tag={prod.tag} icon={prod.icon} onClick={showDevToast} />
+            ))}
+            <LiquidToast isVisible={isVisible} message={message} />
+        </section>
+    );
+};

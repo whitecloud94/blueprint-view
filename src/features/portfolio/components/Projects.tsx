@@ -8,6 +8,8 @@ import { COMMON_STYLES } from "../../../constants/styles.ts";
 import {AnimatePresence} from "framer-motion";
 import { PROJECTS } from "../../../data";
 import { Project } from "../../../types";
+import {useToast} from "../../../hooks/useToast.ts";
+import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
@@ -21,6 +23,7 @@ const STYLES = {
 export const Projects = () => {
     // 1. 현재 어떤 프로젝트가 선택되었는지 관리하는 상태
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const {isVisible, message, showDevToast} = useToast();
 
     // 2. 모달을 닫는 콜백 함수
     const handleCloseModal = () => {
@@ -34,7 +37,7 @@ export const Projects = () => {
                     <div className={STYLES.dot}/>
                     Projects
                 </div>
-                <button className={STYLES.viewAllBtn}>
+                <button className={STYLES.viewAllBtn} onClick={showDevToast}>
                     View All <ArrowUpRight size={12}/>
                 </button>
             </div>
@@ -63,6 +66,7 @@ export const Projects = () => {
                     />
                 )}
             </AnimatePresence>
+            <LiquidToast isVisible={isVisible} message={message} />
         </section>
     );
 };

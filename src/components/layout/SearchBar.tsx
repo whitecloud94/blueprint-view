@@ -1,6 +1,8 @@
 import {useEffect, useRef, useState} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import {Search} from "lucide-react";
+import {useToast} from "../../hooks/useToast.ts";
+import {LiquidToast} from "../common/feedback/LiquidToast.tsx";
 
 interface SearchBarProps {
     className?: string;
@@ -11,6 +13,7 @@ export const SearchBar = ({ className = "" }: SearchBarProps) => {
     const [searchValue, setSearchValue] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
     const [isFocused, setIsFocused] = useState(false);
+    const {isVisible, message, showDevToast} = useToast();
 
     // 검색창이 열릴 때 자동으로 포커스
     useEffect(() => {
@@ -61,12 +64,18 @@ export const SearchBar = ({ className = "" }: SearchBarProps) => {
                             onChange={(e) => setSearchValue(e.target.value)}
                             onFocus={() => setIsFocused(true)}
                             onBlur={() => setIsFocused(false)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    showDevToast();
+                                }
+                            }}
                             placeholder="검색어를 입력해주세요"
                             className="bg-transparent border-none outline-none text-[13px] text-gray-900 placeholder:text-gray-400 font-medium pl-1 pr-4 w-full"
                         />
                     )}
                 </AnimatePresence>
             </motion.div>
+            <LiquidToast isVisible={isVisible} message={message} />
         </div>
     );
 };

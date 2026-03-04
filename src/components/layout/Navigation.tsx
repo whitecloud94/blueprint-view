@@ -6,6 +6,8 @@ import {NAV_ITEMS} from "../../data";
 import {SearchBar} from "./SearchBar";
 import {NavItem} from "./NavItem";
 import {useTheme} from "../../context/ThemeContext.tsx";
+import {useToast} from "../../hooks/useToast.ts";
+import {LiquidToast} from "../common/feedback/LiquidToast.tsx";
 
 const STYLES = {
     wrapper: `w-full transition-all duration-500`,
@@ -24,6 +26,7 @@ export const Navigation = () => {
     const navigate = useNavigate(); // 페이지 이동 함수
     const location = useLocation(); // 현재 URL 정보
     const {theme, toggleTheme} = useTheme();
+    const {isVisible, message, showDevToast} = useToast();
 
     const isPortfolio = location.pathname === '/';
 
@@ -102,13 +105,14 @@ export const Navigation = () => {
                         )}
                     </button>
 
-                    <button className={STYLES.hireButton}>
+                    <button className={STYLES.hireButton} onClick={showDevToast}>
                         <div className={STYLES.plusIconWrapper}>
                             <Plus size={10} strokeWidth={4} />
                         </div>
                         <span className={STYLES.hireMeLabel}>Hire Me</span>
                         <span className={STYLES.hireLabel}>Hire</span>
                     </button>
+                    <LiquidToast isVisible={isVisible} message={message} />
                 </div>
             </div>
         </nav>
