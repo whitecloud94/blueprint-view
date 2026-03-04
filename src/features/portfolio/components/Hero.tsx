@@ -10,7 +10,7 @@ const STATUS_CONFIG = {
         description: "2025.01.02 ~",
         dotClass: "bg-indigo-500 animate-pulse",
         pingClass: "bg-indigo-400",
-        badgeClass: "bg-indigo-50 text-indigo-600 border-indigo-100",
+        badgeClass: "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-800/50",
     },
     COMPILE: {
         code: "COMPILE",
@@ -18,7 +18,7 @@ const STATUS_CONFIG = {
         description: "새로운 도약을 위해 빌드 중 (Open to Work)",
         dotClass: "bg-emerald-500 animate-bounce",
         pingClass: "bg-emerald-400",
-        badgeClass: "bg-emerald-50 text-emerald-600 border-emerald-100",
+        badgeClass: "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800/50",
     },
     DEBUG: {
         code: "DEBUG",
@@ -26,7 +26,7 @@ const STATUS_CONFIG = {
         description: "기존 로직 개선 및 새로운 기술 스택 학습 중",
         dotClass: "bg-amber-500",
         pingClass: "bg-amber-400",
-        badgeClass: "bg-amber-50 text-amber-600 border-amber-100",
+        badgeClass: "bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border-amber-100 dark:border-amber-800/50",
     }
 };
 
@@ -38,18 +38,18 @@ const STYLES = {
     content: "flex flex-col-reverse sm:flex-row justify-between items-center sm:items-start gap-8 sm:gap-4 text-center sm:text-left",
     mainContent: "space-y-6 w-full",
     textGroup: "space-y-3",
-    title: `text-[32px] sm:text-[42px] leading-tight ${COMMON_STYLES.title} font-title text-[#1A1A1A]`,
-    description: `${COMMON_STYLES.body} text-[15px] sm:text-[17px] leading-[1.6] max-w-[380px] mx-auto sm:mx-0 font-sans font-medium`,
+    title: `text-[32px] sm:text-[42px] leading-tight ${COMMON_STYLES.title} font-title text-[#1A1A1A] dark:text-white`,
+    description: `${COMMON_STYLES.body} dark:text-gray-400 text-[15px] sm:text-[17px] leading-[1.6] max-w-[380px] mx-auto sm:mx-0 font-sans font-medium`,
     highlight: "relative ml-1.5 inline-block",
-    highlightText: "relative z-10 text-indigo-600 font-bold",
-    highlightBg: "absolute bottom-0.5 left-0 w-full h-[8px] bg-indigo-50 -rotate-1",
+    highlightText: "relative z-10 text-indigo-600 dark:text-indigo-400 font-bold",
+    highlightBg: "absolute bottom-0.5 left-0 w-full h-[8px] bg-indigo-50 dark:bg-indigo-900/30 -rotate-1",
     buttonGroup: "flex justify-center sm:justify-start gap-3 pt-2",
-    primaryButton: `${COMMON_STYLES.primaryButton} px-5 py-3 text-[12px] sm:text-[13px] hover:-translate-y-0.5`,
-    primaryButtonIcon: "bg-white/20 rounded-full p-0.5",
-    secondaryButton: `${COMMON_STYLES.secondaryButton} px-5 py-3 text-[12px] sm:text-[13px]`,
+    primaryButton: `${COMMON_STYLES.primaryButton} dark:bg-white dark:text-black px-5 py-3 text-[12px] sm:text-[13px] hover:-translate-y-0.5`,
+    primaryButtonIcon: "bg-white/20 dark:bg-black/10 rounded-full p-0.5",
+    secondaryButton: `${COMMON_STYLES.secondaryButton} dark:bg-black/40 dark:border-white/10 dark:text-white px-5 py-3 text-[12px] sm:text-[13px]`,
     avatarWrapper: "flex flex-col items-center gap-4 flex-shrink-0 w-[160px] sm:w-[220px]",
     avatarContainer: "relative",
-    avatarImage: "w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#F2F2F2] border-[4px] sm:border-[6px] border-[#FAFAFA] overflow-hidden shadow-inner",
+    avatarImage: "w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-[#F2F2F2] dark:bg-gray-800 border-[4px] sm:border-[6px] border-[#FAFAFA] dark:border-white/10 overflow-hidden shadow-inner",
     profileImg: "!block !w-full !h-full !max-w-none !m-0 object-cover object-top scale-150",
     statusWrapper: "flex flex-col items-center gap-2",
     badge: "group px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide flex items-center justify-center gap-1.5 border shadow-sm transition-all duration-500 ease-in-out cursor-help overflow-hidden min-w-[120px] max-w-[140px] sm:hover:max-w-[280px]",
@@ -62,7 +62,7 @@ const STYLES = {
     statusDetail: "flex items-center gap-1.5 max-w-0 opacity-0 transition-all duration-500 ease-in-out overflow-hidden whitespace-nowrap sm:group-hover:max-w-[160px] sm:group-hover:opacity-100",
     statusCommentPrefix: "text-current opacity-30 ml-1",
     statusComment: "font-medium text-[9px] sm:text-[11px] text-[#629755]",
-    statusDesc: "text-[10px] text-gray-400 font-medium tracking-tight",
+    statusDesc: "text-[10px] text-gray-400 dark:text-gray-500 font-medium tracking-tight",
 };
 
 export const Hero = () => {

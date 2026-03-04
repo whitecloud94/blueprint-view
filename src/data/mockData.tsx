@@ -15,7 +15,7 @@ import { Project, BlogPost } from "../types";
 
 export const NAV_ITEMS = [
     {Icon: Home, label: 'Home', path: '/'},
-    {Icon: User, label: 'AboutPage', path: '/about'},
+    {Icon: User, label: 'About', path: '/about'},
     {Icon: Briefcase, label: 'Projects', path: '/#projects'},
     {Icon: BookOpen, label: 'Blog', path: '/blog'},
     {Icon: ShoppingBag, label: 'Products', path: '/#products'}

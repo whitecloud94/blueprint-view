@@ -14,8 +14,8 @@ export default function BlogListPage() {
             <div className="space-y-6 relative">
                 {/* 헤더 영역 (선택사항) */}
                 <div className="mb-8 ml-2">
-                    <h1 className="text-3xl font-black text-gray-900 mb-2">Latest Posts</h1>
-                    <p className="text-gray-500">테스트 데이터 및 Mock 데이터를 사용하여 블로그 포스트를 표시합니다.</p>
+                    <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-2">Latest Posts</h1>
+                    <p className="text-gray-500 dark:text-gray-400">테스트 데이터 및 Mock 데이터를 사용하여 블로그 포스트를 표시합니다.</p>
                 </div>
 
                 {/* 글 목록 렌더링 */}

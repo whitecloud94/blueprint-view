@@ -11,13 +11,13 @@ const MODAL_STYLES = {
 
     container: `
         relative w-full max-w-2xl max-h-[90vh] overflow-y-auto
-        bg-white/35 backdrop-blur-[80px] border border-white/60
+        bg-white/35 dark:bg-[#1A1A1A]/90 backdrop-blur-[80px] border border-white/60 dark:border-white/10
         rounded-[40px] sm:rounded-[48px]
         flex flex-col scrollbar-hide 
-        shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_0_0_1px_rgba(255,255,255,0.2)]
+        shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_0_0_1px_rgba(255,255,255,0.2)] dark:shadow-none
     `,
 
-    header: `sticky top-0 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/10 backdrop-blur-2xl border-b border-white/20`,
+    header: `sticky top-0 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/10 dark:bg-white/5 backdrop-blur-2xl border-b border-white/20 dark:border-white/10`,
     headerLeft: "flex-1 pr-6",
     badgeWrapper: "flex items-center gap-2 mb-2 sm:mb-3",
     badgeDot: "w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.8)]",

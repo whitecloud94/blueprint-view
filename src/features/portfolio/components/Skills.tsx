@@ -7,12 +7,12 @@ import React from "react";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
-    skillItem: `${COMMON_STYLES.innerCard} p-3 sm:p-4 pl-4 sm:pl-5 flex items-center justify-between cursor-pointer group hover:bg-white/90 hover:border-white hover:scale-[1.01] hover:shadow-lg`,
+    skillItem: `${COMMON_STYLES.innerCard} p-3 sm:p-4 pl-4 sm:pl-5 flex items-center justify-between cursor-pointer group hover:bg-white/90 dark:hover:bg-white/[0.1] hover:border-white dark:hover:border-white/[0.2] hover:scale-[1.01] hover:shadow-lg`,
     skillInfo: "flex items-center gap-3 sm:gap-5 min-w-0 flex-1",
-    skillIcon: `${COMMON_STYLES.iconButton} text-lg sm:text-xl shadow-sm text-gray-900`,
-    skillName: "text-[14px] sm:text-[15px] font-bold text-gray-900",
+    skillIcon: `${COMMON_STYLES.iconButton} text-lg sm:text-xl shadow-sm text-gray-900 dark:bg-white/[0.1] dark:text-white dark:border-white/[0.1]`,
+    skillName: "text-[14px] sm:text-[15px] font-bold text-gray-900 dark:text-white",
     skillAction: "flex items-center gap-2 sm:gap-3 ml-2 shrink-0",
-    skillTag: `text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 backdrop-blur-sm px-2 py-1 rounded-md tracking-wider border border-black/5`,
+    skillTag: `text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 dark:bg-white/5 backdrop-blur-sm px-2 py-1 rounded-md tracking-wider border border-black/5 dark:border-white/5`,
     skillArrow: "text-gray-300 group-hover:text-black transition-colors",
     header: `${COMMON_STYLES.sectionHeader} px-4 sm:px-6 py-4`,
     dot: COMMON_STYLES.dot,

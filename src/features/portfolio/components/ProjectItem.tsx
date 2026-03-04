@@ -6,8 +6,8 @@ import {ProjectItemProps} from "../../../types";
 const STYLES = {
     item: (active?: boolean) =>
         `${COMMON_STYLES.innerCard} p-3 sm:p-4 pl-4 sm:pl-5 flex items-center justify-between cursor-pointer group
-    ${ active ? "bg-white/90 border-indigo-200 shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:scale-[1.02]"
-              : "hover:bg-white/90 hover:border-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] sm:hover:scale-[1.01]"
+    ${ active ? "bg-white/90 dark:bg-white/10 border-indigo-200 dark:border-indigo-500/50 shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:scale-[1.02]"
+              : "hover:bg-white/90 dark:hover:bg-white/10 hover:border-white dark:hover:border-white/20 shadow-[0_4px_20px_rgba(0,0,0,0.03)] sm:hover:scale-[1.01]"
     }`,
 
     iconBox: (bg: string) =>
@@ -15,17 +15,17 @@ const STYLES = {
         flex items-center justify-center text-white 
         shadow-[0_4px_12px_rgba(0,0,0,0.1)] group-hover:rotate-6 transition-transform`,
 
-    activeBadge: "hidden xs:inline-block text-[8px] bg-indigo-600 text-white px-1.5 py-0.5 rounded-md font-black animate-pulse",
+    activeBadge: "hidden xs:inline-block text-[8px] bg-indigo-600 dark:bg-indigo-500 text-white px-1.5 py-0.5 rounded-md font-black animate-pulse",
 
     chevron: (active?: boolean) =>
         `flex-shrink-0 w-8 h-8 flex items-center justify-center transition-colors ${
-            active ? "text-indigo-600" : "text-gray-300 group-hover:text-black"
+            active ? "text-indigo-600 dark:text-indigo-400" : "text-gray-300 dark:text-gray-600 group-hover:text-black dark:group-hover:text-white"
         }`,
     contentWrapper: "flex items-center gap-3 sm:gap-5 min-w-0 flex-1",
     infoWrapper: "flex-1 min-w-0 flex flex-col justify-center gap-0.5",
     titleWrapper: "flex items-center gap-2 w-full",
-    title: "text-[14px] sm:text-[16px] font-bold text-gray-900",
-    subTitle: "text-[12px] sm:text-[14px] text-gray-500 font-medium",
+    title: "text-[14px] sm:text-[16px] font-bold text-gray-900 dark:text-white",
+    subTitle: "text-[12px] sm:text-[14px] text-gray-500 dark:text-gray-400 font-medium",
 };
 
 export const ProjectItem = ({

@@ -6,10 +6,10 @@ import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
 
 const STYLES = {
     wrapper: "text-center space-y-6 mb-12 px-2",
-    title: `text-[28px] sm:text-[36px] px-4 leading-tight ${COMMON_STYLES.title}`,
+    title: `text-[28px] sm:text-[36px] px-4 leading-tight ${COMMON_STYLES.title} dark:text-white`,
     buttonGroup: "flex flex-col sm:flex-row justify-center gap-3 px-4",
-    primaryButton: `${COMMON_STYLES.primaryButton} px-6 py-3 text-[13px]`,
-    secondaryButton: `${COMMON_STYLES.secondaryButton} px-5 py-3 text-[13px]`
+    primaryButton: `${COMMON_STYLES.primaryButton} dark:bg-white dark:text-black px-6 py-3 text-[13px]`,
+    secondaryButton: `${COMMON_STYLES.secondaryButton} dark:bg-black/40 dark:border-white/10 dark:text-white px-5 py-3 text-[13px]`
 };
 
 export const FooterCTA = () => {
@@ -31,13 +31,13 @@ export const FooterCTA = () => {
         hidden: {
             opacity: 0,
             y: 8,
-            color: "#4F46E5",// 시작 컬러
+            color: "rgb(79 70 229)", // indigo-600
             filter: "blur(4px)"
         },
         visible: {
             opacity: 1,
             y: 0,
-            color: "#1A1A1A", // 최종 컬러
+            color: "currentColor", // 부모 요소의 텍스트 색상을 따르도록 변경
             filter: "blur(0px)",
             transition: {
                 type: "spring",

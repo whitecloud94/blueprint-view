@@ -9,7 +9,7 @@ import {Notice} from "../components/common/feedback/Notice.tsx";
 import {PageTransition} from "../components/layout/PageTransition.tsx";
 
 const STYLES = {
-    main: "w-full max-w-[640px] bg-white rounded-[32px] sm:rounded-[40px] px-5 sm:px-8 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white mt-0",
+    main: "w-full max-w-[640px] bg-white dark:bg-white/[0.03] rounded-[32px] sm:rounded-[40px] px-5 sm:px-8 pt-10 sm:pt-12 pb-6 sm:pb-8 shadow-sm border border-white dark:border-white/[0.08] mt-0",
 };
 
 const PortfolioPage: React.FC = () => {

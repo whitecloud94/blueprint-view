@@ -64,13 +64,13 @@ export const PostCard = ({id, title, excerpt, date, readTime, tags, relatedProje
                 <div className="flex gap-2">
                     {tags.map((tag) => (
                         <span key={tag}
-                              className="px-2.5 py-1 text-[11px] font-medium text-gray-500 bg-white/50 rounded-lg border border-white/20">
+                              className="px-2.5 py-1 text-[11px] font-medium text-gray-500 dark:text-gray-400 bg-white/50 dark:bg-white/5 rounded-lg border border-white/20 dark:border-white/10">
                             #{tag}
                         </span>
                     ))}
                 </div>
                 <div
-                    className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                    className="w-8 h-8 rounded-full bg-white dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
                     <ArrowUpRight size={16}/>
                 </div>
             </div>

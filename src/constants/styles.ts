@@ -1,14 +1,14 @@
 export const COMMON_STYLES = {
-    glass: "bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm",
-    glassMuted: "bg-white/40 backdrop-blur-lg border border-white/30 shadow-sm",
-    glassDark: "bg-gray-900/80 backdrop-blur-xl border border-white/10 shadow-lg text-white",
-    liquidGlass: "bg-white/20 backdrop-blur-2xl border border-white/30",
+    glass: "bg-white/60 dark:bg-white/[0.05] backdrop-blur-xl border border-white/40 dark:border-white/[0.1] shadow-sm",
+    glassMuted: "bg-white/40 dark:bg-white/[0.03] backdrop-blur-lg border border-white/30 dark:border-white/[0.05] shadow-sm",
+    glassDark: "bg-gray-900/80 dark:bg-white/95 backdrop-blur-xl border border-white/10 dark:border-black/10 shadow-lg text-white dark:text-black",
+    liquidGlass: "bg-white/20 dark:bg-white/[0.05] backdrop-blur-2xl border border-white/30 dark:border-white/[0.1]",
 
-    card: "rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl shadow-gray-200/50",
-    innerCard: "bg-white/50 backdrop-blur-md border border-white/60 rounded-[20px] sm:rounded-[24px] transition-all duration-300",
+    card: "rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl shadow-gray-200/50 dark:shadow-none bg-white dark:bg-white/[0.02]",
+    innerCard: "bg-white/50 dark:bg-white/[0.05] backdrop-blur-md border border-white/60 dark:border-white/[0.1] rounded-[20px] sm:rounded-[24px] transition-all duration-300",
 
-    title: "font-black tracking-tight text-gray-900",
-    body: "font-medium text-gray-600",
+    title: "font-black tracking-tight text-gray-900 dark:text-white",
+    body: "font-medium text-gray-600 dark:text-gray-400",
     
     // Section Headers
     sectionHeader: "flex items-center gap-2 text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.2em] text-indigo-500",
@@ -33,21 +33,21 @@ export const GLASS_STYLES = {
 
     // 유리 카드 (기본)
     card: `
-        bg-white/40 backdrop-blur-xl 
-        border border-white/60 
-        shadow-[0_8px_30px_rgba(0,0,0,0.04)] 
+        bg-white/40 dark:bg-white/[0.03] backdrop-blur-xl 
+        border border-white/60 dark:border-white/[0.08]
+        shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-none
         rounded-[24px]
     `,
 
     // 유리 카드 (강조/호버 시)
     cardHover: `
-        hover:bg-white/60 hover:shadow-[0_8px_30px_rgba(79,70,229,0.08)] 
+        hover:bg-white/60 dark:hover:bg-white/[0.06] hover:shadow-[0_8px_30px_rgba(79,70,229,0.08)] 
         hover:-translate-y-1 transition-all duration-300
     `,
 
     // 텍스트 스타일
-    heading: "text-gray-900 font-bold tracking-tight",
-    subtext: "text-gray-500 font-medium",
+    heading: "text-gray-900 dark:text-white font-bold tracking-tight",
+    subtext: "text-gray-500 dark:text-gray-400 font-medium",
 
     // 포인트 컬러
     accent: "text-indigo-600",

@@ -13,7 +13,7 @@ export const SharedLayout = ({ children }: SharedLayoutProps) => {
 
     const config = useMemo(() => ({
         maxWidth: isBlog ? "max-w-[1100px]" : "max-w-[640px]",
-        className: isBlog ? GLASS_STYLES.background : "bg-[#F3F3F3] selection:bg-gray-200"
+        className: "bg-[#F3F3F3] dark:bg-[#121212] selection:bg-gray-200 dark:selection:bg-gray-800"
     }), [isBlog]);
 
     return (
