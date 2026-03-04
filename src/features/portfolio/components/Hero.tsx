@@ -93,15 +93,18 @@ export const Hero = () => {
                 <div className={STYLES.mainContent}>
                     <div className={STYLES.textGroup}>
                         <h1 className={STYLES.title}>
-                            안녕하세요,<br/> 김대경 입니다.
+                            안녕하세요,<br/>
+                            <span className="text-indigo-600">성장을 꿈꾸는</span><br/>
+                            김대경 입니다.
                         </h1>
                         <p className={STYLES.description}>
-                            문제를 조우했을 때<span className={STYLES.highlight}>
+                            현상의
+                            <span className={STYLES.highlight}>
                                 <span className={STYLES.highlightText}>본질 </span>
                                 <span className={STYLES.highlightBg}></span>
                             </span>
-                            이 무엇인지 깊이 고민하는 시간들을 즐깁니다. 또한,
-                            기술로 현재의 불편함을 차근차근 해소하는 과정에서 보람을 느끼며, 언제나 진심을 담아 개발에 임합니다.
+                            에 집중하며, 단순한 코드가 아닌 '가치'를 사용자에게 전달하고자 노력합니다. 
+                            끊임없는 호기심으로 더 나은 해결책을 탐구하고 기록하는 여정을 즐깁니다.
                         </p>
                     </div>
 

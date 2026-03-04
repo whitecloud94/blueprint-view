@@ -40,67 +40,88 @@ export const PROJECTS: Project[] = [
     },
     {
         id: 2,
-        title: 'IBK 기업은행 업무지원 시스템',
+        title: 'IBK 기업은행 업무지원 시스템 재구축',
         period: '2025.05 - 2025.12',
-        sub: '실시간 연계(EAI) 인터페이스 설계 및 구현',
+        sub: 'ERD 설계 및 개발 일정 관리 및 연계 데이터 적재 배치 프로그램 개발 지원',
         icon: <Briefcase size={20} />,
         bg: 'bg-[#1A1A1A]',
         achievements: [
-            "실시간 연계 인터페이스 약 32종 설계 및 구현",
-            "관리자용 배치 모니터링 화면 및 운영관리 메뉴 구현",
-            "시스템 레포트 레이아웃 약 100종 작성"
+            "화면 정의서를 바탕으로 정규화와 인덱스를 고려한 도메인 모델 및 관계형 데이터베이스 설계 수행",
+            "총 4인 규모의 개발 팀 내 리더 역할 수행 중, 개발자 3인의 작업 분배 및 일정 조율을 통해 안정적인 개발 일정 관리",
+            "기획자와 고객사의 요구사항을 분석하여 리스크 관리 및 설계 의도 전달",
+            "React, TypeScript, Spring Boot를 활용한 프로젝트 환경에서 UI 개발과 EAI를 통한 타 시스템 연계 진행"
         ],
-        tech: ["React", "TypeScript", "Spring", "EAI", "EDB"]
+        tech: ["React", "TypeScript", "Java", "Spring Boot", "Spring Batch", "EDB(PostgreSQL)", "Oracle"]
     },
     {
         id: 3,
-        title: 'IBK 기업은행 상시감시 시스템',
-        period: '2024.09 - 2025.05',
-        sub: 'Spring Batch 기반 데이터 처리 및 공통 모듈 구현',
+        title: 'IBK 기업은행 상시감시 시스템 구축',
+        period: '2024.10 - 2025.04',
+        sub: '정보계 데이터 적재 및 처리용 배치 프로그램 구조 설계',
         icon: <ShieldCheck size={20} />,
         bg: 'bg-[#1A1A1A]',
         achievements: [
-            "준실시간 데이터 및 DW 처리 프로그램 구현",
-            "배치 프로그램 공통 모듈 작성",
-            "스케줄링 관리 및 데이터 처리 모니터링"
+            "실시간성과 안정성을 고려한 데이터 처리 로직 구현",
+            "Spring Batch 기반 프로젝트 환경에서 공통 모듈을 작성하여 배치 프로그램 생산성 향상",
+            "타 부서 및 외부 시스템과의 협의를 통해 필요한 데이터를 식별하고 인터페이스를 정의한 후 EAI를 통해 연계 데이터 수신 및 적재"
         ],
-        tech: ["Java", "Spring Batch", "PostgreSQL"]
+        tech: ["React", "TypeScript", "Java", "Spring Boot", "Spring Batch", "EDB(PostgreSQL)", "Oracle"]
     },
     {
         id: 4,
-        title: 'IBK 기업은행 ESG 탄소중립 HUB',
-        period: '2023.01 - 2023.04',
-        sub: '실시간 연계(EAI) 로직 구현 및 관리자 화면 구현',
+        title: 'IBK 기업은행 탄소중립 ESG HUB 시스템 구축',
+        period: '2024.02 - 2024.06',
+        sub: '탄소배출량 관련 데이터 수집·정제 및 시각화 시스템 구축',
         icon: <Leaf size={20} />,
         bg: 'bg-[#1A1A1A]',
-        tech: ["Java", "Spring", "Vue.js", "Oracle"]
+        achievements: [
+            "정보계 및 타 부서 시스템과 협의하여 탄소배출량 관련 인터페이스 정의 및 연계 데이터 항목 설계",
+            "정보계 적재 및 가공 로직 설계, 배치 프로그램 개발 및 스케줄링 총괄",
+            "ESG 관련 정량 데이터의 신뢰성과 실시간성 향상을 위한 배치 구조 최적화 및 공통 코드 적용"
+        ],
+        tech: ["Java", "Spring Boot", "Spring Batch", "EAI", "PostgreSQL(EDB)", "React", "TypeScript"]
     },
     {
         id: 5,
-        title: 'BNK 경남은행 시니어 뱅킹 및 모바일 뱅킹 메인화면 개편',
-        period: '2022.08 - 2022.12',
-        sub: '메인이체, 거래내역조회 등 다수 화면 및 관리자 화면 구현',
-        icon: <Smartphone size={20} />,
+        title: 'IBK 기업은행 투자상품 통합관리 시스템 구축',
+        period: '2023.04 - 2024.11',
+        sub: '비예금형 투자상품 내부통제 시스템 구축',
+        icon: <LineChart size={20} />,
         bg: 'bg-[#1A1A1A]',
-        tech: ["Java", "Android", "Webview", "Oracle"]
+        achievements: [
+            "결재 요청 및 승인 프로세스를 포함한 업무 처리화면 개발, Nexacro 기반의 UI 및 Java Back-end 비즈니스 로직 구현",
+            "외부 시스템과의 연계를 위한 데이터 협의 및 정보계 데이터 수신, 적재 배치 프로그램 설계 및 개발",
+            "일일/주간/월간 단위의 정기 배치 프로그램 설계 및 스케줄링 시스템을 활용한 배치, 로깅 자동화"
+        ],
+        tech: ["IBK Framework", "Java", "Nexacro", "JavaScript", "Oracle", "Tibero", "Clip Report"]
     },
     {
         id: 6,
-        title: 'IBK 기업은행 투자상품 통합관리 시스템',
-        period: '2022.01 - 2022.07',
-        sub: '비즈니스 로직 구현 및 Spring Batch 기반의 DW 데이터 처리 로직 구현',
-        icon: <LineChart size={20} />,
+        title: 'BNK 경남은행 시니어 뱅킹 및 모바일 뱅킹 메인화면 개편',
+        period: '2023.12 - 2024.02',
+        sub: '고령층 고객을 위한 시니어뱅킹 서비스 및 메인화면 고도화',
+        icon: <Smartphone size={20} />,
         bg: 'bg-[#1A1A1A]',
-        tech: ["Java", "Spring Batch", "Oracle"]
+        achievements: [
+            "시니어뱅킹(큰글씨) 서비스 UI 구현 및 접근성을 고려한 반응형 화면 구현",
+            "메인화면 내 주요 메뉴 고도화 및 주요 서비스화면 개발 담당",
+            "관리자 전용 페이지 및 백오피스용 API를 설계, 운영데이터 기반 관리 페이지 기능 구현"
+        ],
+        tech: ["IB20Framwork", "UBIZ30", "Javascript", "JSP", "Spring Framework", "Java", "Oracle"]
     },
     {
         id: 7,
-        title: 'BNK 경남은행 비대면 제증명서 발급 서비스',
-        period: '2021.09 - 2021.12',
-        sub: '레포트 레이아웃 작성 및 비즈니스 로직 구현',
+        title: 'BNK 경남은행 비대면 제증명서 발급 서비스 구축',
+        period: '2022.04 - 2022.09',
+        sub: '공공기관 연계 비대면 제증명서 조회 및 발급 시스템 구축',
         icon: <FileText size={20} />,
         bg: 'bg-[#1A1A1A]',
-        tech: ["Java", "OZ Report", "Oracle"]
+        achievements: [
+            "약 40종 이상의 제증명서 레포트 레이아웃 작성 및 공통 템플릿화",
+            "약 11종의 제증명서 발급 기능 화면 및 서버 비즈니스 로직 구현",
+            "전행 제증명서 발급 현황 통계 및 관리자 기능 제공"
+        ],
+        tech: ["IB20Framework", "UBIZ30", "JavaScript", "JSP", "Spring Framework", "Oracle", "Clip Report"]
     },
 ];
 
@@ -185,44 +206,70 @@ public class TransferService {
 ];
 
 export const RESUME_CONTENT = `
-# 👋 안녕하세요, 김대경입니다.
+# 🛠️ 비즈니스의 가치를 더하는 풀스택 개발자, 김대경입니다.
 
-> **기술은 비즈니스 문제를 해결하기 위한 도구입니다. 복잡한 요구사항을 단순하고 효율적인 로직으로 구현해내는 프로세스 그 자체에 가치를 두고 작업에 임합니다.**
+> **기술은 비즈니스 문제를 해결하기 위한 도구라는 신념 아래, 복잡한 요구사항을 안정적이고 확장 가능한 아키텍처로 구현하는 데 주력합니다.** 
+> 금융권 프로젝트를 수행하며 데이터 정합성과 시스템 안정성을 최우선으로 생각하는 태도를 길렀으며, 다양한 스테이크홀더와의 협업을 통해 프로젝트의 성공을 이끌어내는 경험을 쌓아왔습니다.
 
 ---
 
 ## 💼 Work Experience
 
 ### 🚗 **Toyota Financial Services Korea**
-*Core 시스템 운영관리 | 2025.01 - Present*
+*Core 시스템 운영관리 | 2026.01 - Present*
 
--  **여신 계정계 코어 시스템 운영 및 유지보수**
--  대량 데이터 처리 및 프로세스 최적화
--  금융 규제 준수를 위한 시스템 로직 수정
--  \`Java\`, \`iFramwork\`, \`Tibero\`, \`JEUS\`
+- **여신 계정계 코어 시스템 운영 및 유지보수**
+- 대량 데이터 처리 및 프로세스 최적화
+- 금융 규제 준수를 위한 시스템 로직 수정
+- \`Java\`, \`iFramwork\`, \`Tibero\`, \`JEUS\`
 
-### 🏦 **IBK 기업은행 업무지원 시스템**
-*실시간 연계(EAI) 인터페이스 설계 및 구현 | 2025.05 - 2025.12*
+### 🏦 **IBK 기업은행 업무지원 시스템 재구축**
+*ERD 설계 및 데이터 연계 배치 개발 | 2025.05 - 2025.12*
 
--  **실시간 연계 인터페이스 약 32종 설계 및 구현**
-- ️ 관리자용 배치 모니터링 화면 및 운영관리 메뉴 구현
--  시스템 레포트 레이아웃 약 100종 작성
--  \`React\`, \`TypeScript\`, \`Spring\`, \`EAI\`, \`EDB\`
+- **도메인 모델 및 관계형 데이터베이스 설계 (정규화, 인덱스 최적화)**
+- 개발 팀 리더로서 일정 조율 및 리스크 관리
+- React, TypeScript UI 개발 및 EAI 시스템 연계
+- \`React\`, \`TypeScript\`, \`Spring Boot\`, \`Spring Batch\`, \`EDB\`, \`Oracle\`
 
-### 🛡️ **IBK 기업은행 상시감시 시스템**
-*Spring Batch 기반 데이터 처리 및 공통 모듈 구현 | 2024.09 - 2025.05*
+### 🛡️ **IBK 기업은행 상시감시 시스템 구축**
+*정보계 데이터 적재 및 처리 구조 설계 | 2024.10 - 2025.04*
 
-- **준실시간 데이터 및 DW 처리 프로그램 구현**
-- 배치 프로그램 공통 모듈 작성
-- ️ 스케줄링 관리 및 데이터 처리 모니터링
--  \`Java\`, \`Spring Batch\`, \`PostgreSQL\`
+- **Spring Batch 기반 공통 모듈 작성을 통한 생산성 향상**
+- 실시간성과 안정성을 고려한 데이터 처리 로직 구현
+- 외부 시스템 협의 및 EAI 인터페이스 정의
+- \`Java\`, \`Spring Boot\`, \`Spring Batch\`, \`EDB\`, \`Oracle\`
 
-### 🌿 **IBK 기업은행 ESG 탄소중립 HUB**
-*실시간 연계(EAI) 로직 및 관리자 화면 구현 | 2023.01 - 2023.04*
+### 🌿 **IBK 기업은행 탄소중립 ESG HUB 시스템 구축**
+*ESG 통합 관리 시스템 및 배치 프로세스 구축 | 2024.02 - 2024.06*
 
--  EAI 연계 로직 설계 및 구현
--  관리자 대시보드 및 운영 메뉴 개발
--  \`Java\`, \`Spring\`, \`Vue.js\`, \`Oracle\`
+- **탄소배출량 데이터 수집·정제 및 시각화 시스템 구축**
+- 정보계 연계 데이터 항목 설계 및 배치 스케줄링 총괄
+- 배치 구조 최적화 및 공통 코드 적용으로 데이터 신뢰성 확보
+- \`Java\`, \`Spring Boot\`, \`Spring Batch\`, \`EAI\`, \`PostgreSQL\`, \`React\`
+
+### 📈 **IBK 기업은행 투자상품 통합관리 시스템 구축**
+*내부통제 시스템 및 데이터 연계 개발 | 2023.04 - 2024.11*
+
+- **비예금형 투자상품 모니터링 및 결재 프로세스 구현**
+- Nexacro 기반 UI 및 Java 백엔드 비즈니스 로직 개발
+- 정기 배치 프로그램 설계 및 스케줄링 자동화
+- \`Java\`, \`Nexacro\`, \`Oracle\`, \`Tibero\`, \`Clip Report\`
+
+### 📱 **BNK 경남은행 시니어 뱅킹 및 메인화면 개편**
+*접근성 강화 및 메인 서비스 고도화 | 2023.12 - 2024.02*
+
+- **고령층 고객을 위한 시니어뱅킹(큰글씨) UI 및 반응형 화면 구현**
+- 메인이체, 거래내역조회 등 주요 뱅킹 서비스 개발
+- 관리자 페이지 및 백오피스용 API 설계
+- \`Java\`, \`Spring Framework\`, \`JavaScript\`, \`JSP\`, \`Oracle\`
+
+### 📄 **BNK 경남은행 비대면 제증명서 발급 서비스 구축**
+*레포트 레이아웃 및 발급 시스템 구축 | 2022.04 - 2022.09*
+
+- **40종 이상의 제증명서 레포트 공통 템플릿화**
+- 비대면 채널 증명서 조회 및 단말기 발급 UI/로직 구현
+- 발급 현황 통계 및 관리 기능을 위한 백데이터 처리
+- \`Java\`, \`Spring Framework\`, \`JavaScript\`, \`Oracle\`, \`Clip Report\`
 
 ---
 
@@ -235,7 +282,8 @@ export const RESUME_CONTENT = `
 
 ###  **Frontend**
 - **React / TypeScript**: 현대적인 UI/UX 구현 및 컴포넌트 기반 개발
-- **Vue.js**: 관리자 화면 및 인터랙티브 웹 개발
+- **Nexacro / JavaScript**: 금융권 특화 UI 프레임워크 활용 및 웹 표준 기술 적용
+- **JSP / Web Standard**: 레거시 및 최신 웹 환경 아우르는 프론트엔드 개발
 
 ---
 
@@ -257,9 +305,9 @@ export const RESUME_CONTENT = `
 
 ## 🎓 Others
 
-- **OZ Report / iFramwork**: 금융권 특화 솔루션 활용 능력
-- **EAI (Enterprise Application Integration)**: 시스템 간 실시간 연계 설계 전문가
-- **Continuous Learning**: 새로운 기술 스택(React, TypeScript 등)에 대한 끊임없는 학습과 적용
+- **Clip Report / OZ Report / Nexacro**: 금융권 특화 솔루션 및 리포팅 툴 활용 능력
+- **EAI (Enterprise Application Integration)**: 시스템 간 실시간 연계 설계 및 데이터 적재 프로세스 구축 전문가
+- **Continuous Learning**: 새로운 기술 스택(React, TypeScript 등)에 대한 끊임없는 학습과 실전 적용
 
 ---
 
