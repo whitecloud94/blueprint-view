@@ -19,7 +19,7 @@ export const FooterCTA = () => {
 
     const text = "저의 기술적 여정이 귀사에 가치를 더할 수 있기를 기대합니다."
     const sentenceVariants: Variants = {
-        hidden: { opacity: 1 },
+        hidden: {opacity: 1},
         visible: {
             opacity: 1,
             transition: {
@@ -45,7 +45,7 @@ export const FooterCTA = () => {
                 type: "spring",
                 stiffness: 150,
                 damping: 15,
-                color: { duration: 1.0 } // 색상이 서서히 변하도록 설정
+                color: {duration: 1.0} // 색상이 서서히 변하도록 설정
             }
         },
     };
@@ -64,25 +64,26 @@ export const FooterCTA = () => {
                 variants={sentenceVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
             >
                 {text.split("").map((char, index) => (
                     <motion.span key={index} variants={letterVariants}>
-                        {char === "\n" ? <br /> : char}
+                        {char === "\n" ? <br/> : char}
                     </motion.span>
                 ))}
             </motion.h2>
 
             <motion.div
                 className={STYLES.buttonGroup}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 2.5, type: "spring", stiffness: 100 }}
-                viewport={{ once: true }}
+                initial={{opacity: 0, scale: 0.95}}
+                whileInView={{opacity: 1, scale: 1}}
+                transition={{delay: 2.5, type: "spring", stiffness: 100}}
+                viewport={{once: true}}
             >
 
                 <button className={STYLES.primaryButton} onClick={showDevToast}>
-                    <div className={COMMON_STYLES.innerCard.replace('rounded-[20px] sm:rounded-[24px]', 'rounded-full') + " p-0.5"}>
+                    <div
+                        className={COMMON_STYLES.innerCard.replace('rounded-[20px] sm:rounded-[24px]', 'rounded-full') + " p-0.5"}>
                         <Plus size={10} strokeWidth={4}/>
                     </div>
                     Hire Me

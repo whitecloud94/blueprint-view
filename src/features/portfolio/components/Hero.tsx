@@ -76,7 +76,7 @@ export const Hero = () => {
         if (showCopyToast) return; // 이미 토스트가 떠있으면 중복 방지
         navigator.clipboard.writeText(import.meta.env.VITE_CONTACT_EMAIL).then(() => {
             setShowCopyToast(true);
-            setTimeout(() => setShowCopyToast(false), 2500); 
+            setTimeout(() => setShowCopyToast(false), 2500);
         });
     };
 

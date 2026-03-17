@@ -11,7 +11,7 @@ import {
     Smartphone,
     User
 } from 'lucide-react';
-import { Project, BlogPost } from "../types";
+import {Project, BlogPost} from "../types";
 
 export const NAV_ITEMS = [
     {Icon: Home, label: 'Home', path: '/'},
@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
         title: 'Toyota Financial Core',
         period: '2026.01 - Present',
         sub: "Core시스템 운영관리",
-        icon: <CarFront size={20} />,
+        icon: <CarFront size={20}/>,
         bg: 'bg-indigo-600',
         active: true,
         achievements: [
@@ -43,7 +43,7 @@ export const PROJECTS: Project[] = [
         title: 'IBK 기업은행 업무지원 시스템 재구축',
         period: '2025.05 - 2025.12',
         sub: 'ERD 설계 및 개발 일정 관리 및 연계 데이터 적재 배치 프로그램 개발 지원',
-        icon: <Briefcase size={20} />,
+        icon: <Briefcase size={20}/>,
         bg: 'bg-[#1A1A1A]',
         achievements: [
             "화면 정의서를 바탕으로 정규화와 인덱스를 고려한 도메인 모델 및 관계형 데이터베이스 설계 수행",
@@ -58,7 +58,7 @@ export const PROJECTS: Project[] = [
         title: 'IBK 기업은행 상시감시 시스템 구축',
         period: '2024.10 - 2025.04',
         sub: '정보계 데이터 적재 및 처리용 배치 프로그램 구조 설계',
-        icon: <ShieldCheck size={20} />,
+        icon: <ShieldCheck size={20}/>,
         bg: 'bg-[#1A1A1A]',
         achievements: [
             "실시간성과 안정성을 고려한 데이터 처리 로직 구현",
@@ -72,7 +72,7 @@ export const PROJECTS: Project[] = [
         title: 'IBK 기업은행 탄소중립 ESG HUB 시스템 구축',
         period: '2024.02 - 2024.06',
         sub: '탄소배출량 관련 데이터 수집·정제 및 시각화 시스템 구축',
-        icon: <Leaf size={20} />,
+        icon: <Leaf size={20}/>,
         bg: 'bg-[#1A1A1A]',
         achievements: [
             "정보계 및 타 부서 시스템과 협의하여 탄소배출량 관련 인터페이스 정의 및 연계 데이터 항목 설계",
@@ -86,7 +86,7 @@ export const PROJECTS: Project[] = [
         title: 'IBK 기업은행 투자상품 통합관리 시스템 구축',
         period: '2023.04 - 2024.11',
         sub: '비예금형 투자상품 내부통제 시스템 구축',
-        icon: <LineChart size={20} />,
+        icon: <LineChart size={20}/>,
         bg: 'bg-[#1A1A1A]',
         achievements: [
             "결재 요청 및 승인 프로세스를 포함한 업무 처리화면 개발, Nexacro 기반의 UI 및 Java Back-end 비즈니스 로직 구현",
@@ -100,7 +100,7 @@ export const PROJECTS: Project[] = [
         title: 'BNK 경남은행 시니어 뱅킹 및 모바일 뱅킹 메인화면 개편',
         period: '2023.12 - 2024.02',
         sub: '고령층 고객을 위한 시니어뱅킹 서비스 및 메인화면 고도화',
-        icon: <Smartphone size={20} />,
+        icon: <Smartphone size={20}/>,
         bg: 'bg-[#1A1A1A]',
         achievements: [
             "시니어뱅킹(큰글씨) 서비스 UI 구현 및 접근성을 고려한 반응형 화면 구현",
@@ -114,7 +114,7 @@ export const PROJECTS: Project[] = [
         title: 'BNK 경남은행 비대면 제증명서 발급 서비스 구축',
         period: '2022.04 - 2022.09',
         sub: '공공기관 연계 비대면 제증명서 조회 및 발급 시스템 구축',
-        icon: <FileText size={20} />,
+        icon: <FileText size={20}/>,
         bg: 'bg-[#1A1A1A]',
         achievements: [
             "약 40종 이상의 제증명서 레포트 레이아웃 작성 및 공통 템플릿화",

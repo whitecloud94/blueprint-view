@@ -28,14 +28,14 @@ export const Navigation = () => {
     const {theme, toggleTheme} = useTheme();
     const {isVisible, message, showDevToast} = useToast();
 
-    const isPortfolio = location.pathname === '/';
+    const isBlog = location.pathname.startsWith('/blog');
 
     // 현재 URL(location.pathname)에 따라 활성화될 탭 자동 결정
     const activeTab = useMemo(() => {
         const currentPath = location.pathname;
 
         // 1. 블로그 페이지인 경우
-        if (currentPath.startsWith('/blog')) {
+        if (isBlog) {
             return 'Blog';
         }
 
@@ -90,8 +90,8 @@ export const Navigation = () => {
 
                 {/* 우측 액션 버튼 영역 (기존 유지) */}
                 <div className={STYLES.actionGroup}>
-                    {/* 검색 영역 (포트폴리오에서는 노출 제외) */}
-                    {!isPortfolio && <SearchBar />}
+                    {/* 검색 영역 (블로그 페이지에서만 노출) */}
+                    {isBlog && <SearchBar />}
 
                     <button 
                         className={STYLES.themeButton} 
