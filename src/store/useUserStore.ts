@@ -10,7 +10,6 @@ interface UserState {
   // 액션
   fetchUsers: () => Promise<void>;
   addUser: (user: User) => Promise<void>;
-  removeUser: (id: number) => Promise<void>;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -38,19 +37,6 @@ export const useUserStore = create<UserState>((set) => ({
       }));
     } catch (err: any) {
       set({ error: err.message || '사용자 추가에 실패했습니다.', isLoading: false });
-    }
-  },
-
-  removeUser: async (id: number) => {
-    set({ isLoading: true, error: null });
-    try {
-      await userService.deleteUser(id);
-      set((state) => ({
-        users: state.users.filter((user) => user.id !== id),
-        isLoading: false,
-      }));
-    } catch (err: any) {
-      set({ error: err.message || '사용자 삭제에 실패했습니다.', isLoading: false });
     }
   },
 }));

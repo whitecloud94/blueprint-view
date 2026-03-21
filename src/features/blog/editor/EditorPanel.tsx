@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
-import { Tag as TagIcon, X, Link as LinkIcon } from 'lucide-react';
-import { PROJECTS } from '../../../data';
-import { useBlogStore } from '../../../store/useBlogStore';
-import Select, { SelectOption } from '../../../components/common/Select';
+import React, {useMemo} from 'react';
+import {Link as LinkIcon, Tag as TagIcon, X, Send} from 'lucide-react';
+import {PROJECTS} from '../../../data';
+import {useBlogStore} from '../../../store/useBlogStore';
+import Select, {SelectOption} from '../../../components/common/Select';
+import {postService} from "../../../services/postService.ts";
+import {postSchema} from "../../../schemas/postSchema.ts";
 
 interface EditorPaneProps {
   className?: string;
@@ -13,8 +15,25 @@ const EditorPanel = ({
   className = '',
   isCompact = false,
 }: EditorPaneProps) => {
-  const { formData, currentTag, setFormData, setCurrentTag, addTag, removeTag } = useBlogStore();
+  const { formData, currentTag, setFormData, setCurrentTag, addTag, removeTag, reset } = useBlogStore();
   const { title, content, tags, relatedProjectId } = formData;
+
+  const handlePublish = async () => {
+    const validationResult = postSchema.safeParse(formData);
+    if (!validationResult.success) {
+      alert(validationResult.error.message)
+      return;
+    }
+
+    try {
+      await postService.addPost(validationResult.data);
+      alert('포스트가 성공적으로 등록되었습니다.');
+      reset();
+    } catch (error) {
+      console.error('Failed to add post:', error);
+      alert('포스트 등록에 실패했습니다.');
+    }
+  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ title: e.target.value });
@@ -73,41 +92,51 @@ const EditorPanel = ({
           } font-black bg-transparent border-none outline-none placeholder:text-gray-300 text-gray-900`}
         />
 
-        <div className="flex flex-wrap gap-4 items-center">
-          {/* 프로젝트 연동 */}
-          <Select
-            value={selectedProjectId}
-            onChange={(val) => handleProjectChange(val === 'none' ? null : Number(val))}
-            options={projectOptions}
-            icon={<LinkIcon size={14} />}
-            placeholder="Related Project"
-          />
+        <div className="flex flex-wrap gap-4 items-center justify-between">
+          <div className="flex flex-wrap gap-4 items-center flex-1">
+            {/* 프로젝트 연동 */}
+            <Select
+              value={selectedProjectId}
+              onChange={(val) => handleProjectChange(val === 'none' ? null : Number(val))}
+              options={projectOptions}
+              icon={<LinkIcon size={14} />}
+              placeholder="Related Project"
+            />
 
-          {/* 태그 입력 */}
-          <div className="flex flex-wrap gap-2 items-center flex-1">
-            <div className="flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg border border-indigo-100">
-              <TagIcon size={14} />
-              <input
-                type="text"
-                placeholder="Add tag..."
-                value={currentTag}
-                onChange={handleTagInputChange}
-                onKeyDown={handleAddTag}
-                className="bg-transparent outline-none text-sm font-bold w-20 placeholder:text-indigo-300"
-              />
+            {/* 태그 입력 */}
+            <div className="flex flex-wrap gap-2 items-center flex-1">
+              <div className="flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg border border-indigo-100">
+                <TagIcon size={14} />
+                <input
+                  type="text"
+                  placeholder="Add tag..."
+                  value={currentTag}
+                  onChange={handleTagInputChange}
+                  onKeyDown={handleAddTag}
+                  className="bg-transparent outline-none text-sm font-bold w-20 placeholder:text-indigo-300"
+                />
+              </div>
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="flex items-center gap-1 bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-sm font-bold text-gray-600 shadow-sm"
+                >
+                  #{tag}
+                  <button onClick={() => removeTagHandler(tag)} className="hover:text-red-500">
+                    <X size={12} />
+                  </button>
+                </span>
+              ))}
             </div>
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="flex items-center gap-1 bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-sm font-bold text-gray-600 shadow-sm"
-              >
-                #{tag}
-                <button onClick={() => removeTagHandler(tag)} className="hover:text-red-500">
-                  <X size={12} />
-                </button>
-              </span>
-            ))}
           </div>
+
+          <button
+            onClick={handlePublish}
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl font-bold transition-colors shadow-lg shadow-indigo-200"
+          >
+            <Send size={18} />
+            Publish
+          </button>
         </div>
       </div>
 

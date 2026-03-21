@@ -1,6 +1,6 @@
 import {useMemo} from 'react'; // useMemo 추가
 import {useLocation, useNavigate} from 'react-router-dom'; // 라우터 훅 추가
-import {Moon, Plus, Sun} from "lucide-react";
+import {Moon, Plus, Sun, UserPlus} from "lucide-react";
 import {COMMON_STYLES} from "../../constants/styles";
 import {NAV_ITEMS} from "../../data";
 import {SearchBar} from "./SearchBar";
@@ -92,6 +92,14 @@ export const Navigation = () => {
                 <div className={STYLES.actionGroup}>
                     {/* 검색 영역 (블로그 페이지에서만 노출) */}
                     {isBlog && <SearchBar />}
+
+                    <button
+                        className={STYLES.themeButton}
+                        onClick={() => navigate('/register')}
+                        aria-label="Register User"
+                    >
+                        <UserPlus size={18} className={STYLES.navIcon} />
+                    </button>
 
                     <button 
                         className={STYLES.themeButton} 
