@@ -46,9 +46,9 @@ const AboutPage: React.FC = () => {
                                             <div
                                                 className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-[#F2F2F2] dark:bg-gray-800 border-[4px] sm:border-[6px] border-[#FAFAFA] dark:border-white/10 overflow-hidden shadow-lg shadow-gray-200/50 dark:shadow-none ring-1 ring-black/5 dark:ring-white/5 transition-transform duration-500 hover:scale-105">
                                                 <img
-                                                    src="/MyPhoto.jpg"
+                                                    src="/Glasses.png"
                                                     alt="Profile"
-                                                    className="!block !w-full !h-full !max-w-none !m-0 object-cover object-top scale-150"
+                                                    className="!block !w-full !h-full !max-w-none !m-0 object-cover"
                                                 />
                                             </div>
                                         </div>

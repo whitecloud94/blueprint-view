@@ -27,8 +27,8 @@ export const Sidebar = () => {
                     DK
                 </div>
                 <div>
-                    <h3 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Daekyeong Lee</h3>
-                    <p className="text-xs text-gray-400 dark:text-gray-500">5y+ Java Backend Dev</p>
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Whitecloud</h3>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">DAEKYOUNG KIM</p>
                 </div>
             </div>
 
