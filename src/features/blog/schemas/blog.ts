@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const blogPostSchema = z.object({
-  title_name: z
+  titleName: z
     .string()
     .min(1, '제목을 입력해주세요.')
     .max(300, '제목은 최대 300자까지 가능합니다.'),

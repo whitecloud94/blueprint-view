@@ -11,7 +11,7 @@ import {LiquidToast} from "../common/feedback/LiquidToast.tsx";
 
 const STYLES = {
     wrapper: `w-full transition-all duration-500`,
-    container: `${COMMON_STYLES.glassMuted} dark:bg-black/40 dark:border-white/10 rounded-[24px] p-2 pl-4 sm:pl-6 pr-2 flex justify-between items-center relative`,
+    container: `${COMMON_STYLES.glassMuted} dark:bg-black/40 dark:border-white/10 rounded-[24px] p-2 pl-4 sm:pl-6 pr-2 flex justify-between items-center relative overflow-hidden`,
     iconGroup: `flex gap-4 sm:gap-6 text-gray-400 relative z-10`,
     navIcon: `sm:w-5 sm:h-5`,
     actionGroup: `flex items-center gap-2 sm:gap-3`,
@@ -33,17 +33,22 @@ export const Navigation = () => {
     // 현재 URL(location.pathname)에 따라 활성화될 탭 자동 결정
     const activeTab = useMemo(() => {
         const currentPath = location.pathname;
+        const currentHash = location.hash;
+        const fullPath = currentPath + currentHash;
 
         // 1. 블로그 페이지인 경우
         if (isBlog) {
             return 'Blog';
         }
 
-        // 2. 그 외의 경우 (나중에 해시 링크 로직 등을 정교화 할 수 있음)
-        // 현재는 단순하게 path가 일치하는지 확인
-        const found = NAV_ITEMS.find(item => item.path === currentPath);
-        return found ? found.label : 'Home';
-    }, [location.pathname]);
+        // 2. NAV_ITEMS에서 현재 경로(경로+해시)와 일치하는 항목 찾기
+        const found = NAV_ITEMS.find(item => item.path === fullPath);
+        if (found) return found.label;
+
+        // 3. 해시가 없는 경우 경로만으로 찾기 (기본값 대응)
+        const pathOnlyFound = NAV_ITEMS.find(item => item.path === currentPath);
+        return pathOnlyFound ? pathOnlyFound.label : 'Home';
+    }, [location.pathname, location.hash, isBlog]);
 
     const scrollToElement = (targetId: string) => {
         const element = document.getElementById(targetId);

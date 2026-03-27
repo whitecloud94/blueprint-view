@@ -1,11 +1,12 @@
 export interface PostSaveRequest {
-    title: string;
+    titleName: string;
     content: string;
-    // tags: string[];
+    excerpt?: string;
+    boardStatusCode?: string;
 }
 
 export interface PostSaveResponse extends PostSaveRequest {
-    id: number;
+    postId: number;
     writerName: string;
     createdAt: string;
 }

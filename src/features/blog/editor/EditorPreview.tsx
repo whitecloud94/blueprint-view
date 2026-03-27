@@ -15,7 +15,7 @@ const EditorPreview = ({
   showLiveBadge = false,
 }: PreviewPaneProps) => {
   const { formData } = useBlogStore();
-  const { title_name, content } = formData;
+  const { titleName, content } = formData;
   return (
     <div className={`flex flex-col overflow-hidden ${className}`}>
       {showLiveBadge && (
@@ -26,7 +26,7 @@ const EditorPreview = ({
       <div className="flex-1 overflow-y-auto p-8 sm:p-12 custom-scrollbar">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-6 leading-tight">
-            {title_name || 'Untitled Post'}
+            {titleName || 'Untitled Post'}
           </h1>
           <div className="prose prose-indigo prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900">
             {content ? (

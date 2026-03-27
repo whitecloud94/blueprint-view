@@ -1,8 +1,6 @@
-import React, {useMemo} from 'react';
-import {Link as LinkIcon, Tag as TagIcon, X, Send} from 'lucide-react';
-import {PROJECTS} from '../../../data';
+import React from 'react';
+import {Send} from 'lucide-react';
 import {useBlogStore} from '../../../store/useBlogStore';
-import Select, {SelectOption} from '../../../components/common/Select';
 import {postService} from "../../../services/postService.ts";
 import {postSchema} from "../../../schemas/postSchema.ts";
 
@@ -16,10 +14,10 @@ const EditorPanel = ({
   isCompact = false,
 }: EditorPaneProps) => {
   const { formData, setFormData, reset } = useBlogStore();
-  const { title_name, content } = formData;
+  const { titleName, content } = formData;
 
   const handlePublish = async () => {
-    const postData = { ...formData, writer: 'admin', excerpt: formData.content.substring(0, 100) }; // 나중엔 실제 로그인 유저 정보 연동
+    const postData = { ...formData, writer: 'admin', excerpt: formData.content.substring(0, 100), boardStatusCode: '01' }; // 나중엔 실제 로그인 유저 정보 연동
     const validationResult = postSchema.safeParse(postData);
     if (!validationResult.success) {
       alert(validationResult.error.message)
@@ -37,7 +35,7 @@ const EditorPanel = ({
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ title_name: e.target.value});
+    setFormData({ titleName: e.target.value});
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -50,7 +48,7 @@ const EditorPanel = ({
         <input
           type="text"
           placeholder="Enter post title..."
-          value={title_name}
+          value={titleName}
           onChange={handleTitleChange}
           className={`w-full ${
             isCompact ? 'text-2xl' : 'text-4xl'

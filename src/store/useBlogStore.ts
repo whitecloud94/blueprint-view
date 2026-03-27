@@ -8,7 +8,7 @@ interface BlogState {
 }
 
 const initialState: BlogPostData = {
-  title_name: '',
+  titleName: '',
   content: '',
   excerpt: '',
 };

@@ -2,7 +2,7 @@
 import {PostCard} from '../../features/blog/components/PostCard';
 import {PostCardSkeleton} from '../../features/blog/components/PostCardSkeleton';
 import {BlogLayout} from "../../features/blog/components/BlogLayout";
-import {motion, AnimatePresence} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import {Pencil} from 'lucide-react';
 import {useNavigate} from 'react-router-dom';
 import {COMMON_STYLES} from '../../constants/styles';
@@ -65,10 +65,10 @@ export default function BlogListPage() {
                             {posts.map((post, index) => (
                                 <PostCard
                                     key={index}
-                                    id={post.post_id || index}
-                                    title={post.title_name || ''}
+                                    id={post.postId || index}
+                                    title={post.titleName || ''}
                                     excerpt={post.excerpt}
-                                    date={post.created_at ? new Date(post.created_at).toLocaleDateString() : new Date().toLocaleDateString()}
+                                    date={post.createdAt ? new Date(post.createdAt).toLocaleDateString() : new Date().toLocaleDateString()}
                                     readTime="a few minutes"
                                     tags={[]}
                                     {...post}

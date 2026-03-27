@@ -7,11 +7,10 @@ import remarkGfm from 'remark-gfm';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {GLASS_STYLES} from '../../constants/styles';
-import {motion, AnimatePresence} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import {useEffect, useState} from "react";
 import {postService} from "../../services/postService.ts";
 import {Post} from "../../schemas/postSchema.ts";
-import {PROJECTS} from "../../data";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
 
 export default function PostDetailPage() {
@@ -60,7 +59,7 @@ export default function PostDetailPage() {
                         exit={{ opacity: 0 }}
                         className="flex flex-col items-center justify-center py-20"
                     >
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Post not found</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Post not found</h2>
                         <button 
                             onClick={() => navigate('/blog')}
                             className="text-indigo-600 font-bold flex items-center gap-2"
@@ -80,7 +79,7 @@ export default function PostDetailPage() {
                         <div className="space-y-6">
                             <button 
                                 onClick={() => navigate('/blog')}
-                                className="group flex items-center gap-2 text-gray-500 hover:text-indigo-600 transition-colors font-bold text-sm"
+                                className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-bold text-sm"
                             >
                                 <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                                 Back to List
@@ -88,41 +87,41 @@ export default function PostDetailPage() {
 
                             <div className="space-y-4">
                                 {relatedProject && (
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-xs font-black uppercase tracking-wider">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-black uppercase tracking-wider">
                                         <LinkIcon size={12} />
                                         Related Project: {relatedProject.title}
                                     </div>
                                 )}
-                                <h1 className="text-4xl sm:text-5xl font-black text-gray-900 leading-tight">
-                                    {post.title_name}
+                                <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white leading-tight">
+                                    {post.titleName}
                                 </h1>
                                 
-                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 font-mono">
+                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 dark:text-gray-500 font-mono">
                                     <span className="flex items-center gap-1.5">
-                                        <Calendar size={14}/> {post.created_at ? new Date(post.created_at).toLocaleDateString() : new Date().toLocaleDateString()}
+                                        <Calendar size={14}/> {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : new Date().toLocaleDateString()}
                                     </span>
-                                    <span className="w-1 h-1 rounded-full bg-gray-300"/>
+                                    <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"/>
                                     <span className="flex items-center gap-1.5">
-                                        <Clock size={14}/> {post.updated_at ? new Date(post.updated_at).toLocaleTimeString() : new Date().toLocaleTimeString()}
+                                        <Clock size={14}/> {post.updatedAt ? new Date(post.updatedAt).toLocaleTimeString() : new Date().toLocaleTimeString()}
                                     </span>
                                 </div>
                             </div>
                         </div>
 
                         {/* 본문 콘텐츠 */}
-                        <div className={`${GLASS_STYLES.card} bg-white/80 p-8 sm:p-12`}>
-                            <div className="prose prose-indigo prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900">
+                        <div className={`${GLASS_STYLES.card} bg-white/80 dark:bg-gray-900/40 p-8 sm:p-12`}>
+                            <div className="prose prose-indigo dark:prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
                                 <ReactMarkdown
                                     remarkPlugins={[remarkGfm]}
                                     components={{
                                         h1: ({node, ...props}) => (
-                                            <h1 className="text-4xl font-black text-gray-900 mt-12 mb-6" {...props} />
+                                            <h1 className="text-4xl font-black text-gray-900 dark:text-white mt-12 mb-6" {...props} />
                                         ),
                                         h2: ({node, ...props}) => (
-                                            <h2 className="text-3xl font-black text-gray-900 mt-10 mb-4" {...props} />
+                                            <h2 className="text-3xl font-black text-gray-900 dark:text-white mt-10 mb-4" {...props} />
                                         ),
                                         h3: ({node, ...props}) => (
-                                            <h3 className="text-2xl font-black text-gray-900 mt-8 mb-3" {...props} />
+                                            <h3 className="text-2xl font-black text-gray-900 dark:text-white mt-8 mb-3" {...props} />
                                         ),
                                         code({node, className, children, ...props}: any) {
                                             const match = /language-(\w+)/.exec(className || '');
