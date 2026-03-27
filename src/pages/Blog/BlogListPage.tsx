@@ -1,30 +1,82 @@
 // src/pages/Blog/BlogListPage.tsx
 import {PostCard} from '../../features/blog/components/PostCard';
+import {PostCardSkeleton} from '../../features/blog/components/PostCardSkeleton';
 import {BlogLayout} from "../../features/blog/components/BlogLayout";
-import {MOCK_POSTS} from "../../data";
-import {motion} from 'framer-motion';
+import {motion, AnimatePresence} from 'framer-motion';
 import {Pencil} from 'lucide-react';
 import {useNavigate} from 'react-router-dom';
 import {COMMON_STYLES} from '../../constants/styles';
+import {useEffect, useState} from "react";
+import {postService} from "../../services/postService.ts";
+import {Post} from "../../schemas/postSchema.ts";
 
 export default function BlogListPage() {
     const navigate = useNavigate();
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    
+    useEffect(() => {
+        const fetchPosts = async () => {
+            setIsLoading(true);
+            try {
+                const data = await postService.getPosts();
+                setPosts(data);
+            } catch (error) {
+                console.error("Failed to fetch posts:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchPosts().then(r => console.log(r));
+    }, [])
     return (
         <BlogLayout>
             <div className="space-y-6 relative">
                 {/* 헤더 영역 (선택사항) */}
                 <div className="mb-8 ml-2">
                     <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-2">Latest Posts</h1>
-                    <p className="text-gray-500 dark:text-gray-400">테스트 데이터 및 Mock 데이터를 사용하여 블로그 포스트를 표시합니다.</p>
+                    <p className="text-gray-500 dark:text-gray-400">최신 포스트를 조회합니다.</p>
                 </div>
 
                 {/* 글 목록 렌더링 */}
-                {MOCK_POSTS.map((post) => (
-                    <PostCard
-                        key={post.id}
-                        {...post}
-                    />
-                ))}
+                <AnimatePresence mode="wait">
+                    {isLoading ? (
+                        // 로딩 스켈레톤 UI
+                        <motion.div
+                            key="skeleton"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="space-y-6"
+                        >
+                            {[1, 2, 3].map((i) => (
+                                <PostCardSkeleton key={i} />
+                            ))}
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="content"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="space-y-6"
+                        >
+                            {posts.map((post, index) => (
+                                <PostCard
+                                    key={index}
+                                    id={post.post_id || index}
+                                    title={post.title_name || ''}
+                                    excerpt={post.excerpt}
+                                    date={post.created_at ? new Date(post.created_at).toLocaleDateString() : new Date().toLocaleDateString()}
+                                    readTime="a few minutes"
+                                    tags={[]}
+                                    {...post}
+                                />
+                            ))}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* 플로팅 액션 버튼 (FAB) */}
                 <motion.button

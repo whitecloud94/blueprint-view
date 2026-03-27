@@ -9,6 +9,11 @@ export const postService = {
         return response.data;
     },
 
+    getPostById: async (id: number): Promise<Post> => {
+        const response = await axiosInstance.get<Post>(`${prefix}/posts/${id}`);
+        return response.data;
+    },
+
     addPost: async (post: Post): Promise<Post> => {
         const response = await axiosInstance.post<Post>(`${prefix}/posts`, post);
         return response.data;

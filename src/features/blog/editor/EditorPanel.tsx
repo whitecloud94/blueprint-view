@@ -15,11 +15,12 @@ const EditorPanel = ({
   className = '',
   isCompact = false,
 }: EditorPaneProps) => {
-  const { formData, currentTag, setFormData, setCurrentTag, addTag, removeTag, reset } = useBlogStore();
-  const { title, content, tags, relatedProjectId } = formData;
+  const { formData, setFormData, reset } = useBlogStore();
+  const { title_name, content } = formData;
 
   const handlePublish = async () => {
-    const validationResult = postSchema.safeParse(formData);
+    const postData = { ...formData, writer: 'admin', excerpt: formData.content.substring(0, 100) }; // 나중엔 실제 로그인 유저 정보 연동
+    const validationResult = postSchema.safeParse(postData);
     if (!validationResult.success) {
       alert(validationResult.error.message)
       return;
@@ -36,47 +37,11 @@ const EditorPanel = ({
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ title: e.target.value });
+    setFormData({ title_name: e.target.value});
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({ content: e.target.value });
-  };
-
-  const handleProjectChange = (value: number | null) => {
-    setFormData({ relatedProjectId: value });
-  };
-
-  const projectOptions = useMemo((): SelectOption[] => [
-    { value: 'none', label: 'No Related Project' },
-    ...PROJECTS.map((p) => ({ value: p.id!, label: p.title })),
-  ], []);
-
-  const selectedProjectId = relatedProjectId === null ? 'none' : relatedProjectId;
-
-  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentTag(e.target.value);
-  };
-
-  const handleAddTag = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && currentTag.trim()) {
-      const next = currentTag.trim();
-      const isValid = /^[a-zA-Z0-9-_]{1,20}$/.test(next);
-      if (!isValid) {
-        alert('태그는 영문/숫자, 하이픈(-), 언더스코어(_)만 허용하며 최대 20자입니다.');
-        return;
-      }
-      if (tags.length >= 10) {
-        alert('태그는 최대 10개까지 추가할 수 있습니다.');
-        return;
-      }
-      addTag(next);
-      setCurrentTag('');
-    }
-  };
-
-  const removeTagHandler = (tagToRemove: string) => {
-    removeTag(tagToRemove);
   };
 
   return (
@@ -85,7 +50,7 @@ const EditorPanel = ({
         <input
           type="text"
           placeholder="Enter post title..."
-          value={title}
+          value={title_name}
           onChange={handleTitleChange}
           className={`w-full ${
             isCompact ? 'text-2xl' : 'text-4xl'
@@ -94,40 +59,7 @@ const EditorPanel = ({
 
         <div className="flex flex-wrap gap-4 items-center justify-between">
           <div className="flex flex-wrap gap-4 items-center flex-1">
-            {/* 프로젝트 연동 */}
-            <Select
-              value={selectedProjectId}
-              onChange={(val) => handleProjectChange(val === 'none' ? null : Number(val))}
-              options={projectOptions}
-              icon={<LinkIcon size={14} />}
-              placeholder="Related Project"
-            />
-
-            {/* 태그 입력 */}
-            <div className="flex flex-wrap gap-2 items-center flex-1">
-              <div className="flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg border border-indigo-100">
-                <TagIcon size={14} />
-                <input
-                  type="text"
-                  placeholder="Add tag..."
-                  value={currentTag}
-                  onChange={handleTagInputChange}
-                  onKeyDown={handleAddTag}
-                  className="bg-transparent outline-none text-sm font-bold w-20 placeholder:text-indigo-300"
-                />
-              </div>
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="flex items-center gap-1 bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-sm font-bold text-gray-600 shadow-sm"
-                >
-                  #{tag}
-                  <button onClick={() => removeTagHandler(tag)} className="hover:text-red-500">
-                    <X size={12} />
-                  </button>
-                </span>
-              ))}
-            </div>
+            {/* 태그 및 프로젝트 연동 기능은 추후 테이블 설계 완료 후 추가 예정 */}
           </div>
 
           <button
