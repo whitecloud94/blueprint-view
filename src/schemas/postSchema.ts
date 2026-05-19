@@ -1,18 +1,48 @@
 import { z } from 'zod';
+import { auditFieldsSchema } from './auditSchema';
 
-export const postSchema = z.object({
-  postId: z.number().optional(),
-  titleName: z.string().min(1, '제목을 입력해주세요.').max(300, '제목은 최대 300자까지 가능합니다.').nullable(),
-  content: z.string().min(1, '내용을 입력해주세요.').nullable(),
-  excerpt: z.string().max(200, '요약은 최대 200자까지 가능합니다.').nullable(),
-  writer: z.string().min(1, '작성자는 필수입니다.').max(100).default('admin').nullable(),
-  boardStatusCode: z.string().max(10).default('01').nullable(),
-  viewCount: z.number().default(0).nullable(),
-  likeCount: z.number().default(0).nullable(),
-  createdAt: z.string().datetime().optional(),
-  createdBy: z.string().max(50).optional(),
-  updatedAt: z.string().datetime().optional(),
-  updatedBy: z.string().max(50).optional(),
+export const postSchema = z
+  .object({
+    postId: z.number().optional(),
+    titleName: z.string().min(1, '제목을 입력해주세요.').max(300),
+    content: z.string().min(1, '내용을 입력해주세요.'),
+    excerpt: z.string().max(200, '요약은 최대 200자까지 가능합니다.').optional(),
+    writer: z.string().min(1).max(100),
+    boardStatusCode: z.string().max(10),
+    viewCount: z.number().optional(),
+    likeCount: z.number().optional(),
+  })
+  .extend(auditFieldsSchema.shape);
+
+export type Post = z.output<typeof postSchema>;
+
+export const postSaveRequestSchema = z.object({
+  titleName: z.string().min(1, '제목을 입력해주세요.').max(300),
+  content: z.string().min(1, '내용을 입력해주세요.'),
+  excerpt: z.string().max(200, '요약은 최대 200자까지 가능합니다.').optional(),
+  writer: z.string().min(1).max(100).default('admin'),
+  boardStatusCode: z.string().max(10).default('01'),
 });
-export type Post = z.infer<typeof postSchema>;
-export type PostInput = z.input<typeof postSchema>;
+
+export type PostSaveRequest = z.output<typeof postSaveRequestSchema>;
+
+export const postSaveResponseSchema = postSchema.pick({
+  postId: true,
+  titleName: true,
+  content: true,
+  excerpt: true,
+  writer: true,
+  boardStatusCode: true,
+  createdAt: true,
+  createdBy: true,
+});
+
+export type PostSaveResponse = z.output<typeof postSaveResponseSchema>;
+
+export const postFormSchema = z.object({
+  titleName: z.string().min(1, '제목을 입력해주세요.').max(300),
+  content: z.string().min(1, '내용을 입력해주세요.'),
+  excerpt: z.string().max(200, '요약은 최대 200자까지 가능합니다').optional(),
+});
+
+export type PostFormData = z.infer<typeof postFormSchema>;

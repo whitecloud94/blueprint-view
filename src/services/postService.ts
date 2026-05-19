@@ -1,22 +1,19 @@
-import axiosInstance from "../api/axiosInstance.ts";
-import {Post} from "../schemas/postSchema.ts";
-
-const prefix = "http://localhost:8080/api/v1"
+import axiosInstance from '../api/axiosInstance';
+import type { Post, PostSaveRequest, PostSaveResponse } from '../schemas/postSchema';
 
 export const postService = {
-    getPosts: async (): Promise<Post[]> => {
-        const response = await axiosInstance.get<Post[]>(`${prefix}/posts`);
-        return response.data;
-    },
+  getPosts: async (): Promise<Post[]> => {
+    const { data } = await axiosInstance.get<Post[]>('/posts');
+    return data;
+  },
 
-    getPostById: async (id: number): Promise<Post> => {
-        const response = await axiosInstance.get<Post>(`${prefix}/posts/${id}`);
-        return response.data;
-    },
+  getPostById: async (id: number): Promise<Post> => {
+    const { data } = await axiosInstance.get<Post>(`/posts/${id}`);
+    return data;
+  },
 
-    addPost: async (post: Post): Promise<Post> => {
-        const response = await axiosInstance.post<Post>(`${prefix}/posts`, post);
-        return response.data;
-    }
+  addPost: async (payload: PostSaveRequest): Promise<PostSaveResponse> => {
+    const { data } = await axiosInstance.post<PostSaveResponse>('/posts', payload);
+    return data;
+  },
 };
-

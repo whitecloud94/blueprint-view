@@ -11,7 +11,7 @@ import {
     Smartphone,
     User
 } from 'lucide-react';
-import {Project, BlogPost} from "../types";
+import { Project, PostDisplay } from '../types';
 
 export const NAV_ITEMS = [
     {Icon: Home, label: 'Home', path: '/'},
@@ -125,10 +125,10 @@ export const PROJECTS: Project[] = [
     },
 ];
 
-export const MOCK_POSTS: BlogPost[] = [
+export const MOCK_POSTS: PostDisplay[] = [
     {
-        id: 1,
-        title: "Building a Liquid Glass UI with React & Tailwind",
+        postId: 1,
+        titleName: "Building a Liquid Glass UI with React & Tailwind",
         excerpt: "현대적인 웹 디자인 트렌드인 리퀴드 글래스(Liquid Glass) 효과를 Tailwind CSS와 Framer Motion을 사용하여 구현하는 방법을 상세하게 알아봅니다.",
         content: `
 # Building a Liquid Glass UI with React & Tailwind
@@ -161,14 +161,16 @@ Tailwind CSS의 \`backdrop-blur\` 유틸리티 클래스를 사용하면 손쉽�
 3. **블러 효과**: \`backdrop-blur-md\` 또는 \`backdrop-blur-xl\`을 사용합니다.
 4. **테두리 디테일**: \`border border-white/20\`으로 유리 조각의 끝부분을 표현합니다.
         `,
-        date: "2026.01.26",
+        writer: 'admin',
+        boardStatusCode: '01',
+        createdAt: '2026-01-26T00:00:00',
         readTime: "5 min read",
         tags: ["React", "Design System", "Tailwind"],
         relatedProjectId: 1
     },
     {
-        id: 2,
-        title: "Spring Boot Transaction Management",
+        postId: 2,
+        titleName: "Spring Boot Transaction Management",
         excerpt: "금융권 프로젝트에서 경험한 트랜잭션 격리 수준과 전파 속성에 대한 심층 분석. 데이터 정합성을 지키기 위한 고군분투기.",
         content: `
 # Spring Boot Transaction Management
@@ -199,7 +201,9 @@ public class TransferService {
 ### 격리 수준 (Isolation Level)
 금융 시스템에서는 보통 \`READ_COMMITTED\`를 기본으로 사용하며, 특정 통계나 마감 작업 시 \`SERIALIZABLE\`을 고려하기도 합니다.
         `,
-        date: "2026.01.20",
+        writer: 'admin',
+        boardStatusCode: '01',
+        createdAt: '2026-01-20T00:00:00',
         readTime: "12 min read",
         tags: ["Spring Boot", "Database", "Backend"]
     }

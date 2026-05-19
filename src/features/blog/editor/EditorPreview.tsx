@@ -1,21 +1,21 @@
 import React from 'react';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
-import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import {useBlogStore} from '../../../store/useBlogStore';
+import { useFormContext, useWatch } from 'react-hook-form';
+import type { PostFormData } from '../../../schemas/postSchema';
 
 interface PreviewPaneProps {
   className?: string;
   showLiveBadge?: boolean;
 }
 
-const EditorPreview = ({
-  className = '',
-  showLiveBadge = false,
-}: PreviewPaneProps) => {
-  const { formData } = useBlogStore();
-  const { titleName, content } = formData;
+const EditorPreview = ({ className = '', showLiveBadge = false }: PreviewPaneProps) => {
+  const { control } = useFormContext<PostFormData>();
+  const titleName = useWatch({ control, name: 'titleName' });
+  const content = useWatch({ control, name: 'content' });
+
   return (
     <div className={`flex flex-col overflow-hidden ${className}`}>
       {showLiveBadge && (
@@ -33,17 +33,17 @@ const EditorPreview = ({
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  h1: ({ node, ...props }) => (
+                  h1: ({ ...props }) => (
                     <h1 className="text-4xl font-black text-gray-900 mt-12 mb-6" {...props} />
                   ),
-                  h2: ({ node, ...props }) => (
+                  h2: ({ ...props }) => (
                     <h2 className="text-3xl font-black text-gray-900 mt-10 mb-4" {...props} />
                   ),
-                  h3: ({ node, ...props }) => (
+                  h3: ({ ...props }) => (
                     <h3 className="text-2xl font-black text-gray-900 mt-8 mb-3" {...props} />
                   ),
-                  code({ node, className, children, ...props }: any) {
-                    const match = /language-(\w+)/.exec(className || '');
+                  code({ className: codeClassName, children, ...props }) {
+                    const match = /language-(\w+)/.exec(codeClassName || '');
                     const isInline = !match;
                     return !isInline ? (
                       <SyntaxHighlighter
@@ -55,7 +55,7 @@ const EditorPreview = ({
                         {String(children).replace(/\n$/, '')}
                       </SyntaxHighlighter>
                     ) : (
-                      <code className={className} {...props}>
+                      <code className={codeClassName} {...props}>
                         {children}
                       </code>
                     );

@@ -1,40 +1,40 @@
-import axios from 'axios';
+import axios, { type AxiosError } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
-  timeout: 10000,
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api/v1',
+  timeout: 10_000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// 요청 인터셉터
-axiosInstance.interceptors.request.use(
-  (config) => {
-    // 예: 로컬 스토리지에서 토큰 가져오기
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  return config;
+});
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('accessToken');
+    }
+    return Promise.reject(error);
+  },
 );
 
-// 응답 인터셉터
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    // 에러 공통 처리 (예: 401 Unauthorized)
-    if (error.response?.status === 401) {
-      // 로그아웃 처리 등
-    }
-    return Promise.reject(error);
+export function getAxiosErrorMessage(error: unknown, fallback = '요청 처리 중 오류가 발생했습니다.'): string {
+  if (axios.isAxiosError(error)) {
+    const data = error.response?.data as { message?: string } | undefined;
+    return data?.message ?? error.message;
   }
-);
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return fallback;
+}
 
 export default axiosInstance;
