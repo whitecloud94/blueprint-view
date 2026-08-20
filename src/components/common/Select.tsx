@@ -47,17 +47,17 @@ const Select = ({
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-2 text-sm font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 ${
           isOpen
-            ? 'bg-white border-indigo-200 text-indigo-600 shadow-sm'
-            : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100'
+            ? 'bg-white dark:bg-white/10 border-indigo-200 dark:border-indigo-500/50 text-indigo-600 dark:text-indigo-400 shadow-sm'
+            : 'bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10'
         }`}
       >
-        {icon && <span className={isOpen ? 'text-indigo-500' : 'text-gray-400'}>{icon}</span>}
+        {icon && <span className={isOpen ? 'text-indigo-500 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500'}>{icon}</span>}
         <span className="truncate max-w-[200px]">
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <ChevronDown
           size={14}
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-indigo-500' : 'text-gray-400'}`}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-indigo-500 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500'}`}
         />
       </button>
 
@@ -68,7 +68,7 @@ const Select = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className={`absolute top-full left-0 mt-2 w-72 z-50 overflow-hidden ${COMMON_STYLES.glass} rounded-2xl p-1.5 shadow-xl border border-white/40`}
+            className={`absolute top-full left-0 mt-2 w-72 z-50 overflow-hidden ${COMMON_STYLES.glass} rounded-2xl p-1.5 shadow-xl border border-white/40 dark:border-white/10`}
           >
             <div className="max-h-60 overflow-y-auto custom-scrollbar">
               {options.map((option) => (
@@ -81,8 +81,8 @@ const Select = ({
                   }}
                   className={`w-full flex items-center justify-between px-3 py-2 text-sm font-bold rounded-xl transition-all duration-200 ${
                     value === option.value
-                      ? 'bg-indigo-50 text-indigo-600'
-                      : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                      ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
+                      : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/10 hover:text-gray-700 dark:hover:text-gray-200'
                   }`}
                 >
                   <span className="truncate mr-2 text-left">{option.label}</span>

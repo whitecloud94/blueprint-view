@@ -1,21 +1,39 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, AlertTriangle } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
 const TOAST_STYLES = {
     container: `
     fixed bottom-20 left-0 right-0 mx-auto z-[200]
     flex items-center gap-3 px-6 py-4
-    bg-white/50 backdrop-blur-3xl
-    rounded-[24px] border border-white/40
+    bg-white/50 dark:bg-black/50 backdrop-blur-3xl
+    rounded-[24px] border border-white/40 dark:border-white/10
     shadow-[0_20px_50px_rgba(0,0,0,0.1)]
     w-fit min-w-[280px] justify-center
   `,
-    iconBox: "w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200 flex-shrink-0",
-    text: "font-sans font-bold text-gray-900 text-[14px] tracking-tight whitespace-nowrap",
+    text: "font-sans font-bold text-gray-900 dark:text-white text-[14px] tracking-tight whitespace-nowrap",
 };
 
-export const LiquidToast = ({ isVisible, message }: { isVisible: boolean, message: string }) => {
+const VARIANT_CONFIG = {
+    success: {
+        icon: Check,
+        iconBox: "bg-indigo-600 shadow-indigo-200 dark:shadow-none",
+    },
+    error: {
+        icon: AlertTriangle,
+        iconBox: "bg-red-500 shadow-red-200 dark:shadow-none",
+    },
+};
+
+interface LiquidToastProps {
+    isVisible: boolean;
+    message: string;
+    variant?: 'success' | 'error';
+}
+
+export const LiquidToast = ({ isVisible, message, variant = 'success' }: LiquidToastProps) => {
+    const { icon: Icon, iconBox } = VARIANT_CONFIG[variant];
+
     return createPortal(
         <AnimatePresence>
             {isVisible && (
@@ -26,12 +44,12 @@ export const LiquidToast = ({ isVisible, message }: { isVisible: boolean, messag
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     className={TOAST_STYLES.container}
                 >
-                    <div className={TOAST_STYLES.iconBox}>
-                        <Check size={14} strokeWidth={4} />
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-white shadow-lg flex-shrink-0 ${iconBox}`}>
+                        <Icon size={14} strokeWidth={3} />
                     </div>
                     <span className={TOAST_STYLES.text}>{message}</span>
 
-                    <div className="absolute inset-0 rounded-[24px] pointer-events-none border-t border-white/60" />
+                    <div className="absolute inset-0 rounded-[24px] pointer-events-none border-t border-white/60 dark:border-white/10" />
                 </motion.div>
             )}
         </AnimatePresence>,

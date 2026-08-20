@@ -1,8 +1,8 @@
 const STYLES = {
     wrapper: "mt-10 sm:mt-12 text-center space-y-2 pb-4 px-4",
-    text: "text-[11px] sm:text-[12px] text-gray-400 font-medium",
-    subText: "text-[11px] sm:text-[12px] text-gray-300",
-    link: "underline decoration-gray-300"
+    text: "text-[11px] sm:text-[12px] text-gray-400 dark:text-gray-500 font-medium",
+    subText: "text-[11px] sm:text-[12px] text-gray-300 dark:text-gray-600",
+    link: "underline decoration-gray-300 dark:decoration-gray-600"
 };
 
 export const FooterInfo = () => (

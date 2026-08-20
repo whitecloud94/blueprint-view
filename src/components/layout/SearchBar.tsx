@@ -3,6 +3,7 @@ import {AnimatePresence, motion} from 'framer-motion';
 import {Search} from "lucide-react";
 import {useToast} from "../../hooks/useToast.ts";
 import {LiquidToast} from "../common/feedback/LiquidToast.tsx";
+import {useTheme} from "../../context/ThemeContext.tsx";
 
 interface SearchBarProps {
     className?: string;
@@ -13,7 +14,8 @@ export const SearchBar = ({ className = "" }: SearchBarProps) => {
     const [searchValue, setSearchValue] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
     const [isFocused, setIsFocused] = useState(false);
-    const {isVisible, message, showDevToast} = useToast();
+    const {isVisible, message, showToast} = useToast();
+    const {theme} = useTheme();
 
     // 검색창이 열릴 때 자동으로 포커스
     useEffect(() => {
@@ -26,6 +28,9 @@ export const SearchBar = ({ className = "" }: SearchBarProps) => {
         setIsSearchOpen(!isSearchOpen);
     };
 
+    const pillBg = theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+    const pillBorder = theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)';
+
     return (
         <div
             className={`flex items-center ${className}`}
@@ -36,8 +41,8 @@ export const SearchBar = ({ className = "" }: SearchBarProps) => {
                 initial={false}
                 animate={{
                     width: isSearchOpen ? (typeof window !== 'undefined' && window.innerWidth < 640 ? 180 : 240) : 40,
-                    backgroundColor: isSearchOpen ? 'rgba(0, 0, 0, 0.06)' : 'transparent',
-                    borderColor: isSearchOpen ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
+                    backgroundColor: isSearchOpen ? pillBg : 'transparent',
+                    borderColor: isSearchOpen ? pillBorder : 'transparent',
                 }}
                 className="flex items-center overflow-hidden rounded-full border border-transparent"
                 transition={{ type: "spring", stiffness: 600, damping: 40 }}
@@ -45,7 +50,7 @@ export const SearchBar = ({ className = "" }: SearchBarProps) => {
                 <button
                     onClick={handleToggle}
                     className={`p-2 shrink-0 transition-colors flex items-center justify-center ${
-                        isSearchOpen ? 'text-black' : 'text-gray-400 hover:text-black'
+                        isSearchOpen ? 'text-black dark:text-white' : 'text-gray-400 hover:text-black dark:hover:text-white'
                     }`}
                     aria-label="Search"
                 >
@@ -66,11 +71,11 @@ export const SearchBar = ({ className = "" }: SearchBarProps) => {
                             onBlur={() => setIsFocused(false)}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
-                                    showDevToast();
+                                    showToast("검색 기능은 준비 중이에요");
                                 }
                             }}
                             placeholder="검색어를 입력해주세요"
-                            className="bg-transparent border-none outline-none text-[13px] text-gray-900 placeholder:text-gray-400 font-medium pl-1 pr-4 w-full"
+                            className="bg-transparent border-none outline-none text-[13px] text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 font-medium pl-1 pr-4 w-full"
                         />
                     )}
                 </AnimatePresence>

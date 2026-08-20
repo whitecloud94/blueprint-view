@@ -15,8 +15,8 @@ export const COMMON_STYLES = {
     dot: "w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]",
 
     // Typography
-    modalTitle: "text-[28px] sm:text-[36px] font-black text-white leading-[1.1] tracking-tight",
-    modalBody: "text-[16px] sm:text-[17px] text-white/80 leading-[1.85] font-medium tracking-tight",
+    modalTitle: "text-[28px] sm:text-[36px] font-black text-gray-900 dark:text-white leading-[1.1] tracking-tight",
+    modalBody: "text-[16px] sm:text-[17px] text-gray-600 dark:text-white/80 leading-[1.85] font-medium tracking-tight",
     badgeText: "text-[11px] font-black tracking-widest",
 
     // Buttons
