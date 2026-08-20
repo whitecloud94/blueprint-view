@@ -16,11 +16,16 @@ export const postSchema = z
 
 export type Post = z.output<typeof postSchema>;
 
+/**
+ * 게시글 저장 요청.
+ *
+ * writer 를 담지 않는다. 작성자는 서버가 인증된 토큰의 주체에서 결정하며,
+ * 클라이언트가 보낸 값은 무시된다.
+ */
 export const postSaveRequestSchema = z.object({
   titleName: z.string().min(1, '제목을 입력해주세요.').max(300),
   content: z.string().min(1, '내용을 입력해주세요.'),
   excerpt: z.string().max(200, '요약은 최대 200자까지 가능합니다.').optional(),
-  writer: z.string().min(1).max(100).default('admin'),
   boardStatusCode: z.string().max(10).default('01'),
 });
 

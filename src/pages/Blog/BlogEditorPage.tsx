@@ -75,8 +75,7 @@ export default function BlogEditorPage() {
     try {
       const payload = postSaveRequestSchema.parse({
         ...data,
-        excerpt: data.excerpt ?? data.content.slice(0, 200),
-        writer: 'admin',
+        excerpt: data.excerpt?.trim() || data.content.slice(0, 200),
         boardStatusCode: '01',
       });
       await postService.addPost(payload);
