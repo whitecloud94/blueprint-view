@@ -1,13 +1,12 @@
 import {useMemo} from 'react'; // useMemo 추가
 import {useLocation, useNavigate} from 'react-router-dom'; // 라우터 훅 추가
-import {Moon, Plus, Sun, UserPlus} from "lucide-react";
+import {LogIn, LogOut, Moon, Plus, Sun} from "lucide-react";
 import {COMMON_STYLES} from "../../constants/styles";
 import {NAV_ITEMS} from "../../data";
 import {SearchBar} from "./SearchBar";
 import {NavItem} from "./NavItem";
 import {useTheme} from "../../context/ThemeContext.tsx";
-import {useToast} from "../../hooks/useToast.ts";
-import {LiquidToast} from "../common/feedback/LiquidToast.tsx";
+import {useAuthActions, useAuthStatus, useCurrentUser} from "../../store/useAuthStore";
 
 const STYLES = {
     wrapper: `w-full transition-all duration-500`,
@@ -16,6 +15,7 @@ const STYLES = {
     navIcon: `sm:w-5 sm:h-5`,
     actionGroup: `flex items-center gap-2 sm:gap-3`,
     themeButton: `text-gray-400 hover:text-black dark:hover:text-white transition-transform p-2 hover:rotate-12 duration-300`,
+    userName: `hidden sm:inline max-w-[120px] truncate text-[12px] font-bold text-gray-500 dark:text-gray-400`,
     hireButton: `${COMMON_STYLES.glassDark} dark:bg-white dark:text-black dark:border-white/20 px-3 sm:px-5 py-2 sm:py-2.5 rounded-[14px] sm:rounded-[16px] text-[11px] sm:text-[13px] font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-black dark:hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all`,
     plusIconWrapper: "bg-white/20 dark:bg-black/10 rounded-full p-0.5",
     hireMeLabel: "hidden xs:inline",
@@ -26,7 +26,10 @@ export const Navigation = () => {
     const navigate = useNavigate(); // 페이지 이동 함수
     const location = useLocation(); // 현재 URL 정보
     const {theme, toggleTheme} = useTheme();
-    const {isVisible, message, showDevToast} = useToast();
+    const authStatus = useAuthStatus();
+    const currentUser = useCurrentUser();
+    const {signOut} = useAuthActions();
+    const isAuthenticated = authStatus === 'authenticated';
 
     const isBlog = location.pathname.startsWith('/blog');
 
@@ -98,12 +101,22 @@ export const Navigation = () => {
                     {/* 검색 영역 (블로그 페이지에서만 노출) */}
                     {isBlog && <SearchBar />}
 
+                    {isAuthenticated && (
+                        <span className={STYLES.userName} title={currentUser?.userName}>
+                            {currentUser?.userName}
+                        </span>
+                    )}
+
                     <button
                         className={STYLES.themeButton}
-                        onClick={() => navigate('/register')}
-                        aria-label="Register User"
+                        onClick={() => (isAuthenticated ? signOut() : navigate('/login'))}
+                        aria-label={isAuthenticated ? '로그아웃' : '로그인'}
                     >
-                        <UserPlus size={18} className={STYLES.navIcon} />
+                        {isAuthenticated ? (
+                            <LogOut size={18} className={STYLES.navIcon} />
+                        ) : (
+                            <LogIn size={18} className={STYLES.navIcon} />
+                        )}
                     </button>
 
                     <button 
@@ -118,14 +131,16 @@ export const Navigation = () => {
                         )}
                     </button>
 
-                    <button className={STYLES.hireButton} onClick={showDevToast}>
+                    <a
+                        href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL}?subject=${encodeURIComponent('채용 문의')}`}
+                        className={STYLES.hireButton}
+                    >
                         <div className={STYLES.plusIconWrapper}>
                             <Plus size={10} strokeWidth={4} />
                         </div>
                         <span className={STYLES.hireMeLabel}>Hire Me</span>
                         <span className={STYLES.hireLabel}>Hire</span>
-                    </button>
-                    <LiquidToast isVisible={isVisible} message={message} />
+                    </a>
                 </div>
             </div>
         </nav>

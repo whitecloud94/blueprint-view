@@ -1,4 +1,3 @@
 export * from './auditSchema';
+export * from './authSchema';
 export * from './postSchema';
-export * from './userSchema';
-export * from './permissionSchema';
