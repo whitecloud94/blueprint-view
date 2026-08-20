@@ -1,24 +1,22 @@
 import {Copy, Plus} from 'lucide-react';
 import {useState} from "react";
+import {motion} from "framer-motion";
 import {COMMON_STYLES} from "../../../constants/styles.ts";
 import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
-import {useToast} from "../../../hooks/useToast.ts";
 
 const STATUS_CONFIG = {
     RUNTIME: {
         code: "RUNTIME",
         comment: "재직 중",
         description: "2025.01.02 ~",
-        dotClass: "bg-indigo-500 animate-pulse",
-        pingClass: "bg-indigo-400",
+        dotClass: "bg-indigo-500",
         badgeClass: "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-800/50",
     },
     COMPILE: {
         code: "COMPILE",
         comment: "구직 중",
         description: "새로운 도약을 위해 빌드 중 (Open to Work)",
-        dotClass: "bg-emerald-500 animate-bounce",
-        pingClass: "bg-emerald-400",
+        dotClass: "bg-emerald-500",
         badgeClass: "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800/50",
     },
     DEBUG: {
@@ -26,7 +24,6 @@ const STATUS_CONFIG = {
         comment: "학습 중",
         description: "기존 로직 개선 및 새로운 기술 스택 학습 중",
         dotClass: "bg-amber-500",
-        pingClass: "bg-amber-400",
         badgeClass: "bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border-amber-100 dark:border-amber-800/50",
     }
 };
@@ -57,8 +54,7 @@ const STYLES = {
     badgeLayout: "flex flex-col items-center gap-2 w-full font-mono tracking-tight",
     badgeContainer: "h-8 flex items-center justify-center w-full",
     statusIndicator: "relative flex items-center justify-center w-2.5 h-2.5",
-    statusPing: "absolute w-full h-full rounded-full opacity-75 animate-ping",
-    statusDot: "relative w-1.5 h-1.5 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.2)]",
+    statusDot: "w-1.5 h-1.5 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.2)]",
     statusCode: "shrink-0 uppercase",
     statusDetail: "flex items-center gap-1.5 max-w-0 opacity-0 transition-all duration-500 ease-in-out overflow-hidden whitespace-nowrap sm:group-hover:max-w-[160px] sm:group-hover:opacity-100",
     statusCommentPrefix: "text-current opacity-30 ml-1",
@@ -70,7 +66,6 @@ export const Hero = () => {
     // 현재 상태 TODO - (추후 useState 등으로 관리)
     const [isExpanded, setIsExpanded] = useState(false);
     const [showCopyToast, setShowCopyToast] = useState(false);
-    const {isVisible: isDevVisible, message: devMessage, showDevToast} = useToast();
 
     const handleCopyEmail = () => {
         if (showCopyToast) return; // 이미 토스트가 떠있으면 중복 방지
@@ -111,12 +106,15 @@ export const Hero = () => {
                     </div>
 
                     <div className={STYLES.buttonGroup}>
-                        <button className={STYLES.primaryButton} onClick={showDevToast}>
+                        <a
+                            href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL}?subject=${encodeURIComponent('채용 문의')}`}
+                            className={STYLES.primaryButton}
+                        >
                             <div className={STYLES.primaryButtonIcon}>
                                 <Plus size={10} strokeWidth={4}/>
                             </div>
                             Hire Me
-                        </button>
+                        </a>
                         <button
                             className={STYLES.secondaryButton}
                             onClick={handleCopyEmail}
@@ -124,7 +122,6 @@ export const Hero = () => {
                             <Copy size={14}/> Copy Email
                         </button>
                         <LiquidToast isVisible={showCopyToast} message="이메일 주소가 복사되었습니다"/>
-                        <LiquidToast isVisible={isDevVisible} message={devMessage}/>
                     </div>
                 </div>
 
@@ -150,8 +147,11 @@ export const Hero = () => {
                                 onClick={() => setIsExpanded(!isExpanded)}
                             >
                                 <div className={STYLES.statusIndicator}>
-                                    <div className={`${STYLES.statusPing} ${status.pingClass}`}/>
-                                    <div className={`${STYLES.statusDot} ${status.dotClass}`}/>
+                                    <motion.div
+                                        className={`${STYLES.statusDot} ${status.dotClass}`}
+                                        animate={{opacity: [0.5, 1, 0.5]}}
+                                        transition={{duration: 2.5, repeat: Infinity, ease: "easeInOut"}}
+                                    />
                                 </div>
 
                                 <span className={STYLES.statusCode}>{status.code}</span>

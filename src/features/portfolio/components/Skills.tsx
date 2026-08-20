@@ -17,6 +17,7 @@ const STYLES = {
     skillTag: `text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 dark:bg-white/5 backdrop-blur-sm px-2 py-1 rounded-md tracking-wider border border-black/5 dark:border-white/5`,
     skillArrow: "text-gray-300 group-hover:text-black transition-colors",
     header: `${COMMON_STYLES.sectionHeader} px-4 sm:px-6 py-4`,
+    listWrapper: "flex flex-col gap-1.5",
     dot: COMMON_STYLES.dot,
 };
 
@@ -61,9 +62,11 @@ export const Skills = () => {
                 <div className={STYLES.dot} />
                 My available skills
             </div>
-            {SKILLS.map((prod, j) => (
-                <SkillItem key={j} name={prod.name} tag={prod.tag} icon={prod.icon} onClick={showDevToast} />
-            ))}
+            <div className={STYLES.listWrapper}>
+                {SKILLS.map((prod, j) => (
+                    <SkillItem key={j} name={prod.name} tag={prod.tag} icon={prod.icon} onClick={showDevToast} />
+                ))}
+            </div>
             <LiquidToast isVisible={isVisible} message={message} />
         </section>
     );

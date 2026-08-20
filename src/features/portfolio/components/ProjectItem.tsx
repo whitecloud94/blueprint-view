@@ -1,4 +1,5 @@
 import {ChevronRight} from "lucide-react";
+import {motion} from "framer-motion";
 import { COMMON_STYLES } from "../../../constants/styles.ts";
 import { MarqueeText } from "../../../components/common/MarqueeText.tsx";
 import {ProjectItemProps} from "../../../types";
@@ -15,7 +16,7 @@ const STYLES = {
         flex items-center justify-center text-white 
         shadow-[0_4px_12px_rgba(0,0,0,0.1)] group-hover:rotate-6 transition-transform`,
 
-    activeBadge: "hidden xs:inline-block text-[8px] bg-indigo-600 dark:bg-indigo-500 text-white px-1.5 py-0.5 rounded-md font-black animate-pulse",
+    activeBadge: "hidden xs:inline-block text-[8px] bg-indigo-600 dark:bg-indigo-500 text-white px-1.5 py-0.5 rounded-md font-black",
 
     chevron: (active?: boolean) =>
         `flex-shrink-0 w-8 h-8 flex items-center justify-center transition-colors ${
@@ -49,7 +50,16 @@ export const ProjectItem = ({
                             text={title} 
                             className={STYLES.title}
                         />
-                        {active && <span className={STYLES.activeBadge + " shrink-0"}>ACTIVE</span>}
+                        {active && (
+                            <motion.span
+                                className={STYLES.activeBadge + " shrink-0"}
+                                initial={{opacity: 0, scale: 0.7}}
+                                animate={{opacity: 1, scale: 1}}
+                                transition={{type: "spring", stiffness: 400, damping: 20}}
+                            >
+                                ACTIVE
+                            </motion.span>
+                        )}
                     </div>
 
                     <MarqueeText 
