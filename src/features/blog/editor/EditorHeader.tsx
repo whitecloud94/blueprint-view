@@ -10,9 +10,18 @@ interface EditorHeaderProps {
     /** 공개 상태로 저장 */
     onPublish: () => void;
     isSubmitting?: boolean;
+    /** 기존 글 수정 중인지 여부. 제목 표기에만 쓰인다. */
+    isEditMode?: boolean;
 }
 
-export const EditorHeader = ({ mode, setMode, onSaveDraft, onPublish, isSubmitting = false }: EditorHeaderProps) => {
+export const EditorHeader = ({
+    mode,
+    setMode,
+    onSaveDraft,
+    onPublish,
+    isSubmitting = false,
+    isEditMode = false,
+}: EditorHeaderProps) => {
     const navigate = useNavigate();
 
     return (
@@ -27,7 +36,9 @@ export const EditorHeader = ({ mode, setMode, onSaveDraft, onPublish, isSubmitti
                         >
                             <ArrowLeft size={20} className="text-gray-600 dark:text-gray-300"/>
                         </button>
-                        <h1 className="font-bold text-gray-900 dark:text-white hidden sm:block">Write New Post</h1>
+                        <h1 className="font-bold text-gray-900 dark:text-white hidden sm:block">
+                            {isEditMode ? '글 수정' : '새 글 작성'}
+                        </h1>
                     </div>
 
                     <div className="flex items-center gap-2">

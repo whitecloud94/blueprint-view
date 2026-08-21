@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import {
-  FormProvider,
-  useForm,
-  type SubmitErrorHandler,
-} from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FormProvider, useForm, type SubmitErrorHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GLASS_STYLES } from '../../constants/styles';
 import EditorPanel from '../../features/blog/editor/EditorPanel';
 import EditorPreview from '../../features/blog/editor/EditorPreview';
 import { EditorHeader } from '../../features/blog/editor/EditorHeader';
+import { useDraftAutosave } from '../../features/blog/editor/useDraftAutosave';
 import {
   postFormSchema,
-  postSaveRequestSchema,
+  postWriteRequestSchema,
   type PostFormData,
   type PostStatus,
 } from '../../schemas/postSchema';
@@ -21,8 +18,11 @@ import { postService } from '../../services/postService';
 import { getAxiosErrorMessage } from '../../api/axiosInstance';
 import { useToast } from '../../hooks/useToast';
 import { LiquidToast } from '../../components/common/feedback/LiquidToast';
+import { LoadingBar } from '../../components/common/LoadingBar';
 
-const DRAFT_KEY = 'blog-draft';
+type EditorMode = 'edit' | 'preview' | 'split';
+
+const EXCERPT_MAX_LENGTH = 200;
 
 const defaultValues: PostFormData = {
   titleName: '',
@@ -30,21 +30,23 @@ const defaultValues: PostFormData = {
   excerpt: '',
 };
 
-function loadDraft(): PostFormData | null {
-  const saved = localStorage.getItem(DRAFT_KEY);
-  if (!saved) return null;
-  try {
-    const parsed = postFormSchema.safeParse(JSON.parse(saved));
-    return parsed.success ? parsed.data : null;
-  } catch {
-    return null;
-  }
-}
-
+/**
+ * 글 작성/수정 화면.
+ *
+ * <p>경로에 id 가 있으면 수정, 없으면 작성이다. 두 흐름은 초기값을 어디서
+ * 가져오는지와 저장 시 호출하는 API 만 다르고 편집 경험은 동일하므로 한
+ * 컴포넌트로 둔다.
+ */
 export default function BlogEditorPage() {
+  const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<'edit' | 'preview' | 'split'>('split');
   const { isVisible, message, showToast } = useToast();
+
+  const postId = id ? Number(id) : undefined;
+  const isEditMode = postId !== undefined;
+
+  const [mode, setMode] = useState<EditorMode>('split');
+  const [isLoading, setIsLoading] = useState(isEditMode);
 
   const methods = useForm<PostFormData>({
     resolver: zodResolver(postFormSchema),
@@ -55,30 +57,40 @@ export default function BlogEditorPage() {
   const {
     handleSubmit,
     reset,
-    watch,
     formState: { isSubmitting },
   } = methods;
 
-  useEffect(() => {
-    const draft = loadDraft();
-    if (draft) {
-      reset(draft);
-    }
-  }, [reset]);
+  const { clearDraft } = useDraftAutosave(methods, !isEditMode);
 
+  // 수정 모드에서는 서버의 현재 내용을 초기값으로 불러온다.
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const subscription = watch((values) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(values));
-      }, 500);
-    });
-    return () => {
-      subscription.unsubscribe();
-      clearTimeout(timer);
+    if (postId === undefined) return;
+
+    if (!Number.isInteger(postId) || postId <= 0) {
+      showToast('잘못된 주소입니다.');
+      navigate('/blog', { replace: true });
+      return;
+    }
+
+    const fetchPost = async () => {
+      setIsLoading(true);
+      try {
+        const post = await postService.getPostById(postId);
+        reset({
+          titleName: post.titleName,
+          content: post.content,
+          excerpt: post.excerpt ?? '',
+        });
+      } catch (error) {
+        showToast(getAxiosErrorMessage(error, '글을 불러오지 못했습니다.'));
+        navigate('/blog', { replace: true });
+      } finally {
+        setIsLoading(false);
+      }
     };
-  }, [watch]);
+
+    void fetchPost();
+  }, [postId, reset, navigate, showToast]);
 
   const onInvalid: SubmitErrorHandler<PostFormData> = (formErrors) => {
     const firstError = Object.values(formErrors)[0];
@@ -88,28 +100,35 @@ export default function BlogEditorPage() {
   };
 
   /**
-   * 저장 핸들러를 상태별로 만든다.
+   * 저장 핸들러를 발행 상태별로 만든다.
    *
-   * writer 는 보내지 않는다. 서버가 인증된 토큰의 주체로 결정하며, 클라이언트가
+   * <p>writer 는 보내지 않는다. 서버가 인증된 토큰의 주체로 결정하며, 클라이언트가
    * 보낸 값은 무시된다.
    */
   const submitWith = (status: PostStatus) =>
     handleSubmit(async (data: PostFormData) => {
       try {
-        const payload = postSaveRequestSchema.parse({
+        const payload = postWriteRequestSchema.parse({
           ...data,
-          excerpt: data.excerpt?.trim() || data.content.slice(0, 200),
+          excerpt: data.excerpt?.trim() || data.content.slice(0, EXCERPT_MAX_LENGTH),
           status,
         });
 
-        const created = await postService.addPost(payload);
-        localStorage.removeItem(DRAFT_KEY);
+        const saved = isEditMode
+          ? await postService.updatePost(postId, payload)
+          : await postService.addPost(payload);
+
+        clearDraft();
         reset(defaultValues);
-        navigate(`/blog/${created.postId}`, { replace: true });
+        navigate(`/blog/${saved.postId}`, { replace: true });
       } catch (error) {
-        showToast(getAxiosErrorMessage(error, '포스트 저장에 실패했습니다.'));
+        showToast(getAxiosErrorMessage(error, '저장에 실패했습니다.'));
       }
     }, onInvalid);
+
+  if (isLoading) {
+    return <LoadingBar />;
+  }
 
   return (
     <FormProvider {...methods}>
@@ -117,6 +136,7 @@ export default function BlogEditorPage() {
         <EditorHeader
           mode={mode}
           setMode={setMode}
+          isEditMode={isEditMode}
           onSaveDraft={submitWith('DRAFT')}
           onPublish={submitWith('PUBLISHED')}
           isSubmitting={isSubmitting}
@@ -133,11 +153,11 @@ export default function BlogEditorPage() {
                 className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[calc(100vh-140px)]"
               >
                 <EditorPanel
-                  className={`${GLASS_STYLES.card} bg-white/70`}
+                  className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04]`}
                   isCompact
                 />
                 <EditorPreview
-                  className={`${GLASS_STYLES.card} bg-white/80`}
+                  className={`${GLASS_STYLES.card} bg-white/80 dark:bg-white/[0.05]`}
                   showLiveBadge
                 />
               </motion.div>
@@ -149,7 +169,7 @@ export default function BlogEditorPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
               >
-                <EditorPanel className={`${GLASS_STYLES.card} bg-white/70 h-full`} />
+                <EditorPanel className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04] h-full`} />
               </motion.div>
             ) : (
               <motion.div
@@ -159,7 +179,7 @@ export default function BlogEditorPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
               >
-                <EditorPreview className={`${GLASS_STYLES.card} bg-white/80 h-full`} />
+                <EditorPreview className={`${GLASS_STYLES.card} bg-white/80 dark:bg-white/[0.05] h-full`} />
               </motion.div>
             )}
           </AnimatePresence>

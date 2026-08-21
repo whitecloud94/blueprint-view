@@ -27,6 +27,7 @@ export const AppRouter = () => {
                     {/* 관리자 전용 구간. 최종 권한 판정은 서버가 수행한다. */}
                     <Route element={<RequireAdmin/>}>
                         <Route path="/blog/write" element={<BlogEditorPage/>}/>
+                        <Route path="/blog/:id/edit" element={<BlogEditorPage/>}/>
                     </Route>
                 </Routes>
             </Suspense>
