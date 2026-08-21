@@ -46,6 +46,16 @@ export const postService = {
     return data;
   },
 
+  /**
+   * 조회수 증가.
+   *
+   * 상세 조회와 분리된 명령이다. GET 이 매번 쓰기를 유발하면 캐시·재시도·프리페치가
+   * 모두 카운트를 부풀린다.
+   */
+  increaseViewCount: async (id: number): Promise<void> => {
+    await axiosInstance.post(`/posts/${id}/views`);
+  },
+
   deletePost: async (id: number): Promise<void> => {
     await axiosInstance.delete(`/posts/${id}`);
   },

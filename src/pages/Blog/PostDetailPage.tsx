@@ -10,6 +10,7 @@ import {postService} from "../../services/postService.ts";
 import {Post} from "../../schemas/postSchema.ts";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
 import {MarkdownContent} from "../../features/blog/components/MarkdownContent";
+import {useViewCount} from "../../features/blog/hooks/useViewCount";
 import {ConfirmDialog} from "../../components/common/feedback/ConfirmDialog";
 import {ERROR_ACTION_STYLES, ErrorState} from "../../components/common/feedback/ErrorState";
 import {useIsAdmin} from "../../store/useAuthStore";
@@ -27,6 +28,9 @@ export default function PostDetailPage() {
     const [loadFailed, setLoadFailed] = useState(false);
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [isDeleting, setDeleting] = useState(false);
+
+    // 본문을 실제로 연 방문만 센다. 세션 단위 중복은 훅이 걸러 낸다.
+    useViewCount(post?.postId, post?.status === 'PUBLISHED');
 
     const handleDelete = async () => {
         if (!post?.postId) return;
