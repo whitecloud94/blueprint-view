@@ -32,6 +32,8 @@ interface DialogProps {
   description: string;
   /** 부가 정보(오류 식별자 등). 본문보다 약하게 표기한다. */
   meta?: string;
+  /** 제목·설명과 버튼 사이에 들어갈 추가 내용(입력 필드 등). */
+  children?: ReactNode;
   /** 버튼 영역. */
   actions: ReactNode;
   onClose: () => void;
@@ -56,6 +58,7 @@ export const Dialog = ({
   title,
   description,
   meta,
+  children,
   actions,
   onClose,
   initialFocusRef,
@@ -121,6 +124,8 @@ export const Dialog = ({
             </p>
 
             {meta && <p className={STYLES.meta}>{meta}</p>}
+
+            {children && <div className="mt-5">{children}</div>}
 
             <div className={STYLES.actions}>{actions}</div>
           </motion.div>
