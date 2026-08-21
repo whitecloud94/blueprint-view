@@ -1,7 +1,8 @@
 // src/pages/Blog/PostDetailPage.tsx
+import axios from 'axios';
 import {useNavigate, useParams} from 'react-router-dom';
 import {BlogLayout} from "../../features/blog/components/BlogLayout";
-import {ArrowLeft, Calendar, Clock, Link as LinkIcon, Pencil, Trash2} from 'lucide-react';
+import {ArrowLeft, Calendar, Clock, FileQuestion, Link as LinkIcon, Pencil, PlugZap, Trash2} from 'lucide-react';
 import {GLASS_STYLES} from '../../constants/styles';
 import {AnimatePresence, motion} from 'framer-motion';
 import {useEffect, useState} from "react";
@@ -10,20 +11,20 @@ import {Post} from "../../schemas/postSchema.ts";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
 import {MarkdownContent} from "../../features/blog/components/MarkdownContent";
 import {ConfirmDialog} from "../../components/common/feedback/ConfirmDialog";
-import {LiquidToast} from "../../components/common/feedback/LiquidToast";
-import {useToast} from "../../hooks/useToast";
-import {getAxiosErrorMessage} from "../../api/axiosInstance";
+import {ERROR_ACTION_STYLES, ErrorState} from "../../components/common/feedback/ErrorState";
 import {useIsAdmin} from "../../store/useAuthStore";
+import {useErrorActions} from "../../store/useErrorStore";
 
 export default function PostDetailPage() {
     const {id} = useParams<{ id: string }>();
     const navigate = useNavigate();
     
     const isAdmin = useIsAdmin();
-    const {isVisible, message, showToast} = useToast();
+    const {showError} = useErrorActions();
 
     const [post, setPost] = useState<Post>();
     const [isLoading, setIsLoading] = useState(true);
+    const [loadFailed, setLoadFailed] = useState(false);
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [isDeleting, setDeleting] = useState(false);
 
@@ -35,9 +36,12 @@ export default function PostDetailPage() {
             await postService.deletePost(post.postId);
             navigate('/blog', {replace: true});
         } catch (error) {
-            showToast(getAxiosErrorMessage(error, '삭제에 실패했습니다.'));
             setDeleting(false);
             setDeleteDialogOpen(false);
+            showError(error, {
+                fallbackTitle: '삭제하지 못했습니다',
+                onRetry: () => void handleDelete(),
+            });
         }
     };
 
@@ -47,8 +51,12 @@ export default function PostDetailPage() {
             try {
                 const data = await postService.getPostById(Number(id));
                 setPost(data);
+                setLoadFailed(false);
             } catch (error) {
-                console.error("Failed to fetch posts:", error);
+                // 404(없거나 비공개)와 서버에 닿지 못한 상황을 구분한다.
+                // 둘 다 "글이 없다"로 보여주면 사용자가 잘못된 판단을 하게 된다.
+                setPost(undefined);
+                setLoadFailed(!isNotFound(error));
             } finally {
                 setIsLoading(false);
             }
@@ -77,15 +85,43 @@ export default function PostDetailPage() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="flex flex-col items-center justify-center py-20"
+                        className="flex justify-center py-16"
                     >
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Post not found</h2>
-                        <button 
-                            onClick={() => navigate('/blog')}
-                            className="text-indigo-600 font-bold flex items-center gap-2"
-                        >
-                            <ArrowLeft size={20} /> Back to Blog
-                        </button>
+                        {/* 삭제된 글과 권한이 없어 감춰진 글을 서버가 모두 404 로 응답한다.
+                            어느 쪽인지 드러나지 않도록 문구도 구분하지 않는다. */}
+                        {loadFailed ? (
+                            <ErrorState
+                                icon={PlugZap}
+                                title="글을 불러올 수 없습니다"
+                                description="콘텐츠 서버에 일시적으로 연결할 수 없습니다. 잠시 후 다시 시도해주세요."
+                                actions={
+                                    <button
+                                        type="button"
+                                        onClick={() => navigate('/blog')}
+                                        className={ERROR_ACTION_STYLES.primary}
+                                    >
+                                        <ArrowLeft size={16} /> 목록으로
+                                    </button>
+                                }
+                            />
+                        ) : (
+                            <ErrorState
+                                icon={FileQuestion}
+                                code="404"
+                                label="NOT FOUND"
+                                title="글을 찾을 수 없습니다"
+                                description="삭제되었거나 아직 공개되지 않은 글입니다."
+                                actions={
+                                    <button
+                                        type="button"
+                                        onClick={() => navigate('/blog')}
+                                        className={ERROR_ACTION_STYLES.primary}
+                                    >
+                                        <ArrowLeft size={16} /> 목록으로
+                                    </button>
+                                }
+                            />
+                        )}
                     </motion.div>
                 ) : (
                     <motion.div 
@@ -172,7 +208,11 @@ export default function PostDetailPage() {
                 onConfirm={handleDelete}
                 onCancel={() => setDeleteDialogOpen(false)}
             />
-            <LiquidToast isVisible={isVisible} message={message} variant="error" />
         </BlogLayout>
     );
+}
+
+/** 서버가 404 로 응답했는지. 연결 실패와 구분하기 위한 판별이다. */
+function isNotFound(error: unknown): boolean {
+    return axios.isAxiosError(error) && error.response?.status === 404;
 }

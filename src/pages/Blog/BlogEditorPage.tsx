@@ -18,6 +18,7 @@ import { postService } from '../../services/postService';
 import { getAxiosErrorMessage } from '../../api/axiosInstance';
 import { useToast } from '../../hooks/useToast';
 import { LiquidToast } from '../../components/common/feedback/LiquidToast';
+import { useErrorActions } from '../../store/useErrorStore';
 import { LoadingBar } from '../../components/common/LoadingBar';
 
 type EditorMode = 'edit' | 'preview' | 'split';
@@ -41,6 +42,7 @@ export default function BlogEditorPage() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
   const { isVisible, message, showToast } = useToast();
+  const { showError } = useErrorActions();
 
   const postId = id ? Number(id) : undefined;
   const isEditMode = postId !== undefined;
@@ -122,7 +124,12 @@ export default function BlogEditorPage() {
         reset(defaultValues);
         navigate(`/blog/${saved.postId}`, { replace: true });
       } catch (error) {
-        showToast(getAxiosErrorMessage(error, '저장에 실패했습니다.'));
+        // 저장 실패는 하려던 일이 통째로 무산된 상황이다. 사라지는 토스트로는
+        // 놓치기 쉽고, 작성 중인 글을 두고 무엇을 할지 결정해야 한다.
+        showError(error, {
+          fallbackTitle: '저장하지 못했습니다',
+          onRetry: () => void submitWith(status)(),
+        });
       }
     }, onInvalid);
 

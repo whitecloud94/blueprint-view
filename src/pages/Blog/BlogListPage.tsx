@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PostCard } from '../../features/blog/components/PostCard';
 import { PostCardSkeleton } from '../../features/blog/components/PostCardSkeleton';
 import { BlogLayout } from '../../features/blog/components/BlogLayout';
@@ -10,13 +10,16 @@ import { postService } from '../../services/postService';
 import { getAxiosErrorMessage } from '../../api/axiosInstance';
 import { useToast } from '../../hooks/useToast';
 import { LiquidToast } from '../../components/common/feedback/LiquidToast';
+import { ERROR_ACTION_STYLES, ErrorState } from '../../components/common/feedback/ErrorState';
 import { useIsAdmin } from '../../store/useAuthStore';
+import { useErrorActions } from '../../store/useErrorStore';
 import type { Post } from '../../schemas/postSchema';
 
 export default function BlogListPage() {
   const navigate = useNavigate();
   const isAdmin = useIsAdmin();
   const { isVisible, message, showToast } = useToast();
+  const { showError } = useErrorActions();
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadFailed, setLoadFailed] = useState(false);
@@ -27,27 +30,31 @@ export default function BlogListPage() {
       const updated = await postService.changeStatus(postId, 'PUBLISHED');
       setPosts((prev) => prev.map((post) => (post.postId === postId ? updated : post)));
     } catch (error) {
-      showToast(getAxiosErrorMessage(error, '발행에 실패했습니다.'));
+      showError(error, {
+        fallbackTitle: '발행하지 못했습니다',
+        onRetry: () => void handlePublish(postId),
+      });
     }
   };
 
   // 조회 범위는 서버가 판정한다. 관리자에게는 임시저장 글이 함께 내려온다.
+  const fetchPosts = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const data = await postService.getPosts();
+      setPosts(data);
+      setLoadFailed(false);
+    } catch (error) {
+      setLoadFailed(true);
+      showToast(getAxiosErrorMessage(error, '포스트를 불러오지 못했습니다.'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [showToast]);
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      setIsLoading(true);
-      try {
-        const data = await postService.getPosts();
-        setPosts(data);
-        setLoadFailed(false);
-      } catch (error) {
-        setLoadFailed(true);
-        showToast(getAxiosErrorMessage(error, '포스트를 불러오지 못했습니다.'));
-      } finally {
-        setIsLoading(false);
-      }
-    };
     void fetchPosts();
-  }, [showToast, isAdmin]);
+  }, [fetchPosts, isAdmin]);
 
   return (
     <BlogLayout>
@@ -82,12 +89,21 @@ export default function BlogListPage() {
               {/* API 가 로컬 데스크탑에 있어 연결 실패가 정상 범위의 상태다.
                   빈 목록으로 보이면 "글이 없음"과 구분되지 않으므로 명시한다. */}
               {loadFailed ? (
-                <div className={`${GLASS_STYLES.card} p-10 flex flex-col items-center gap-3 text-center`}>
-                  <PlugZap size={36} className="text-gray-300 dark:text-gray-600" aria-hidden="true" />
-                  <h2 className={`${GLASS_STYLES.heading} text-lg`}>글을 불러올 수 없습니다</h2>
-                  <p className={GLASS_STYLES.subtext}>
-                    콘텐츠 서버에 일시적으로 연결할 수 없습니다. 잠시 후 다시 시도해주세요.
-                  </p>
+                <div className="flex justify-center py-6">
+                  <ErrorState
+                    icon={PlugZap}
+                    title="글을 불러올 수 없습니다"
+                    description="콘텐츠 서버에 일시적으로 연결할 수 없습니다. 잠시 후 다시 시도해주세요."
+                    actions={
+                      <button
+                        type="button"
+                        onClick={() => void fetchPosts()}
+                        className={ERROR_ACTION_STYLES.primary}
+                      >
+                        다시 시도
+                      </button>
+                    }
+                  />
                 </div>
               ) : posts.length === 0 ? (
                 <div className={`${GLASS_STYLES.card} p-10 text-center`}>
