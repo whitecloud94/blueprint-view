@@ -25,6 +25,19 @@ export const postService = {
     return postSummaryPageSchema.parse(data);
   },
 
+  /**
+   * 검색.
+   *
+   * 검색어는 서버가 해석한다. 목록과 같은 요약 페이지를 돌려주므로 화면에서는
+   * 같은 카드를 그대로 쓴다.
+   */
+  searchPosts: async (keyword: string, page = 0, size = 10): Promise<PostSummaryPage> => {
+    const { data } = await axiosInstance.get('/posts/search', {
+      params: { q: keyword, page, size },
+    });
+    return postSummaryPageSchema.parse(data);
+  },
+
   getPostById: async (id: number): Promise<Post> => {
     const { data } = await axiosInstance.get<Post>(`/posts/${id}`);
     return data;

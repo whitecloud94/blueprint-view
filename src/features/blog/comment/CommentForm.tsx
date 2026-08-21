@@ -16,6 +16,21 @@ const defaultValues: CommentFormData = {
   guestName: '',
   guestPassword: '',
   content: '',
+  website: '',
+};
+
+/**
+ * 허니팟 입력을 감추는 스타일.
+ *
+ * display:none 을 쓰지 않는다. 감춰진 것이 티가 나면 폼을 채우는 쪽에서 건너뛴다.
+ * 화면 밖으로 밀어 두면 사람 눈에는 보이지 않으면서 DOM 상으로는 평범한 입력이다.
+ */
+const HONEYPOT_STYLE: React.CSSProperties = {
+  position: 'absolute',
+  left: '-9999px',
+  width: '1px',
+  height: '1px',
+  opacity: 0,
 };
 
 /**
@@ -24,6 +39,9 @@ const defaultValues: CommentFormData = {
  * <p>최상위 댓글과 답글이 받는 값이 같아 하나로 쓴다. 차이는 parentId 뿐이다.
  *
  * <p>비밀번호를 함께 받는 이유는 가입 없이 쓴 댓글을 나중에 수정·삭제하기 위해서다.
+ *
+ * <p>스팸 방어용 허니팟 입력이 하나 숨어 있다. 키보드 순서와 스크린리더에서 모두
+ * 빠지므로 실제 사용자는 존재 자체를 알 수 없다.
  */
 export const CommentForm = ({ parentId, onSubmit, onCancel, onInvalid }: CommentFormProps) => {
   const {
@@ -49,6 +67,15 @@ export const CommentForm = ({ parentId, onSubmit, onCancel, onInvalid }: Comment
 
   return (
     <form onSubmit={handleSubmit(onValid, handleInvalid)} className="space-y-3" noValidate>
+      <input
+        {...register('website')}
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={HONEYPOT_STYLE}
+      />
+
       <div className="grid grid-cols-2 gap-2">
         <input
           {...register('guestName')}
