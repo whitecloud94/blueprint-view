@@ -1,6 +1,7 @@
 import axios, { type AxiosError } from 'axios';
 import { tokenStorage } from './tokenStorage';
 import { toErrorMessage } from './errorPolicy';
+import { ensureFreshToken, isRefreshRequest } from './tokenRefresh';
 
 /**
  * API 기본 주소.
@@ -23,7 +24,13 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use(async (config) => {
+  // 갱신과 헤더 부착을 한 인터셉터에 둔다. 나누면 axios 가 요청 인터셉터를
+  // 등록 역순으로 실행해, 갱신되기 전의 토큰이 헤더에 실린다.
+  if (!isRefreshRequest(config)) {
+    await ensureFreshToken(axiosInstance);
+  }
+
   const token = tokenStorage.get();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

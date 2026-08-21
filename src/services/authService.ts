@@ -19,6 +19,17 @@ export const authService = {
   },
 
   /**
+   * 액세스 토큰 재발급.
+   *
+   * 유효한 토큰을 새 토큰으로 교환한다. 만료된 뒤에는 호출할 수 없으므로
+   * 만료 전에 미리 갱신해야 한다.
+   */
+  refresh: async (): Promise<LoginResponse> => {
+    const { data } = await axiosInstance.post('/auth/refresh');
+    return loginResponseSchema.parse(data);
+  },
+
+  /**
    * 현재 사용자 조회.
    *
    * 권한은 토큰 안의 클레임이 아니라 이 응답을 신뢰한다. 서버가 DB 의 현재 role 을
