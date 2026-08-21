@@ -1,7 +1,7 @@
 // src/pages/Blog/PostDetailPage.tsx
 import {useNavigate, useParams} from 'react-router-dom';
 import {BlogLayout} from "../../features/blog/components/BlogLayout";
-import {ArrowLeft, Calendar, Clock, Link as LinkIcon} from 'lucide-react';
+import {ArrowLeft, Calendar, Clock, Link as LinkIcon, Pencil, Trash2} from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
@@ -12,14 +12,37 @@ import {useEffect, useState} from "react";
 import {postService} from "../../services/postService.ts";
 import {Post} from "../../schemas/postSchema.ts";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
+import {ConfirmDialog} from "../../components/common/feedback/ConfirmDialog";
+import {LiquidToast} from "../../components/common/feedback/LiquidToast";
+import {useToast} from "../../hooks/useToast";
+import {getAxiosErrorMessage} from "../../api/axiosInstance";
+import {useIsAdmin} from "../../store/useAuthStore";
 
 export default function PostDetailPage() {
     const {id} = useParams<{ id: string }>();
     const navigate = useNavigate();
     
-    // const post = MOCK_POSTS.find(p => p.id === Number(id));
+    const isAdmin = useIsAdmin();
+    const {isVisible, message, showToast} = useToast();
+
     const [post, setPost] = useState<Post>();
     const [isLoading, setIsLoading] = useState(true);
+    const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [isDeleting, setDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        if (!post?.postId) return;
+
+        setDeleting(true);
+        try {
+            await postService.deletePost(post.postId);
+            navigate('/blog', {replace: true});
+        } catch (error) {
+            showToast(getAxiosErrorMessage(error, '삭제에 실패했습니다.'));
+            setDeleting(false);
+            setDeleteDialogOpen(false);
+        }
+    };
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -77,13 +100,33 @@ export default function PostDetailPage() {
                     >
                         {/* 상단 네비게이션 & 메타 */}
                         <div className="space-y-6">
-                            <button 
-                                onClick={() => navigate('/blog')}
-                                className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-bold text-sm"
-                            >
-                                <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-                                Back to List
-                            </button>
+                            <div className="flex items-center justify-between gap-4">
+                                <button
+                                    onClick={() => navigate('/blog')}
+                                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-bold text-sm"
+                                >
+                                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                                    Back to List
+                                </button>
+
+                                {/* 관리자에게만 노출한다. 노출 여부와 무관하게 실제 권한은 서버가 판정한다. */}
+                                {isAdmin && (
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={() => navigate(`/blog/${post.postId}/edit`)}
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white/60 dark:hover:bg-white/5 transition-colors"
+                                        >
+                                            <Pencil size={15} /> 수정
+                                        </button>
+                                        <button
+                                            onClick={() => setDeleteDialogOpen(true)}
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-red-500 hover:bg-white/60 dark:hover:bg-white/5 transition-colors"
+                                        >
+                                            <Trash2 size={15} /> 삭제
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
 
                             <div className="space-y-4">
                                 {relatedProject && (
@@ -97,6 +140,11 @@ export default function PostDetailPage() {
                                 </h1>
                                 
                                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 dark:text-gray-500 font-mono">
+                                    {post.status === 'DRAFT' && (
+                                        <span className="px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 text-xs font-black tracking-wider">
+                                            임시저장
+                                        </span>
+                                    )}
                                     <span className="flex items-center gap-1.5">
                                         <Calendar size={14}/> {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : new Date().toLocaleDateString()}
                                     </span>
@@ -150,6 +198,17 @@ export default function PostDetailPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <ConfirmDialog
+                isOpen={isDeleteDialogOpen}
+                title="글을 삭제할까요?"
+                description="삭제한 글은 복구할 수 없습니다. 잠시 내려두려는 것이라면 수정 화면에서 임시저장으로 되돌리는 편이 안전합니다."
+                confirmLabel="삭제"
+                isProcessing={isDeleting}
+                onConfirm={handleDelete}
+                onCancel={() => setDeleteDialogOpen(false)}
+            />
+            <LiquidToast isVisible={isVisible} message={message} variant="error" />
         </BlogLayout>
     );
 }
