@@ -2,6 +2,19 @@ import { z } from 'zod';
 import { auditFieldsSchema } from './auditSchema';
 
 /** 서버 PostStatus enum 과 짝을 이룬다. */
+export const tagSchema = z.object({
+  name: z.string().min(1),
+  slug: z.string().min(1),
+});
+
+export type Tag = z.output<typeof tagSchema>;
+
+export const tagSummarySchema = tagSchema.extend({
+  postCount: z.number().int().nonnegative(),
+});
+
+export type TagSummary = z.output<typeof tagSummarySchema>;
+
 export const postStatusSchema = z.enum(['DRAFT', 'PUBLISHED']);
 
 export type PostStatus = z.infer<typeof postStatusSchema>;
@@ -25,6 +38,7 @@ export const postSchema = z
     viewCount: z.number().optional(),
     likeCount: z.number().int().nonnegative(),
     likedByMe: z.boolean().optional(),
+    tags: z.array(tagSchema).default([]),
   })
   .extend(auditFieldsSchema.shape);
 
@@ -39,6 +53,13 @@ export type Post = z.output<typeof postSchema>;
 export const postSummarySchema = postSchema.omit({ content: true, likedByMe: true }).extend({
   // 서버가 조회 시점에 세어 내려준다. 비정규화 카운터가 아니라 드리프트가 없다.
   commentCount: z.number().int().nonnegative(),
+  /**
+   * 방문자들이 실제로 머문 시간의 평균(ms).
+   *
+   * 아직 아무도 읽지 않았으면 null 이다. 0 과 구분해야 화면이 "기록 없음"을
+   * 판단할 수 있다.
+   */
+  averageReadMs: z.number().int().nonnegative().nullable(),
 });
 
 export type PostSummary = z.output<typeof postSummarySchema>;
@@ -72,6 +93,7 @@ export type PostSummaryPage = z.output<typeof postSummaryPageSchema>;
 export const postWriteRequestSchema = z.object({
   ...postContentShape,
   status: postStatusSchema,
+  tags: z.array(z.string()).default([]),
 });
 
 export type PostWriteRequest = z.output<typeof postWriteRequestSchema>;

@@ -9,6 +9,7 @@ const AboutPage = lazy(() => import("../pages/AboutPage"));
 const BlogListPage = lazy(() => import("../pages/Blog/BlogListPage"));
 const BlogEditorPage = lazy(() => import("../pages/Blog/BlogEditorPage"));
 const PostDetailPage = lazy(() => import("../pages/Blog/PostDetailPage"));
+const TagPostsPage = lazy(() => import("../pages/Blog/TagPostsPage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
@@ -22,6 +23,8 @@ export const AppRouter = () => {
                     <Route path="/" element={<PortfolioPage/>}/>
                     <Route path="/about" element={<AboutPage/>}/>
                     <Route path="/blog" element={<BlogListPage/>}/>
+                    {/* :id 보다 먼저 둔다. 뒤에 두면 'tags' 가 글 번호로 해석된다. */}
+                    <Route path="/blog/tags/:slug" element={<TagPostsPage/>}/>
                     <Route path="/blog/:id" element={<PostDetailPage/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
 
