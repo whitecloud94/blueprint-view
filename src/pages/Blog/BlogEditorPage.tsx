@@ -155,6 +155,7 @@ export default function BlogEditorPage() {
                 <EditorPanel
                   className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04]`}
                   isCompact
+                  onError={showToast}
                 />
                 <EditorPreview
                   className={`${GLASS_STYLES.card} bg-white/80 dark:bg-white/[0.05]`}
@@ -169,7 +170,10 @@ export default function BlogEditorPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
               >
-                <EditorPanel className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04] h-full`} />
+                <EditorPanel
+                  className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04] h-full`}
+                  onError={showToast}
+                />
               </motion.div>
             ) : (
               <motion.div
