@@ -134,6 +134,7 @@ export const CommentSection = ({ postId, onNotify }: CommentSectionProps) => {
         onEdit={startEditing}
         onDelete={requestDelete}
         isAdmin={isAdmin}
+        onError={onNotify}
       />
     );
 

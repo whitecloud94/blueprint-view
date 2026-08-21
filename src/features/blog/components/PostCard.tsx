@@ -1,4 +1,4 @@
-﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Eye, MessageCircle, Send } from 'lucide-react';
+﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Eye, Heart, MessageCircle, Send } from 'lucide-react';
 import { GLASS_STYLES } from '../../../constants/styles';
 import { useNavigate } from 'react-router-dom';
 import type { PostSummary } from '../../../schemas/postSchema';
@@ -83,6 +83,10 @@ export const PostCard = ({
         </span>
         <span className="flex items-center gap-1" title="댓글 수">
           <MessageCircle size={12} /> {post.commentCount}
+        </span>
+        {/* 목록에서는 개수만 보여준다. 누르는 것은 글을 읽은 뒤가 자연스럽다. */}
+        <span className="flex items-center gap-1" title="좋아요 수">
+          <Heart size={12} /> {post.likeCount}
         </span>
       </div>
 

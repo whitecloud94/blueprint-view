@@ -1,4 +1,5 @@
 import { MessageSquare, Pencil, Trash2 } from 'lucide-react';
+import { LikeButton } from '../components/LikeButton';
 import type { CommentReply } from '../../../schemas/commentSchema';
 
 const STYLES = {
@@ -19,9 +20,10 @@ interface CommentItemProps {
   onEdit: (commentId: number) => void;
   onDelete: (comment: CommentReply) => void;
   isAdmin: boolean;
+  onError?: (message: string) => void;
 }
 
-export const CommentItem = ({ comment, onReply, onEdit, onDelete, isAdmin }: CommentItemProps) => {
+export const CommentItem = ({ comment, onReply, onEdit, onDelete, isAdmin, onError }: CommentItemProps) => {
   const isDeleted = comment.deleted;
 
   return (
@@ -40,6 +42,14 @@ export const CommentItem = ({ comment, onReply, onEdit, onDelete, isAdmin }: Com
 
       {!isDeleted && (
         <div className="flex items-center gap-4 mt-2">
+          <LikeButton
+            target="comment"
+            targetId={comment.commentId}
+            initialCount={comment.likeCount}
+            initialLiked={comment.likedByMe}
+            onError={onError}
+            size="sm"
+          />
           {onReply && (
             <button type="button" onClick={() => onReply(comment.commentId)} className={STYLES.action}>
               <MessageSquare size={12} /> 답글

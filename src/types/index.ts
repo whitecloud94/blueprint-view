@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Post } from '../schemas/postSchema';
 
 export interface Project {
   id?: number;
@@ -14,12 +13,6 @@ export interface Project {
   blogId?: number;
 }
 
-/** 목업/UI 전용 확장 필드 (DB 스키마에 없음) */
-export type PostDisplay = Post & {
-  readTime?: string;
-  tags?: string[];
-  relatedProjectId?: number;
-};
 
 export interface ProjectItemProps {
   title: string;

@@ -12,6 +12,7 @@ import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkele
 import {MarkdownContent} from "../../features/blog/components/MarkdownContent";
 import {useViewCount} from "../../features/blog/hooks/useViewCount";
 import {CommentSection} from "../../features/blog/comment/CommentSection";
+import {LikeButton} from "../../features/blog/components/LikeButton";
 import {LiquidToast} from "../../components/common/feedback/LiquidToast";
 import {useToast} from "../../hooks/useToast";
 import {ConfirmDialog} from "../../components/common/feedback/ConfirmDialog";
@@ -201,6 +202,17 @@ export default function PostDetailPage() {
                         <div className={`${GLASS_STYLES.card} bg-white/80 dark:bg-gray-900/40 p-8 sm:p-12`}>
                             <div className="prose prose-indigo dark:prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
                                 <MarkdownContent>{post.content}</MarkdownContent>
+                            </div>
+
+                            {/* 글을 다 읽은 자리에 둔다. 읽기 전에 누르는 동선은 어색하다. */}
+                            <div className="mt-10 pt-8 border-t border-gray-100 dark:border-white/10 flex justify-center">
+                                <LikeButton
+                                    target="post"
+                                    targetId={post.postId ?? 0}
+                                    initialCount={post.likeCount}
+                                    initialLiked={post.likedByMe ?? false}
+                                    onError={showToast}
+                                />
                             </div>
                         </div>
 
