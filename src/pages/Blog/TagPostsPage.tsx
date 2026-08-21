@@ -7,6 +7,7 @@ import { PostCard } from '../../features/blog/components/PostCard';
 import { PostCardSkeleton } from '../../features/blog/components/PostCardSkeleton';
 import { COMMON_STYLES } from '../../constants/styles';
 import { tagService } from '../../services/tagService';
+import { useBlogNavigation } from '../../features/blog/hooks/useBlogNavigation';
 import { getAxiosErrorMessage } from '../../api/axiosInstance';
 import { useToast } from '../../hooks/useToast';
 import { LiquidToast } from '../../components/common/feedback/LiquidToast';
@@ -22,6 +23,7 @@ export default function TagPostsPage() {
   const { slug = '' } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { isVisible, message, showToast } = useToast();
+  const { state: navigationState } = useBlogNavigation();
 
   const [posts, setPosts] = useState<PostSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +61,20 @@ export default function TagPostsPage() {
     void fetchPosts(0);
   }, [fetchPosts]);
 
+  /**
+   * 화면에 보일 태그 이름.
+   *
+   * <p>주소에는 슬러그가 들어 있어 그대로 쓰면 "spring-boot" 처럼 보인다. 사이드바가
+   * "Spring Boot" 로 부르는 것과 같은 대상이므로 이름도 같아야 한다.
+   *
+   * <p>이름을 얻지 못하면 슬러그를 그대로 쓴다. 제목이 비는 것보다는 낫고, 이름을
+   * 못 찾는 경우는 대개 글이 없는 태그라 어차피 빈 목록 안내가 함께 나온다.
+   */
+  const displayName =
+    navigationState.status === 'ready'
+      ? (navigationState.data.tags.find((tag) => tag.slug === slug)?.name ?? slug)
+      : slug;
+
   return (
     <BlogLayout>
       <div className="space-y-6">
@@ -73,7 +89,7 @@ export default function TagPostsPage() {
         <div className="mb-8 ml-2">
           <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-2 flex items-center gap-2">
             <Hash size={26} className="text-indigo-500" aria-hidden="true" />
-            {slug}
+            {displayName}
           </h1>
           <p className="text-gray-500 dark:text-gray-400">
             {isLoading ? '불러오는 중...' : `${total}개의 글`}
