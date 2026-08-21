@@ -11,6 +11,9 @@ import {Post} from "../../schemas/postSchema.ts";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
 import {MarkdownContent} from "../../features/blog/components/MarkdownContent";
 import {useViewCount} from "../../features/blog/hooks/useViewCount";
+import {CommentSection} from "../../features/blog/comment/CommentSection";
+import {LiquidToast} from "../../components/common/feedback/LiquidToast";
+import {useToast} from "../../hooks/useToast";
 import {ConfirmDialog} from "../../components/common/feedback/ConfirmDialog";
 import {ERROR_ACTION_STYLES, ErrorState} from "../../components/common/feedback/ErrorState";
 import {useIsAdmin} from "../../store/useAuthStore";
@@ -22,6 +25,7 @@ export default function PostDetailPage() {
     
     const isAdmin = useIsAdmin();
     const {showError} = useErrorActions();
+    const {isVisible, message, showToast} = useToast();
 
     const [post, setPost] = useState<Post>();
     const [isLoading, setIsLoading] = useState(true);
@@ -199,9 +203,16 @@ export default function PostDetailPage() {
                                 <MarkdownContent>{post.content}</MarkdownContent>
                             </div>
                         </div>
+
+                        {/* 댓글은 발행된 글에만 받는다. 임시저장 글은 방문자에게 보이지 않는다. */}
+                        {post.postId !== undefined && post.status === 'PUBLISHED' && (
+                            <CommentSection postId={post.postId} onNotify={showToast} />
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <LiquidToast isVisible={isVisible} message={message} variant="error" />
 
             <ConfirmDialog
                 isOpen={isDeleteDialogOpen}

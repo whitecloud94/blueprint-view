@@ -35,7 +35,10 @@ export type Post = z.output<typeof postSchema>;
  * 서버가 본문을 내려주지 않는다. 목록 화면은 요약만 쓰는데 본문까지 실으면
  * 응답의 대부분이 쓰이지 않는 데이터가 되기 때문이다.
  */
-export const postSummarySchema = postSchema.omit({ content: true });
+export const postSummarySchema = postSchema.omit({ content: true }).extend({
+  // 서버가 조회 시점에 세어 내려준다. 비정규화 카운터가 아니라 드리프트가 없다.
+  commentCount: z.number().int().nonnegative(),
+});
 
 export type PostSummary = z.output<typeof postSummarySchema>;
 

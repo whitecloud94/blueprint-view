@@ -1,4 +1,4 @@
-﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Send } from 'lucide-react';
+﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Eye, MessageCircle, Send } from 'lucide-react';
 import { GLASS_STYLES } from '../../../constants/styles';
 import { useNavigate } from 'react-router-dom';
 import type { PostSummary } from '../../../schemas/postSchema';
@@ -76,6 +76,13 @@ export const PostCard = ({
         <span className="w-1 h-1 rounded-full bg-gray-300" />
         <span className="flex items-center gap-1">
           <Clock size={12} /> {readTime}
+        </span>
+        <span className="w-1 h-1 rounded-full bg-gray-300" />
+        <span className="flex items-center gap-1" title="조회수">
+          <Eye size={12} /> {post.viewCount ?? 0}
+        </span>
+        <span className="flex items-center gap-1" title="댓글 수">
+          <MessageCircle size={12} /> {post.commentCount}
         </span>
       </div>
 
