@@ -15,9 +15,12 @@ import {
   postFormSchema,
   postSaveRequestSchema,
   type PostFormData,
+  type PostStatus,
 } from '../../schemas/postSchema';
 import { postService } from '../../services/postService';
 import { getAxiosErrorMessage } from '../../api/axiosInstance';
+import { useToast } from '../../hooks/useToast';
+import { LiquidToast } from '../../components/common/feedback/LiquidToast';
 
 const DRAFT_KEY = 'blog-draft';
 
@@ -41,6 +44,7 @@ function loadDraft(): PostFormData | null {
 export default function BlogEditorPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<'edit' | 'preview' | 'split'>('split');
+  const { isVisible, message, showToast } = useToast();
 
   const methods = useForm<PostFormData>({
     resolver: zodResolver(postFormSchema),
@@ -48,7 +52,12 @@ export default function BlogEditorPage() {
     mode: 'onTouched',
   });
 
-  const { handleSubmit, reset, watch } = methods;
+  const {
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isSubmitting },
+  } = methods;
 
   useEffect(() => {
     const draft = loadDraft();
@@ -71,36 +80,46 @@ export default function BlogEditorPage() {
     };
   }, [watch]);
 
-  const onValid = async (data: PostFormData) => {
-    try {
-      const payload = postSaveRequestSchema.parse({
-        ...data,
-        excerpt: data.excerpt?.trim() || data.content.slice(0, 200),
-        boardStatusCode: '01',
-      });
-      await postService.addPost(payload);
-      localStorage.removeItem(DRAFT_KEY);
-      reset(defaultValues);
-      navigate('/blog');
-    } catch (error) {
-      alert(getAxiosErrorMessage(error, '포스트 저장에 실패했습니다.'));
-    }
-  };
-
   const onInvalid: SubmitErrorHandler<PostFormData> = (formErrors) => {
     const firstError = Object.values(formErrors)[0];
     if (firstError?.message) {
-      alert(firstError.message);
+      showToast(firstError.message);
     }
   };
 
+  /**
+   * 저장 핸들러를 상태별로 만든다.
+   *
+   * writer 는 보내지 않는다. 서버가 인증된 토큰의 주체로 결정하며, 클라이언트가
+   * 보낸 값은 무시된다.
+   */
+  const submitWith = (status: PostStatus) =>
+    handleSubmit(async (data: PostFormData) => {
+      try {
+        const payload = postSaveRequestSchema.parse({
+          ...data,
+          excerpt: data.excerpt?.trim() || data.content.slice(0, 200),
+          status,
+        });
+
+        const created = await postService.addPost(payload);
+        localStorage.removeItem(DRAFT_KEY);
+        reset(defaultValues);
+        navigate(`/blog/${created.postId}`, { replace: true });
+      } catch (error) {
+        showToast(getAxiosErrorMessage(error, '포스트 저장에 실패했습니다.'));
+      }
+    }, onInvalid);
+
   return (
     <FormProvider {...methods}>
-      <div className="min-h-screen bg-[#F3F3F3] pb-20">
+      <div className="min-h-screen bg-[#F3F3F3] dark:bg-[#121212] pb-20">
         <EditorHeader
           mode={mode}
           setMode={setMode}
-          onSave={handleSubmit(onValid, onInvalid)}
+          onSaveDraft={submitWith('DRAFT')}
+          onPublish={submitWith('PUBLISHED')}
+          isSubmitting={isSubmitting}
         />
 
         <main className="max-w-[1600px] mx-auto mt-4 px-6">
@@ -146,6 +165,7 @@ export default function BlogEditorPage() {
           </AnimatePresence>
         </main>
       </div>
+      <LiquidToast isVisible={isVisible} message={message} variant="error" />
     </FormProvider>
   );
 }

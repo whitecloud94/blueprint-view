@@ -162,7 +162,7 @@ Tailwind CSS의 \`backdrop-blur\` 유틸리티 클래스를 사용하면 손쉽�
 4. **테두리 디테일**: \`border border-white/20\`으로 유리 조각의 끝부분을 표현합니다.
         `,
         writer: 'admin',
-        boardStatusCode: '01',
+        status: 'PUBLISHED',
         createdAt: '2026-01-26T00:00:00',
         readTime: "5 min read",
         tags: ["React", "Design System", "Tailwind"],
@@ -202,7 +202,7 @@ public class TransferService {
 금융 시스템에서는 보통 \`READ_COMMITTED\`를 기본으로 사용하며, 특정 통계나 마감 작업 시 \`SERIALIZABLE\`을 고려하기도 합니다.
         `,
         writer: 'admin',
-        boardStatusCode: '01',
+        status: 'PUBLISHED',
         createdAt: '2026-01-20T00:00:00',
         readTime: "12 min read",
         tags: ["Spring Boot", "Database", "Backend"]

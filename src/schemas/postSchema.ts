@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import { auditFieldsSchema } from './auditSchema';
 
+/** 서버 PostStatus enum 과 짝을 이룬다. */
+export const postStatusSchema = z.enum(['DRAFT', 'PUBLISHED']);
+
+export type PostStatus = z.infer<typeof postStatusSchema>;
+
 export const postSchema = z
   .object({
     postId: z.number().optional(),
@@ -8,7 +13,7 @@ export const postSchema = z
     content: z.string().min(1, '내용을 입력해주세요.'),
     excerpt: z.string().max(200, '요약은 최대 200자까지 가능합니다.').optional(),
     writer: z.string().min(1).max(100),
-    boardStatusCode: z.string().max(10),
+    status: postStatusSchema,
     viewCount: z.number().optional(),
     likeCount: z.number().optional(),
   })
@@ -26,7 +31,7 @@ export const postSaveRequestSchema = z.object({
   titleName: z.string().min(1, '제목을 입력해주세요.').max(300),
   content: z.string().min(1, '내용을 입력해주세요.'),
   excerpt: z.string().max(200, '요약은 최대 200자까지 가능합니다.').optional(),
-  boardStatusCode: z.string().max(10).default('01'),
+  status: postStatusSchema,
 });
 
 export type PostSaveRequest = z.output<typeof postSaveRequestSchema>;
@@ -37,7 +42,7 @@ export const postSaveResponseSchema = postSchema.pick({
   content: true,
   excerpt: true,
   writer: true,
-  boardStatusCode: true,
+  status: true,
   createdAt: true,
   createdBy: true,
 });

@@ -1,14 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Edit3, Eye, Save } from 'lucide-react';
+import { ArrowLeft, Edit3, Eye, FileText, Send } from 'lucide-react';
 import { COMMON_STYLES } from '../../../constants/styles';
 
 interface EditorHeaderProps {
     mode: 'edit' | 'preview' | 'split';
     setMode: (mode: 'edit' | 'preview' | 'split') => void;
-    onSave: () => void;
+    /** 비공개 상태로 저장 */
+    onSaveDraft: () => void;
+    /** 공개 상태로 저장 */
+    onPublish: () => void;
+    isSubmitting?: boolean;
 }
 
-export const EditorHeader = ({ mode, setMode, onSave }: EditorHeaderProps) => {
+export const EditorHeader = ({ mode, setMode, onSaveDraft, onPublish, isSubmitting = false }: EditorHeaderProps) => {
     const navigate = useNavigate();
 
     return (
@@ -57,11 +61,21 @@ export const EditorHeader = ({ mode, setMode, onSave }: EditorHeaderProps) => {
                                 <Eye size={16}/> Preview
                             </button>
                         </div>
+                        {/* 저장과 공개를 분리한다. 하나의 버튼만 두면 쓰다 만 글이
+                            그대로 공개되는 것 외에 선택지가 없다. */}
                         <button
-                            onClick={onSave}
-                            className={`${COMMON_STYLES.primaryButton} dark:bg-white dark:text-black px-6 py-2 text-sm shadow-indigo-200 dark:shadow-none`}
+                            onClick={onSaveDraft}
+                            disabled={isSubmitting}
+                            className={`${COMMON_STYLES.secondaryButton} dark:bg-white/10 dark:text-white dark:border-white/15 px-4 py-2 text-sm disabled:opacity-50`}
                         >
-                            <Save size={18}/> Publish
+                            <FileText size={16}/> 임시저장
+                        </button>
+                        <button
+                            onClick={onPublish}
+                            disabled={isSubmitting}
+                            className={`${COMMON_STYLES.primaryButton} dark:bg-white dark:text-black px-6 py-2 text-sm shadow-indigo-200 dark:shadow-none disabled:opacity-50`}
+                        >
+                            <Send size={16}/> 발행
                         </button>
                     </div>
                 </div>

@@ -48,6 +48,12 @@ export const PostCard = ({
       )}
 
       <div className="flex items-center gap-3 text-xs text-gray-400 mb-4 font-mono">
+        {/* 임시저장 글은 관리자에게만 내려오므로, 뱃지가 보이면 곧 관리자 화면이다. */}
+        {post.status === 'DRAFT' && (
+          <span className="px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 font-black tracking-wider">
+            임시저장
+          </span>
+        )}
         <span className="flex items-center gap-1">
           <Calendar size={12} /> {date}
         </span>
