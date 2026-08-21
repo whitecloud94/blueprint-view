@@ -1,8 +1,11 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ShieldAlert } from 'lucide-react';
 import { LoadingBar } from '../../../components/common/LoadingBar';
-import { GLASS_STYLES } from '../../../constants/styles';
-import { useAuthStatus, useIsAdmin, useIsAuthResolved } from '../../../store/useAuthStore';
+import {
+  ERROR_ACTION_STYLES,
+  ErrorState,
+} from '../../../components/common/feedback/ErrorState';
+import { useAuthActions, useAuthStatus, useIsAdmin, useIsAuthResolved } from '../../../store/useAuthStore';
 
 /**
  * 관리자 전용 라우트 가드.
@@ -36,12 +39,35 @@ export const RequireAdmin = () => {
   return <Outlet />;
 };
 
-const ForbiddenNotice = () => (
-  <div className="w-full flex justify-center px-4 py-20">
-    <div className={`${GLASS_STYLES.card} max-w-[480px] w-full p-10 flex flex-col items-center gap-4 text-center`}>
-      <ShieldAlert size={40} className="text-indigo-500" aria-hidden="true" />
-      <h1 className={`${GLASS_STYLES.heading} text-2xl`}>접근 권한이 없습니다</h1>
-      <p className={GLASS_STYLES.subtext}>이 페이지는 관리자만 사용할 수 있습니다.</p>
+const ForbiddenNotice = () => {
+  const navigate = useNavigate();
+  const { signOut } = useAuthActions();
+
+  // 권한이 없는 계정으로 로그인한 상태다. 다른 계정으로 다시 들어올 수 있게 한다.
+  const handleSwitchAccount = () => {
+    signOut();
+    navigate('/login', { replace: true });
+  };
+
+  return (
+    <div className="w-full flex justify-center px-4 py-16 sm:py-24">
+      <ErrorState
+        icon={ShieldAlert}
+        code="403"
+        label="FORBIDDEN"
+        title="접근 권한이 없습니다"
+        description="이 페이지는 관리자만 사용할 수 있습니다. 다른 계정으로 로그인하시려면 아래에서 전환하세요."
+        actions={
+          <>
+            <button type="button" onClick={() => navigate('/blog')} className={ERROR_ACTION_STYLES.primary}>
+              블로그로 이동
+            </button>
+            <button type="button" onClick={handleSwitchAccount} className={ERROR_ACTION_STYLES.secondary}>
+              다른 계정으로 로그인
+            </button>
+          </>
+        }
+      />
     </div>
-  </div>
-);
+  );
+};

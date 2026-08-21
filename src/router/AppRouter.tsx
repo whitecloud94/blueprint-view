@@ -10,6 +10,7 @@ const BlogListPage = lazy(() => import("../pages/Blog/BlogListPage"));
 const BlogEditorPage = lazy(() => import("../pages/Blog/BlogEditorPage"));
 const PostDetailPage = lazy(() => import("../pages/Blog/PostDetailPage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
 export const AppRouter = () => {
     const location = useLocation();
@@ -29,6 +30,9 @@ export const AppRouter = () => {
                         <Route path="/blog/write" element={<BlogEditorPage/>}/>
                         <Route path="/blog/:id/edit" element={<BlogEditorPage/>}/>
                     </Route>
+
+                    {/* 일치하는 라우트가 없으면 빈 화면이 남는다. 항상 마지막에 둔다. */}
+                    <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>
             </Suspense>
         </AnimatePresence>
