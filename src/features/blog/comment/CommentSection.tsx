@@ -12,8 +12,13 @@ import { CommentEditForm } from './CommentEditForm';
 import { CommentItem } from './CommentItem';
 import type { Comment, CommentFormData, CommentReply } from '../../../schemas/commentSchema';
 
-/** 비밀번호 불일치를 나타내는 서버 도메인 코드. */
-const PASSWORD_MISMATCH_CODE = 'M002';
+/**
+ * 폼을 닫지 않고 자리에서 알릴 서버 도메인 코드.
+ *
+ * 비밀번호 불일치(M002)와 시도 횟수 초과(M010)는 모두 다시 입력하면 되는 문제다.
+ * 폼을 닫아 버리면 사용자가 수정하던 내용부터 다시 써야 한다.
+ */
+const INLINE_ERROR_CODES = new Set(['M002', 'M010']);
 
 interface CommentSectionProps {
   postId: number;
@@ -99,7 +104,7 @@ export const CommentSection = ({ postId, onNotify }: CommentSectionProps) => {
 
   /** 비밀번호 문제는 자리에서 알리고, 그 외에는 폼을 닫고 전역 대화상자로 넘긴다. */
   const handleActionError = (error: unknown, close: () => void) => {
-    if (isPasswordMismatch(error)) {
+    if (isInlineError(error)) {
       setActionError(getAxiosErrorMessage(error));
       return;
     }
@@ -205,7 +210,7 @@ export const CommentSection = ({ postId, onNotify }: CommentSectionProps) => {
   );
 };
 
-function isPasswordMismatch(error: unknown): boolean {
+function isInlineError(error: unknown): boolean {
   const data = (error as { response?: { data?: { code?: string } } })?.response?.data;
-  return data?.code === PASSWORD_MISMATCH_CODE;
+  return data?.code !== undefined && INLINE_ERROR_CODES.has(data.code);
 }
