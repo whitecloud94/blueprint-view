@@ -21,6 +21,16 @@ export default function BlogListPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadFailed, setLoadFailed] = useState(false);
 
+  /** 임시저장 글 발행. 성공 시 목록의 해당 항목만 갱신한다. */
+  const handlePublish = async (postId: number) => {
+    try {
+      const updated = await postService.changeStatus(postId, 'PUBLISHED');
+      setPosts((prev) => prev.map((post) => (post.postId === postId ? updated : post)));
+    } catch (error) {
+      showToast(getAxiosErrorMessage(error, '발행에 실패했습니다.'));
+    }
+  };
+
   // 조회 범위는 서버가 판정한다. 관리자에게는 임시저장 글이 함께 내려온다.
   useEffect(() => {
     const fetchPosts = async () => {
@@ -90,6 +100,7 @@ export default function BlogListPage() {
                     post={post}
                     readTime="5 min read"
                     tags={[]}
+                    onPublish={isAdmin ? handlePublish : undefined}
                   />
                 ))
               )}

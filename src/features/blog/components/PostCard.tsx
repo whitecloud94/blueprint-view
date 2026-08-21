@@ -1,4 +1,4 @@
-﻿import { ArrowUpRight, Briefcase, Calendar, Clock } from 'lucide-react';
+﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Send } from 'lucide-react';
 import { GLASS_STYLES } from '../../../constants/styles';
 import { useNavigate } from 'react-router-dom';
 import { Post } from '../../../schemas/postSchema';
@@ -8,6 +8,8 @@ export interface PostCardProps {
   readTime?: string;
   tags?: string[];
   relatedProjectId?: number;
+  /** 관리자에게만 전달된다. 없으면 발행 버튼을 노출하지 않는다. */
+  onPublish?: (postId: number) => void;
 }
 
 export const PostCard = ({
@@ -15,6 +17,7 @@ export const PostCard = ({
   readTime = '5 min read',
   tags = [],
   relatedProjectId,
+  onPublish,
 }: PostCardProps) => {
   const navigate = useNavigate();
   const postId = post.postId ?? 0;
@@ -53,6 +56,19 @@ export const PostCard = ({
           <span className="px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 font-black tracking-wider">
             임시저장
           </span>
+        )}
+        {post.status === 'DRAFT' && onPublish && (
+          <button
+            type="button"
+            onClick={(e) => {
+              // 카드 전체가 상세로 이동하는 클릭 영역이라 전파를 막는다.
+              e.stopPropagation();
+              onPublish(post.postId ?? 0);
+            }}
+            className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-600 text-white font-black tracking-wider hover:bg-indigo-700 transition-colors"
+          >
+            <Send size={10} /> 발행
+          </button>
         )}
         <span className="flex items-center gap-1">
           <Calendar size={12} /> {date}
