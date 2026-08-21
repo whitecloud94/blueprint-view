@@ -2,16 +2,13 @@
 import {useNavigate, useParams} from 'react-router-dom';
 import {BlogLayout} from "../../features/blog/components/BlogLayout";
 import {ArrowLeft, Calendar, Clock, Link as LinkIcon, Pencil, Trash2} from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
-import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {GLASS_STYLES} from '../../constants/styles';
 import {AnimatePresence, motion} from 'framer-motion';
 import {useEffect, useState} from "react";
 import {postService} from "../../services/postService.ts";
 import {Post} from "../../schemas/postSchema.ts";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
+import {MarkdownContent} from "../../features/blog/components/MarkdownContent";
 import {ConfirmDialog} from "../../components/common/feedback/ConfirmDialog";
 import {LiquidToast} from "../../components/common/feedback/LiquidToast";
 import {useToast} from "../../hooks/useToast";
@@ -159,40 +156,7 @@ export default function PostDetailPage() {
                         {/* 본문 콘텐츠 */}
                         <div className={`${GLASS_STYLES.card} bg-white/80 dark:bg-gray-900/40 p-8 sm:p-12`}>
                             <div className="prose prose-indigo dark:prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
-                                <ReactMarkdown
-                                    remarkPlugins={[remarkGfm]}
-                                    components={{
-                                        h1: ({node, ...props}) => (
-                                            <h1 className="text-4xl font-black text-gray-900 dark:text-white mt-12 mb-6" {...props} />
-                                        ),
-                                        h2: ({node, ...props}) => (
-                                            <h2 className="text-3xl font-black text-gray-900 dark:text-white mt-10 mb-4" {...props} />
-                                        ),
-                                        h3: ({node, ...props}) => (
-                                            <h3 className="text-2xl font-black text-gray-900 dark:text-white mt-8 mb-3" {...props} />
-                                        ),
-                                        code({node, className, children, ...props}: any) {
-                                            const match = /language-(\w+)/.exec(className || '');
-                                            const isInline = !match;
-                                            return !isInline ? (
-                                                <SyntaxHighlighter
-                                                    style={vscDarkPlus}
-                                                    language={match[1]}
-                                                    PreTag="div"
-                                                    {...props}
-                                                >
-                                                    {String(children).replace(/\n$/, '')}
-                                                </SyntaxHighlighter>
-                                            ) : (
-                                                <code className={className} {...props}>
-                                                    {children}
-                                                </code>
-                                            );
-                                        },
-                                    }}
-                                >
-                                    {post.content || post.excerpt}
-                                </ReactMarkdown>
+                                <MarkdownContent>{post.content}</MarkdownContent>
                             </div>
                         </div>
                     </motion.div>

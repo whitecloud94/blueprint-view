@@ -1,7 +1,6 @@
 import { ReactNode, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Navigation } from './Navigation';
-import { GLASS_STYLES } from "../../constants/styles.ts";
 
 interface SharedLayoutProps {
     children: ReactNode;
