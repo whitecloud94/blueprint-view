@@ -13,6 +13,8 @@ const commentBaseSchema = z.object({
   guestName: z.string().nullish(),
   content: z.string().nullish(),
   deleted: z.boolean(),
+  likeCount: z.number().int().nonnegative(),
+  likedByMe: z.boolean(),
   createdAt: z.string(),
   updatedAt: z.string().nullish(),
 });

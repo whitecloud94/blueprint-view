@@ -22,6 +22,9 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  // 익명 방문자 식별 쿠키를 주고받기 위해 필요하다. 서버가 발급한 visitor_id 로
+  // 좋아요 중복을 판정하는데, 이 옵션이 없으면 교차 출처 요청에 쿠키가 실리지 않는다.
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
