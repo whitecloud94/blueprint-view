@@ -1,10 +1,10 @@
 ﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Send } from 'lucide-react';
 import { GLASS_STYLES } from '../../../constants/styles';
 import { useNavigate } from 'react-router-dom';
-import { Post } from '../../../schemas/postSchema';
+import type { PostSummary } from '../../../schemas/postSchema';
 
 export interface PostCardProps {
-  post: Post;
+  post: PostSummary;
   readTime?: string;
   tags?: string[];
   relatedProjectId?: number;

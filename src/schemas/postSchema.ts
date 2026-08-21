@@ -30,6 +30,36 @@ export const postSchema = z
 export type Post = z.output<typeof postSchema>;
 
 /**
+ * 목록 항목.
+ *
+ * 서버가 본문을 내려주지 않는다. 목록 화면은 요약만 쓰는데 본문까지 실으면
+ * 응답의 대부분이 쓰이지 않는 데이터가 되기 때문이다.
+ */
+export const postSummarySchema = postSchema.omit({ content: true });
+
+export type PostSummary = z.output<typeof postSummarySchema>;
+
+/**
+ * 페이지 응답.
+ *
+ * 서버 PageResponse 와 짝을 이룬다. hasNext 를 서버가 계산해 주므로 클라이언트가
+ * totalPages 와 page 를 비교할 필요가 없다.
+ */
+export const pageResponseSchema = <T extends z.ZodTypeAny>(itemSchema: T) =>
+  z.object({
+    content: z.array(itemSchema),
+    page: z.number().int().nonnegative(),
+    size: z.number().int().positive(),
+    totalElements: z.number().int().nonnegative(),
+    totalPages: z.number().int().nonnegative(),
+    hasNext: z.boolean(),
+  });
+
+export const postSummaryPageSchema = pageResponseSchema(postSummarySchema);
+
+export type PostSummaryPage = z.output<typeof postSummaryPageSchema>;
+
+/**
  * 게시글 작성/수정 요청.
  *
  * writer 를 담지 않는다. 작성자는 서버가 인증된 토큰의 주체에서 결정하며,

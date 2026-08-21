@@ -23,8 +23,6 @@ import { LoadingBar } from '../../components/common/LoadingBar';
 
 type EditorMode = 'edit' | 'preview' | 'split';
 
-const EXCERPT_MAX_LENGTH = 200;
-
 const defaultValues: PostFormData = {
   titleName: '',
   content: '',
@@ -110,11 +108,9 @@ export default function BlogEditorPage() {
   const submitWith = (status: PostStatus) =>
     handleSubmit(async (data: PostFormData) => {
       try {
-        const payload = postWriteRequestSchema.parse({
-          ...data,
-          excerpt: data.excerpt?.trim() || data.content.slice(0, EXCERPT_MAX_LENGTH),
-          status,
-        });
+        // 요약을 비워 보내도 서버가 본문 앞부분으로 채운다. 같은 규칙을 양쪽에
+        // 두면 한쪽만 바뀌었을 때 결과가 갈린다.
+        const payload = postWriteRequestSchema.parse({ ...data, status });
 
         const saved = isEditMode
           ? await postService.updatePost(postId, payload)

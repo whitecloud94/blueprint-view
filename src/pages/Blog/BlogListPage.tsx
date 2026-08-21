@@ -3,7 +3,7 @@ import { PostCard } from '../../features/blog/components/PostCard';
 import { PostCardSkeleton } from '../../features/blog/components/PostCardSkeleton';
 import { BlogLayout } from '../../features/blog/components/BlogLayout';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Pencil, PlugZap } from 'lucide-react';
+import { ChevronDown, Loader2, Pencil, PlugZap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { COMMON_STYLES, GLASS_STYLES } from '../../constants/styles';
 import { postService } from '../../services/postService';
@@ -13,22 +13,32 @@ import { LiquidToast } from '../../components/common/feedback/LiquidToast';
 import { ERROR_ACTION_STYLES, ErrorState } from '../../components/common/feedback/ErrorState';
 import { useIsAdmin } from '../../store/useAuthStore';
 import { useErrorActions } from '../../store/useErrorStore';
-import type { Post } from '../../schemas/postSchema';
+import type { PostSummary } from '../../schemas/postSchema';
 
 export default function BlogListPage() {
   const navigate = useNavigate();
   const isAdmin = useIsAdmin();
   const { isVisible, message, showToast } = useToast();
   const { showError } = useErrorActions();
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setLoadingMore] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
+  const [nextPage, setNextPage] = useState(0);
+  const [hasNext, setHasNext] = useState(false);
 
-  /** 임시저장 글 발행. 성공 시 목록의 해당 항목만 갱신한다. */
+  /**
+   * 임시저장 글 발행.
+   *
+   * 목록은 요약만 들고 있어 상세 응답으로 통째로 갈아끼울 수 없다. 바뀐 것은
+   * 상태뿐이므로 해당 필드만 반영한다.
+   */
   const handlePublish = async (postId: number) => {
     try {
       const updated = await postService.changeStatus(postId, 'PUBLISHED');
-      setPosts((prev) => prev.map((post) => (post.postId === postId ? updated : post)));
+      setPosts((prev) =>
+        prev.map((post) => (post.postId === postId ? { ...post, status: updated.status } : post)),
+      );
     } catch (error) {
       showError(error, {
         fallbackTitle: '발행하지 못했습니다',
@@ -37,23 +47,43 @@ export default function BlogListPage() {
     }
   };
 
-  // 조회 범위는 서버가 판정한다. 관리자에게는 임시저장 글이 함께 내려온다.
-  const fetchPosts = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const data = await postService.getPosts();
-      setPosts(data);
-      setLoadFailed(false);
-    } catch (error) {
-      setLoadFailed(true);
-      showToast(getAxiosErrorMessage(error, '포스트를 불러오지 못했습니다.'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [showToast]);
+  /**
+   * 목록 조회.
+   *
+   * 조회 범위는 서버가 판정한다. 관리자에게는 임시저장 글이 함께 내려온다.
+   * 첫 페이지는 교체, 이후 페이지는 이어 붙인다.
+   */
+  const fetchPosts = useCallback(
+    async (page: number) => {
+      const isFirstPage = page === 0;
+      if (isFirstPage) {
+        setIsLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
+
+      try {
+        const result = await postService.getPosts(page);
+        setPosts((prev) => (isFirstPage ? result.content : [...prev, ...result.content]));
+        setNextPage(result.page + 1);
+        setHasNext(result.hasNext);
+        setLoadFailed(false);
+      } catch (error) {
+        // 이어 붙이기 실패는 이미 보고 있는 목록을 지우지 않는다.
+        if (isFirstPage) {
+          setLoadFailed(true);
+        }
+        showToast(getAxiosErrorMessage(error, '포스트를 불러오지 못했습니다.'));
+      } finally {
+        setIsLoading(false);
+        setLoadingMore(false);
+      }
+    },
+    [showToast],
+  );
 
   useEffect(() => {
-    void fetchPosts();
+    void fetchPosts(0);
   }, [fetchPosts, isAdmin]);
 
   return (
@@ -97,7 +127,7 @@ export default function BlogListPage() {
                     actions={
                       <button
                         type="button"
-                        onClick={() => void fetchPosts()}
+                        onClick={() => void fetchPosts(0)}
                         className={ERROR_ACTION_STYLES.primary}
                       >
                         다시 시도
@@ -119,6 +149,29 @@ export default function BlogListPage() {
                     onPublish={isAdmin ? handlePublish : undefined}
                   />
                 ))
+              )}
+
+              {/* 무한 스크롤 대신 명시적 버튼을 쓴다. 키보드로 도달 가능하고,
+                  스크롤 위치 복원이나 푸터 접근을 방해하지 않는다. */}
+              {hasNext && (
+                <div className="flex justify-center pt-4">
+                  <button
+                    type="button"
+                    onClick={() => void fetchPosts(nextPage)}
+                    disabled={isLoadingMore}
+                    className={`${COMMON_STYLES.secondaryButton} dark:bg-white/10 dark:text-white dark:border-white/15 px-6 py-3 text-sm disabled:opacity-50`}
+                  >
+                    {isLoadingMore ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" aria-hidden="true" /> 불러오는 중...
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown size={16} aria-hidden="true" /> 더보기
+                      </>
+                    )}
+                  </button>
+                </div>
               )}
             </motion.div>
           )}

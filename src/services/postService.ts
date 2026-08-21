@@ -1,5 +1,11 @@
 import axiosInstance from '../api/axiosInstance';
-import type { Post, PostStatus, PostWriteRequest } from '../schemas/postSchema';
+import {
+  postSummaryPageSchema,
+  type Post,
+  type PostStatus,
+  type PostSummaryPage,
+  type PostWriteRequest,
+} from '../schemas/postSchema';
 
 /**
  * 게시글 API 클라이언트.
@@ -8,9 +14,15 @@ import type { Post, PostStatus, PostWriteRequest } from '../schemas/postSchema';
  * 덧붙이지 않는 이유이며, 관리자에게는 임시저장 글이 함께 내려온다.
  */
 export const postService = {
-  getPosts: async (): Promise<Post[]> => {
-    const { data } = await axiosInstance.get<Post[]>('/posts');
-    return data;
+  /**
+   * 목록 조회.
+   *
+   * 본문을 제외한 요약만 페이지 단위로 받는다. 조회 범위(임시저장 포함 여부)는
+   * 서버가 토큰을 보고 판정하므로 여기서 조건을 덧붙이지 않는다.
+   */
+  getPosts: async (page = 0, size = 10): Promise<PostSummaryPage> => {
+    const { data } = await axiosInstance.get('/posts', { params: { page, size } });
+    return postSummaryPageSchema.parse(data);
   },
 
   getPostById: async (id: number): Promise<Post> => {
