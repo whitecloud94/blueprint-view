@@ -1,5 +1,6 @@
 import axios, { type AxiosError } from 'axios';
 import { tokenStorage } from './tokenStorage';
+import { toErrorMessage } from './errorPolicy';
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api/v1',
@@ -30,23 +31,13 @@ axiosInstance.interceptors.response.use(
 );
 
 /**
- * 서버 오류 응답을 사용자에게 보여줄 문구로 바꾼다.
+ * 오류를 사용자에게 보여줄 한 줄 문구로 바꾼다.
  *
- * 백엔드는 { code, message, status } 형태의 ErrorResponse 를 내려준다.
+ * 분류와 문구 결정은 errorPolicy 가 담당한다. 이 함수는 기존 호출부를 위한
+ * 얇은 통로이며, 예외의 원문 메시지가 화면에 노출되지 않도록 보장한다.
  */
-export function getAxiosErrorMessage(error: unknown, fallback = '요청 처리 중 오류가 발생했습니다.'): string {
-  if (axios.isAxiosError(error)) {
-    // 서버에 닿지 못한 경우(응답 자체가 없음)는 원문 대신 조치 가능한 안내를 준다.
-    if (!error.response) {
-      return '서버에 연결할 수 없습니다. 백엔드가 실행 중인지 확인해주세요.';
-    }
-    const data = error.response.data as { message?: string } | undefined;
-    return data?.message ?? error.message;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return fallback;
+export function getAxiosErrorMessage(error: unknown, fallback?: string): string {
+  return toErrorMessage(error, fallback);
 }
 
 export default axiosInstance;
