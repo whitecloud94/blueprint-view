@@ -11,6 +11,8 @@ import {Post} from "../../schemas/postSchema.ts";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
 import {MarkdownContent} from "../../features/blog/components/MarkdownContent";
 import {useViewCount} from "../../features/blog/hooks/useViewCount";
+import {useReadTimeTracker} from "../../features/blog/hooks/useReadTimeTracker";
+import {TagChip} from "../../features/blog/components/TagChip";
 import {CommentSection} from "../../features/blog/comment/CommentSection";
 import {LikeButton} from "../../features/blog/components/LikeButton";
 import {LiquidToast} from "../../components/common/feedback/LiquidToast";
@@ -36,6 +38,9 @@ export default function PostDetailPage() {
 
     // 본문을 실제로 연 방문만 센다. 세션 단위 중복은 훅이 걸러 낸다.
     useViewCount(post?.postId, post?.status === 'PUBLISHED');
+
+    // 목록의 평균 읽기 시간을 채우는 기록. 발행글에만 의미가 있다.
+    useReadTimeTracker(post?.status === 'PUBLISHED' ? post?.postId : undefined);
 
     const handleDelete = async () => {
         if (!post?.postId) return;
@@ -181,6 +186,14 @@ export default function PostDetailPage() {
                                     {post.titleName}
                                 </h1>
                                 
+                                {post.tags.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {post.tags.map((tag) => (
+                                            <TagChip key={tag.slug} tag={tag} size="md" />
+                                        ))}
+                                    </div>
+                                )}
+
                                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 dark:text-gray-500 font-mono">
                                     {post.status === 'DRAFT' && (
                                         <span className="px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 text-xs font-black tracking-wider">

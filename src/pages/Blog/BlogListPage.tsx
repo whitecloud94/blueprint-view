@@ -144,8 +144,6 @@ export default function BlogListPage() {
                   <PostCard
                     key={post.postId}
                     post={post}
-                    readTime="5 min read"
-                    tags={[]}
                     onPublish={isAdmin ? handlePublish : undefined}
                   />
                 ))

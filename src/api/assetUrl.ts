@@ -19,6 +19,17 @@ export function resolveAssetUrl(src?: string): string | undefined {
   return `${getApiOrigin()}${src}`;
 }
 
+/**
+ * API 절대 URL.
+ *
+ * <p>sendBeacon 은 axios 를 거치지 않아 baseURL 이 적용되지 않는다. 같은 기준으로
+ * 주소를 만들기 위해 여기서 조립한다.
+ */
+export function resolveApiUrl(path: string): string {
+  const baseUrl = axiosInstance.defaults.baseURL ?? '';
+  return `${baseUrl.replace(/\/$/, '')}${path}`;
+}
+
 function getApiOrigin(): string {
   const baseUrl = axiosInstance.defaults.baseURL ?? '';
 

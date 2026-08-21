@@ -8,6 +8,7 @@ import EditorPanel from '../../features/blog/editor/EditorPanel';
 import EditorPreview from '../../features/blog/editor/EditorPreview';
 import { EditorHeader } from '../../features/blog/editor/EditorHeader';
 import { useDraftAutosave } from '../../features/blog/editor/useDraftAutosave';
+import { TagInput } from '../../features/blog/editor/TagInput';
 import {
   postFormSchema,
   postWriteRequestSchema,
@@ -46,6 +47,9 @@ export default function BlogEditorPage() {
   const isEditMode = postId !== undefined;
 
   const [mode, setMode] = useState<EditorMode>('split');
+  // 태그는 폼 필드가 아니라 별도 상태로 둔다. react-hook-form 의 배열 처리보다
+  // 칩 UI 의 추가·삭제를 그대로 다루는 편이 단순하다.
+  const [tags, setTags] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(isEditMode);
 
   const methods = useForm<PostFormData>({
@@ -81,6 +85,7 @@ export default function BlogEditorPage() {
           content: post.content,
           excerpt: post.excerpt ?? '',
         });
+        setTags(post.tags.map((tag) => tag.name));
       } catch (error) {
         showToast(getAxiosErrorMessage(error, '글을 불러오지 못했습니다.'));
         navigate('/blog', { replace: true });
@@ -110,7 +115,7 @@ export default function BlogEditorPage() {
       try {
         // 요약을 비워 보내도 서버가 본문 앞부분으로 채운다. 같은 규칙을 양쪽에
         // 두면 한쪽만 바뀌었을 때 결과가 갈린다.
-        const payload = postWriteRequestSchema.parse({ ...data, status });
+        const payload = postWriteRequestSchema.parse({ ...data, status, tags });
 
         const saved = isEditMode
           ? await postService.updatePost(postId, payload)
@@ -118,6 +123,7 @@ export default function BlogEditorPage() {
 
         clearDraft();
         reset(defaultValues);
+        setTags([]);
         navigate(`/blog/${saved.postId}`, { replace: true });
       } catch (error) {
         // 저장 실패는 하려던 일이 통째로 무산된 상황이다. 사라지는 토스트로는
@@ -146,6 +152,10 @@ export default function BlogEditorPage() {
         />
 
         <main className="max-w-[1600px] mx-auto mt-4 px-6">
+          <div className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04] px-6 py-4 mb-4`}>
+            <TagInput tags={tags} onChange={setTags} />
+          </div>
+
           <AnimatePresence mode="wait">
             {mode === 'split' ? (
               <motion.div
@@ -153,7 +163,7 @@ export default function BlogEditorPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[calc(100vh-140px)]"
+                className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[calc(100vh-220px)]"
               >
                 <EditorPanel
                   className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04]`}
@@ -171,7 +181,7 @@ export default function BlogEditorPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
+                className="max-w-4xl mx-auto h-[calc(100vh-220px)] flex flex-col"
               >
                 <EditorPanel
                   className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04] h-full`}
@@ -184,7 +194,7 @@ export default function BlogEditorPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col"
+                className="max-w-4xl mx-auto h-[calc(100vh-220px)] flex flex-col"
               >
                 <EditorPreview className={`${GLASS_STYLES.card} bg-white/80 dark:bg-white/[0.05] h-full`} />
               </motion.div>

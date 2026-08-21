@@ -1,29 +1,25 @@
 ﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Eye, Heart, MessageCircle, Send } from 'lucide-react';
 import { GLASS_STYLES } from '../../../constants/styles';
+import { TagChip } from './TagChip';
+import { formatReadTime } from '../utils/readTime';
 import { useNavigate } from 'react-router-dom';
 import type { PostSummary } from '../../../schemas/postSchema';
 
 export interface PostCardProps {
   post: PostSummary;
-  readTime?: string;
-  tags?: string[];
   relatedProjectId?: number;
   /** 관리자에게만 전달된다. 없으면 발행 버튼을 노출하지 않는다. */
   onPublish?: (postId: number) => void;
 }
 
-export const PostCard = ({
-  post,
-  readTime = '5 min read',
-  tags = [],
-  relatedProjectId,
-  onPublish,
-}: PostCardProps) => {
+export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) => {
   const navigate = useNavigate();
   const postId = post.postId ?? 0;
   const date = post.createdAt
     ? new Date(post.createdAt).toLocaleDateString()
     : new Date().toLocaleDateString();
+  // 아무도 읽지 않은 글에는 읽기 시간을 표시하지 않는다.
+  const readTime = formatReadTime(post.averageReadMs);
 
   const handleProjectClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -73,10 +69,14 @@ export const PostCard = ({
         <span className="flex items-center gap-1">
           <Calendar size={12} /> {date}
         </span>
-        <span className="w-1 h-1 rounded-full bg-gray-300" />
-        <span className="flex items-center gap-1">
-          <Clock size={12} /> {readTime}
-        </span>
+        {readTime && (
+          <>
+            <span className="w-1 h-1 rounded-full bg-gray-300" />
+            <span className="flex items-center gap-1" title="방문자들의 평균 읽기 시간">
+              <Clock size={12} /> {readTime}
+            </span>
+          </>
+        )}
         <span className="w-1 h-1 rounded-full bg-gray-300" />
         <span className="flex items-center gap-1" title="조회수">
           <Eye size={12} /> {post.viewCount ?? 0}
@@ -98,14 +98,9 @@ export const PostCard = ({
       </p>
 
       <div className="flex items-center justify-between">
-        <div className="flex gap-2">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-2.5 py-1 text-[11px] font-medium text-gray-500 dark:text-gray-400 bg-white/50 dark:bg-white/5 rounded-lg border border-white/20 dark:border-white/10"
-            >
-              #{tag}
-            </span>
+        <div className="flex flex-wrap gap-2">
+          {post.tags.map((tag) => (
+            <TagChip key={tag.slug} tag={tag} />
           ))}
         </div>
         <div className="w-8 h-8 rounded-full bg-white dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
