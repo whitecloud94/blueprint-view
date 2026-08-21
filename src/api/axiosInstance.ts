@@ -2,8 +2,21 @@ import axios, { type AxiosError } from 'axios';
 import { tokenStorage } from './tokenStorage';
 import { toErrorMessage } from './errorPolicy';
 
+/**
+ * API 기본 주소.
+ *
+ * 프로덕션 기본값을 코드에 둔다. 배포 플랫폼의 환경 변수에만 의존하면, 값이
+ * 비어 있을 때 조용히 localhost 로 빌드돼 방문자 브라우저가 자기 PC 를 호출한다.
+ * (실제로 배포된 번들에 http://localhost:8080 이 박혀 있던 원인이다.)
+ *
+ * VITE_API_BASE_URL 은 스테이징 등에서 덮어쓰기 위한 선택 값으로만 남긴다.
+ */
+const DEFAULT_API_BASE_URL = import.meta.env.PROD
+  ? 'https://api.dk-lab.dev/api/v1'
+  : 'http://localhost:8080/api/v1';
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api/v1',
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? DEFAULT_API_BASE_URL,
   timeout: 10_000,
   headers: {
     'Content-Type': 'application/json',
