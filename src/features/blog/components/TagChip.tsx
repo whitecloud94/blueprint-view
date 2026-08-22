@@ -7,6 +7,8 @@ interface TagChipProps {
   count?: number;
   isActive?: boolean;
   size?: 'sm' | 'md';
+  /** 이동 직전에 호출된다. 모달처럼 화면을 덮고 있는 것을 먼저 닫을 때 쓴다. */
+  onNavigate?: () => void;
 }
 
 /**
@@ -18,7 +20,7 @@ interface TagChipProps {
  * <p>카드 안에서도 쓰이므로 클릭 전파를 막는다. 그러지 않으면 태그를 눌러도
  * 카드의 상세 이동이 함께 실행된다.
  */
-export const TagChip = ({ tag, count, isActive = false, size = 'sm' }: TagChipProps) => {
+export const TagChip = ({ tag, count, isActive = false, size = 'sm', onNavigate }: TagChipProps) => {
   const navigate = useNavigate();
 
   return (
@@ -26,6 +28,7 @@ export const TagChip = ({ tag, count, isActive = false, size = 'sm' }: TagChipPr
       type="button"
       onClick={(event) => {
         event.stopPropagation();
+        onNavigate?.();
         navigate(`/blog/tags/${tag.slug}`);
       }}
       className={`inline-flex items-center gap-1 rounded-lg font-medium transition-colors ${

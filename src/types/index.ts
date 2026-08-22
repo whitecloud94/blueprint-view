@@ -10,7 +10,6 @@ export interface Project {
   active?: boolean;
   achievements?: string[];
   tech: string[];
-  blogId?: number;
 }
 
 

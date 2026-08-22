@@ -1,10 +1,12 @@
-import {ExternalLink, X} from "lucide-react";
+import {BookOpen, X} from "lucide-react";
 import {useEffect} from "react";
 import {createPortal} from "react-dom";
 import {motion} from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import {COMMON_STYLES} from "../../../constants/styles.ts";
 import {Project} from "../../../types";
+import {TagChip} from "../../../features/blog/components/TagChip.tsx";
+import {useBlogNavigation} from "../../../features/blog/hooks/useBlogNavigation.ts";
+import {findTagsForTechStack} from "../../../features/blog/utils/techTag.ts";
 
 const MODAL_STYLES = {
     overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/50 dark:bg-black/70 backdrop-blur-[5px]",
@@ -62,13 +64,13 @@ interface ModalProps {
 }
 
 export const Modal = ({project, onClose}: ModalProps) => {
-    const navigate = useNavigate();
-    if (!project) return null;
+    const {state} = useBlogNavigation();
 
-    const handleBlogLink = () => {
-        onClose();
-        navigate(`/blog?post=${project.blogId}`);
-    };
+    // 프로젝트의 기술 스택과 겹치는 태그. 겹치는 글이 없으면 빈 배열이라 섹션이 사라진다.
+    // 아직 글을 쓰지 않은 프로젝트에 "관련 글" 버튼만 덩그러니 남는 것을 막는다.
+    const relatedTags = state.status === 'ready'
+        ? findTagsForTechStack(project.tech ?? [], state.data.tags)
+        : [];
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -195,26 +197,35 @@ export const Modal = ({project, onClose}: ModalProps) => {
                         </div>
                     </section>
 
-                    {/* 4. Related Blog Post (Conditional) */}
-                    {project.blogId && (
+                    {/* 4. 관련 글 — 기술 스택과 겹치는 태그로 잇는다 */}
+                    {relatedTags.length > 0 && (
                         <section>
-                            <button
-                                onClick={handleBlogLink}
-                                className="w-full p-6 rounded-[24px] bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-400/20 flex items-center justify-between group hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-all duration-300"
-                            >
-                                <div className="flex items-center gap-4 text-left">
-                                    <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/10 backdrop-blur-md flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-white/20 group-hover:text-white transition-colors">
-                                        <ExternalLink size={24} />
+                            <div className="w-full p-6 rounded-[24px] bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-400/20">
+                                <div className="flex items-center gap-4 mb-5">
+                                    <div className="w-12 h-12 shrink-0 rounded-2xl bg-white dark:bg-white/10 backdrop-blur-md flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                                        <BookOpen size={22}/>
                                     </div>
                                     <div>
-                                        <p className="text-[11px] font-black text-indigo-500/70 dark:text-indigo-400/70 group-hover:text-white/70 uppercase tracking-widest mb-0.5">Related Story</p>
-                                        <h4 className="text-[16px] font-bold text-indigo-900 dark:text-white group-hover:text-white transition-colors">이 프로젝트의 개발 비하인드 읽어보기</h4>
+                                        <p className="text-[11px] font-black text-indigo-500/70 dark:text-indigo-400/70 uppercase tracking-widest mb-0.5">
+                                            Related Posts
+                                        </p>
+                                        <h4 className="text-[16px] font-bold text-indigo-900 dark:text-white">
+                                            이 프로젝트의 기술로 쓴 글 읽어보기
+                                        </h4>
                                     </div>
                                 </div>
-                                <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-white/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-white/10 group-hover:text-white group-hover:translate-x-1 transition-all">
-                                    <ExternalLink size={18} />
+                                <div className="flex flex-wrap gap-2">
+                                    {relatedTags.map((tag) => (
+                                        <TagChip
+                                            key={tag.slug}
+                                            tag={tag}
+                                            count={tag.postCount}
+                                            size="md"
+                                            onNavigate={onClose}
+                                        />
+                                    ))}
                                 </div>
-                            </button>
+                            </div>
                         </section>
                     )}
                 </div>
