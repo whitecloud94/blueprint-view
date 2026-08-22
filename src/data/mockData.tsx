@@ -35,8 +35,7 @@ export const PROJECTS: Project[] = [
             "대량 데이터 처리 및 프로세스 최적화",
             "금융 규제 준수를 위한 시스템 로직 수정"
         ],
-        tech: ["Java", "iFramwork", "Tibero", "JEUS"],
-        blogId: 1
+        tech: ["Java", "iFramwork", "Tibero", "JEUS"]
     },
     {
         id: 2,
