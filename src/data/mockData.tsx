@@ -125,16 +125,16 @@ export const PROJECTS: Project[] = [
 ];
 
 export const RESUME_CONTENT = `
-# 🛠️ 비즈니스의 가치를 더하는 풀스택 개발자, 김대경입니다.
+# 비즈니스의 가치를 더하는 풀스택 개발자, 김대경입니다.
 
 > **기술은 비즈니스 문제를 해결하기 위한 도구라는 신념 아래, 복잡한 요구사항을 안정적이고 확장 가능한 아키텍처로 구현하는 데 주력합니다.** 
 > 금융권 프로젝트를 수행하며 데이터 정합성과 시스템 안정성을 최우선으로 생각하는 태도를 길렀으며, 다양한 스테이크홀더와의 협업을 통해 프로젝트의 성공을 이끌어내는 경험을 쌓아왔습니다.
 
 ---
 
-## 💼 Work Experience
+## Work Experience
 
-### 🚗 **Toyota Financial Services Korea**
+### **Toyota Financial Services Korea**
 *Core 시스템 운영관리 | 2026.01 - Present*
 
 - **여신 계정계 코어 시스템 운영 및 유지보수**
@@ -142,7 +142,7 @@ export const RESUME_CONTENT = `
 - 금융 규제 준수를 위한 시스템 로직 수정
 - \`Java\`, \`iFramwork\`, \`Tibero\`, \`JEUS\`
 
-### 🏦 **IBK 기업은행 업무지원 시스템 재구축**
+### **IBK 기업은행 업무지원 시스템 재구축**
 *ERD 설계 및 데이터 연계 배치 개발 | 2025.05 - 2025.12*
 
 - **도메인 모델 및 관계형 데이터베이스 설계 (정규화, 인덱스 최적화)**
@@ -150,7 +150,7 @@ export const RESUME_CONTENT = `
 - React, TypeScript UI 개발 및 EAI 시스템 연계
 - \`React\`, \`TypeScript\`, \`Spring Boot\`, \`Spring Batch\`, \`EDB\`, \`Oracle\`
 
-### 🛡️ **IBK 기업은행 상시감시 시스템 구축**
+### **IBK 기업은행 상시감시 시스템 구축**
 *정보계 데이터 적재 및 처리 구조 설계 | 2024.10 - 2025.04*
 
 - **Spring Batch 기반 공통 모듈 작성을 통한 생산성 향상**
@@ -158,7 +158,7 @@ export const RESUME_CONTENT = `
 - 외부 시스템 협의 및 EAI 인터페이스 정의
 - \`Java\`, \`Spring Boot\`, \`Spring Batch\`, \`EDB\`, \`Oracle\`
 
-### 🌿 **IBK 기업은행 탄소중립 ESG HUB 시스템 구축**
+### **IBK 기업은행 탄소중립 ESG HUB 시스템 구축**
 *ESG 통합 관리 시스템 및 배치 프로세스 구축 | 2024.02 - 2024.06*
 
 - **탄소배출량 데이터 수집·정제 및 시각화 시스템 구축**
@@ -166,7 +166,7 @@ export const RESUME_CONTENT = `
 - 배치 구조 최적화 및 공통 코드 적용으로 데이터 신뢰성 확보
 - \`Java\`, \`Spring Boot\`, \`Spring Batch\`, \`EAI\`, \`PostgreSQL\`, \`React\`
 
-### 📈 **IBK 기업은행 투자상품 통합관리 시스템 구축**
+### **IBK 기업은행 투자상품 통합관리 시스템 구축**
 *내부통제 시스템 및 데이터 연계 개발 | 2023.04 - 2024.11*
 
 - **비예금형 투자상품 모니터링 및 결재 프로세스 구현**
@@ -174,7 +174,7 @@ export const RESUME_CONTENT = `
 - 정기 배치 프로그램 설계 및 스케줄링 자동화
 - \`Java\`, \`Nexacro\`, \`Oracle\`, \`Tibero\`, \`Clip Report\`
 
-### 📱 **BNK 경남은행 시니어 뱅킹 및 메인화면 개편**
+### **BNK 경남은행 시니어 뱅킹 및 메인화면 개편**
 *접근성 강화 및 메인 서비스 고도화 | 2023.12 - 2024.02*
 
 - **고령층 고객을 위한 시니어뱅킹(큰글씨) UI 및 반응형 화면 구현**
@@ -182,7 +182,7 @@ export const RESUME_CONTENT = `
 - 관리자 페이지 및 백오피스용 API 설계
 - \`Java\`, \`Spring Framework\`, \`JavaScript\`, \`JSP\`, \`Oracle\`
 
-### 📄 **BNK 경남은행 비대면 제증명서 발급 서비스 구축**
+### **BNK 경남은행 비대면 제증명서 발급 서비스 구축**
 *레포트 레이아웃 및 발급 시스템 구축 | 2022.04 - 2022.09*
 
 - **40종 이상의 제증명서 레포트 공통 템플릿화**
@@ -192,28 +192,28 @@ export const RESUME_CONTENT = `
 
 ---
 
-## 🛠️ Skills
+## Skills
 
-###  **Backend**
+### **Backend**
 - **Java / Spring Boot**: 대규모 금융 시스템 백엔드 개발 및 유지보수
 - **Spring Batch**: 대량 데이터 처리 및 배치 작업 최적화
 - **Database**: Oracle, PostgreSQL, Tibero, EDB 등 다양한 RDBMS 경험
 
-###  **Frontend**
+### **Frontend**
 - **React / TypeScript**: 현대적인 UI/UX 구현 및 컴포넌트 기반 개발
 - **Nexacro / JavaScript**: 금융권 특화 UI 프레임워크 활용 및 웹 표준 기술 적용
 - **JSP / Web Standard**: 레거시 및 최신 웹 환경 아우르는 프론트엔드 개발
 
 ---
 
-## 🏆 Certificates
+## Certificates
 
 - **정보처리기사** — 한국산업인력공단 (취득: 2019.08)
   - 자격번호: 19202210539L
 
 ---
 
-## 🏫 Education
+## Education
 
 - **부경대학교** - 2020.03 졸업
   - IT융합응용공학과 [3.47/4.5]
@@ -222,7 +222,7 @@ export const RESUME_CONTENT = `
 
 ---
 
-## 🎓 Others
+## Others
 
 - **Clip Report / OZ Report / Nexacro**: 금융권 특화 솔루션 및 리포팅 툴 활용 능력
 - **EAI (Enterprise Application Integration)**: 시스템 간 실시간 연계 설계 및 데이터 적재 프로세스 구축 전문가
@@ -230,7 +230,7 @@ export const RESUME_CONTENT = `
 
 ---
 
-## ✉️ Contact
+## Contact
 
 - **Email**: [ajemfld1@gmail.com](mailto:ajemfld1@gmail.com)
 - **GitHub**: [github.com/whitecloud94](https://github.com/whitecloud94)

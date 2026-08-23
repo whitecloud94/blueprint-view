@@ -44,7 +44,9 @@ const SkillItem = ({ name, tag, icon, postCount, onClick }: SkillItemProps) => (
         <div className={STYLES.skillAction}>
             {/* 읽을 글이 있을 때만 개수를 보여 준다. 없는데 눌러 보게 만들지 않는다. */}
             {postCount !== undefined && postCount > 0 && (
-                <span className={STYLES.postCount}>{postCount} posts</span>
+                <span className={STYLES.postCount}>
+                    {postCount} {postCount === 1 ? 'post' : 'posts'}
+                </span>
             )}
             <span className={STYLES.skillTag}>{tag}</span>
             <ArrowUpRight size={16} className={STYLES.skillArrow} />
