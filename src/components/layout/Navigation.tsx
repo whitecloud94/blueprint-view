@@ -10,16 +10,17 @@ import {useAuthActions, useAuthStatus, useCurrentUser} from "../../store/useAuth
 
 const STYLES = {
     wrapper: `w-full transition-all duration-500`,
-    container: `${COMMON_STYLES.glassMuted} dark:bg-black/40 dark:border-white/10 rounded-[24px] p-2 pl-4 sm:pl-6 pr-2 flex justify-between items-center relative overflow-hidden`,
-    iconGroup: `flex gap-4 sm:gap-6 text-gray-400 relative z-10`,
+    container: `${COMMON_STYLES.glassMuted} dark:bg-black/40 dark:border-white/10 rounded-[24px] p-2 pl-3 sm:pl-6 pr-2 flex justify-between items-center relative gap-2
+        overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`,
+    iconGroup: `flex gap-1 sm:gap-6 text-gray-400 relative z-10 shrink-0`,
     navIcon: `sm:w-5 sm:h-5`,
-    actionGroup: `flex items-center gap-2 sm:gap-3`,
-    themeButton: `text-gray-400 hover:text-black dark:hover:text-white transition-transform p-2 hover:rotate-12 duration-300`,
+    actionGroup: `flex items-center gap-1 sm:gap-3 shrink-0`,
+    themeButton: `text-gray-400 hover:text-black dark:hover:text-white transition-transform p-1.5 sm:p-2 hover:rotate-12 duration-300 shrink-0`,
     userName: `hidden sm:inline max-w-[120px] truncate text-[12px] font-bold text-gray-500 dark:text-gray-400`,
-    hireButton: `${COMMON_STYLES.glassDark} dark:bg-white dark:text-black dark:border-white/20 px-3 sm:px-5 py-2 sm:py-2.5 rounded-[14px] sm:rounded-[16px] text-[11px] sm:text-[13px] font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-black dark:hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all`,
+    hireButton: `${COMMON_STYLES.glassDark} dark:bg-white dark:text-black dark:border-white/20 px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-[14px] sm:rounded-[16px] text-[11px] sm:text-[13px] font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-black dark:hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all shrink-0`,
     plusIconWrapper: "bg-white/20 dark:bg-black/10 rounded-full p-0.5",
-    hireMeLabel: "hidden xs:inline",
-    hireLabel: "xs:hidden",
+    hireMeLabel: "hidden sm:inline",
+    hireLabel: "sm:hidden",
 };
 
 export const Navigation = () => {
@@ -86,13 +87,15 @@ export const Navigation = () => {
             <div className={STYLES.container}>
                 <div className={STYLES.iconGroup}>
                     {NAV_ITEMS.map(({Icon, label, path}) => (
-                        <NavItem
-                            key={label}
-                            Icon={Icon}
-                            label={label}
-                            isActive={activeTab === label}
-                            onClick={() => handleNavClick(path)}
-                        />
+                        // Products는 홈 화면을 스크롤해도 도달하는 보조 바로가기라, 좁은 화면에서는 우선순위가 낮다.
+                        <div key={label} className={label === 'Products' ? 'hidden sm:block' : undefined}>
+                            <NavItem
+                                Icon={Icon}
+                                label={label}
+                                isActive={activeTab === label}
+                                onClick={() => handleNavClick(path)}
+                            />
+                        </div>
                     ))}
                 </div>
 

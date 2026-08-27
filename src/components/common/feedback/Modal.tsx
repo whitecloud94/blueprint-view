@@ -14,12 +14,16 @@ const MODAL_STYLES = {
     overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/50 dark:bg-black/70 backdrop-blur-[5px]",
 
     container: `
-        relative w-full max-w-2xl max-h-[90vh] overflow-y-auto
+        relative w-full max-w-2xl max-h-[90vh] overflow-hidden
         bg-white/90 dark:bg-[#1A1A1A]/90 backdrop-blur-[80px] border border-white/60 dark:border-white/10
         rounded-[40px] sm:rounded-[48px]
-        flex flex-col scrollbar-hide
+        flex flex-col
         shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-none
     `,
+
+    // 실제 스크롤이 일어나는 영역. 애니메이션(transform)은 container(바깥)에 있고
+    // 여기는 transform이 없어야 모바일에서 sticky 헤더가 스크롤 중 좌표를 잃지 않는다.
+    scrollArea: `flex-1 min-h-0 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`,
 
     header: `sticky top-9 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/40 dark:bg-white/5 backdrop-blur-2xl border-b border-black/5 dark:border-white/10`,
     headerLeft: "flex-1 pr-6",
@@ -121,9 +125,10 @@ export const Modal = ({project, onClose}: ModalProps) => {
                 }}
                 onClick={e => e.stopPropagation()}
             >
+                <div className={MODAL_STYLES.scrollArea}>
                 <WindowFrame
                     filename={`project-${project.id ?? 'x'}.json`}
-                    className="sticky top-0 z-20 rounded-t-[40px] sm:rounded-t-[48px]"
+                    className="sticky top-0 z-20"
                 />
 
                 <header className={MODAL_STYLES.header}>
@@ -223,6 +228,7 @@ export const Modal = ({project, onClose}: ModalProps) => {
                             </div>
                         </section>
                     )}
+                </div>
                 </div>
             </motion.div>
         </motion.div>,

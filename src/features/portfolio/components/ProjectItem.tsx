@@ -19,7 +19,7 @@ const STYLES = {
         shadow-[0_4px_12px_rgba(0,0,0,0.1)] group-hover:rotate-6 transition-transform`,
 
     activeBadge: "hidden xs:inline-block text-[8px] bg-accent-600 dark:bg-accent-500 text-white px-1.5 py-0.5 rounded-md font-black",
-    featuredBadge: "inline-flex items-center gap-1 text-[8px] font-mono font-black text-accent-600 dark:text-accent-400 border border-accent-200 dark:border-accent-500/40 px-1.5 py-0.5 rounded-md tracking-wider",
+    featuredBadge: "hidden sm:inline-flex items-center gap-1 text-[8px] font-mono font-black text-accent-600 dark:text-accent-400 border border-accent-200 dark:border-accent-500/40 px-1.5 py-0.5 rounded-md tracking-wider",
 
     chevron: (active?: boolean) =>
         `flex-shrink-0 w-8 h-8 flex items-center justify-center transition-colors ${
