@@ -90,15 +90,31 @@ export const Modal = ({project, onClose}: ModalProps) => {
     }, [onClose]);
 
     useEffect(() => {
+        // body에 overflow:hidden만 걸면 iOS WebKit에서는 배경이 터치 스크롤로
+        // 계속 움직인다(잘 알려진 제약). 모달 위에서 스와이프하면 실제로는 배경
+        // 페이지가 같이 스크롤되면서, 고정 오버레이·sticky 자식들의 좌표 기준이
+        // 흔들려 모달 내용이 프레임 밖으로 새어 보이는 원인이었다. body를
+        // position:fixed로 그 자리에 못박아야 iOS에서도 배경 스크롤이 확실히 막힌다.
+        const scrollY = window.scrollY;
         const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.overflow = 'hidden';
         if (scrollbarWidth > 0) {
             document.body.style.paddingRight = `${scrollbarWidth}px`;
         }
-        document.body.style.overflow = 'hidden';
 
         return () => {
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = '0px';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            window.scrollTo(0, scrollY);
         };
     }, []);
 
