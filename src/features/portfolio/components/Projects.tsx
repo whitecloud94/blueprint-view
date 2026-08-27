@@ -10,14 +10,14 @@ import { PROJECTS } from "../../../data";
 import { Project } from "../../../types";
 import {useToast} from "../../../hooks/useToast.ts";
 import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
+import {SectionMarker} from "../../../components/common/SectionMarker.tsx";
+import {WindowFrame} from "../../../components/common/WindowFrame.tsx";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
     header: "flex justify-between items-center px-4 sm:px-6 py-4",
     viewAllBtn: `${COMMON_STYLES.secondaryButton} px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold text-gray-600 flex items-center gap-1 hover:bg-white/80 transition-all shadow-sm`,
     listWrapper: "flex flex-col gap-1.5",
-    sectionHeader: COMMON_STYLES.sectionHeader,
-    dot: COMMON_STYLES.dot,
 };
 
 export const Projects = () => {
@@ -32,11 +32,10 @@ export const Projects = () => {
 
     return (
         <section id="projects" className={`${STYLES.wrapper} mb-6`}>
+            <WindowFrame filename="projects.ts" className="rounded-t-[32px] sm:rounded-t-[40px]"/>
+
             <div className={STYLES.header}>
-                <div className={STYLES.sectionHeader}>
-                    <div className={STYLES.dot}/>
-                    Projects
-                </div>
+                <SectionMarker index="02" label="Projects"/>
                 <button className={STYLES.viewAllBtn} onClick={showDevToast}>
                     View All <ArrowUpRight size={12}/>
                 </button>
@@ -51,6 +50,7 @@ export const Projects = () => {
                         icon={item.icon}
                         bg={item.bg}
                         active={item.active}
+                        featured={item.featured}
                         // 3. 클릭 시 해당 아이템 데이터를 상태에 저장
                         onClick={() => setSelectedProject(item)}
                     />

@@ -35,8 +35,8 @@ export const TagChip = ({ tag, count, isActive = false, size = 'sm', onNavigate 
         size === 'sm' ? 'px-2.5 py-1 text-[11px]' : 'px-3 py-1.5 text-xs'
       } ${
         isActive
-          ? 'bg-indigo-600 text-white'
-          : 'text-gray-500 dark:text-gray-400 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/10 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200'
+          ? 'bg-accent-600 text-white'
+          : 'text-gray-500 dark:text-gray-400 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/10 hover:text-accent-600 dark:hover:text-accent-400 hover:border-accent-200'
       }`}
     >
       #{tag.name}

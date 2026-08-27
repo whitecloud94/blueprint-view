@@ -1,13 +1,12 @@
 import { SiGithub, SiGmail } from "react-icons/si";
 import { COMMON_STYLES } from "../../../constants/styles.ts";
+import { SectionMarker } from "../../../components/common/SectionMarker.tsx";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} rounded-[24px] sm:rounded-[28px] p-2 flex flex-col xs:flex-row items-center justify-between px-4 sm:pl-6 sm:pr-3 gap-4 py-4 sm:py-2`,
     buttonGroup: "flex gap-2",
     iconButton: (hoverColor: string) => `${COMMON_STYLES.iconButton} ${hoverColor}`,
     iconButtonDisabled: "opacity-40 cursor-not-allowed pointer-events-none",
-    sectionHeader: COMMON_STYLES.sectionHeader,
-    dot: COMMON_STYLES.dot,
 };
 
 const githubUrl = import.meta.env.VITE_GITHUB_URL as string | undefined;
@@ -20,10 +19,7 @@ const SOCIAL_DATA = [
 export const Social = () => {
     return (
         <section className={STYLES.wrapper}>
-            <div className={STYLES.sectionHeader}>
-                <div className={STYLES.dot}/>
-                Contact points
-            </div>
+            <SectionMarker index="04" label="Contact points"/>
             <div className={STYLES.buttonGroup}>
                 {SOCIAL_DATA.map(({ Icon, color, label, href }, idx) => {
                     const isDisabled = !href;

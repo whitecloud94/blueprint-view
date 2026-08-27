@@ -23,7 +23,7 @@ export const LoadingBar = () => {
                                 repeat: Infinity,
                                 ease: "easeInOut"
                             }}
-                            className="w-full h-full bg-indigo-600 shadow-lg shadow-indigo-200 dark:shadow-none"
+                            className="w-full h-full bg-accent-600 shadow-lg shadow-accent-200 dark:shadow-none"
                         />
                     </div>
 
@@ -35,7 +35,7 @@ export const LoadingBar = () => {
                             <motion.span
                                 animate={{ opacity: [0, 1, 0] }}
                                 transition={{ duration: 1.5, repeat: Infinity }}
-                                className="text-[10px] font-mono text-indigo-500 dark:text-indigo-400 font-bold"
+                                className="text-[10px] font-mono text-accent-500 dark:text-accent-400 font-bold"
                             >
                                 PROCESSING...
                             </motion.span>
@@ -51,7 +51,7 @@ export const LoadingBar = () => {
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                                className="h-full w-1/2 bg-gradient-to-r from-transparent via-indigo-600 to-transparent"
+                                className="h-full w-1/2 bg-gradient-to-r from-transparent via-accent-600 to-transparent"
                             />
                         </div>
                     </div>

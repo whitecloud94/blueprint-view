@@ -38,7 +38,7 @@ export const ErrorState = ({
     role="alert"
     className={`${GLASS_STYLES.card} w-full max-w-[480px] px-8 py-12 sm:px-10 flex flex-col items-center gap-5 text-center ${className}`}
   >
-    <span className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-500 dark:text-indigo-400">
+    <span className="w-14 h-14 rounded-2xl bg-accent-50 dark:bg-accent-500/10 flex items-center justify-center text-accent-500 dark:text-accent-400">
       <Icon size={26} aria-hidden="true" />
     </span>
 

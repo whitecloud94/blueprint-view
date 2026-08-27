@@ -148,7 +148,7 @@ export const CommentSection = ({ postId, onNotify }: CommentSectionProps) => {
   return (
     <section className={`${GLASS_STYLES.card} bg-white/80 dark:bg-gray-900/40 p-8 sm:p-10 space-y-8`}>
       <h2 className={`${GLASS_STYLES.heading} text-xl flex items-center gap-2`}>
-        <MessageCircle size={20} className="text-indigo-500" aria-hidden="true" />
+        <MessageCircle size={20} className="text-accent-500" aria-hidden="true" />
         댓글 {totalCount}
       </h2>
 

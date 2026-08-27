@@ -55,7 +55,7 @@ export const LoginForm = () => {
   return (
     <div className="w-full max-w-[480px] bg-white dark:bg-white/[0.03] rounded-[32px] sm:rounded-[40px] px-5 sm:px-10 py-10 sm:py-12 shadow-sm border border-white dark:border-white/[0.08]">
       <div className="flex items-center gap-3 mb-2">
-        <span className="w-10 h-10 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+        <span className="w-10 h-10 rounded-2xl bg-accent-50 dark:bg-accent-500/10 flex items-center justify-center text-accent-600 dark:text-accent-400">
           <Lock size={18} aria-hidden="true" />
         </span>
         <h1 className="text-2xl font-black text-gray-900 dark:text-white">로그인</h1>
@@ -102,7 +102,7 @@ export const LoginForm = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full flex justify-center py-4 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-none font-bold text-sm transition-all transform active:scale-[0.98] ${
+          className={`w-full flex justify-center py-4 px-4 bg-accent-600 hover:bg-accent-700 text-white rounded-2xl shadow-lg shadow-accent-200 dark:shadow-none font-bold text-sm transition-all transform active:scale-[0.98] ${
             isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:scale-[1.01]'
           }`}
         >
@@ -145,7 +145,7 @@ function Field({
 }
 
 function inputClass(hasError: boolean) {
-  return `block w-full px-4 py-3 bg-gray-50 dark:bg-black/20 border rounded-2xl transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:text-sm dark:text-white ${
+  return `block w-full px-4 py-3 bg-gray-50 dark:bg-black/20 border rounded-2xl transition-all focus:outline-none focus:ring-2 focus:ring-accent-500/20 sm:text-sm dark:text-white ${
     hasError ? 'border-red-500' : 'border-gray-100 dark:border-white/10'
   }`;
 }

@@ -28,7 +28,7 @@ export const PROJECTS: Project[] = [
         period: '2026.01 - Present',
         sub: "Core시스템 운영관리",
         icon: <CarFront size={20}/>,
-        bg: 'bg-indigo-600',
+        bg: 'bg-accent-600',
         active: true,
         achievements: [
             "여신 계정계 코어 시스템 운영 및 유지보수",
@@ -44,6 +44,7 @@ export const PROJECTS: Project[] = [
         sub: 'ERD 설계 및 개발 일정 관리 및 연계 데이터 적재 배치 프로그램 개발 지원',
         icon: <Briefcase size={20}/>,
         bg: 'bg-[#1A1A1A]',
+        featured: true,
         achievements: [
             "화면 정의서를 바탕으로 정규화와 인덱스를 고려한 도메인 모델 및 관계형 데이터베이스 설계 수행",
             "총 4인 규모의 개발 팀 내 리더 역할 수행 중, 개발자 3인의 작업 분배 및 일정 조율을 통해 안정적인 개발 일정 관리",
@@ -59,6 +60,7 @@ export const PROJECTS: Project[] = [
         sub: '정보계 데이터 적재 및 처리용 배치 프로그램 구조 설계',
         icon: <ShieldCheck size={20}/>,
         bg: 'bg-[#1A1A1A]',
+        featured: true,
         achievements: [
             "실시간성과 안정성을 고려한 데이터 처리 로직 구현",
             "Spring Batch 기반 프로젝트 환경에서 공통 모듈을 작성하여 배치 프로그램 생산성 향상",
@@ -73,6 +75,7 @@ export const PROJECTS: Project[] = [
         sub: '탄소배출량 관련 데이터 수집·정제 및 시각화 시스템 구축',
         icon: <Leaf size={20}/>,
         bg: 'bg-[#1A1A1A]',
+        featured: true,
         achievements: [
             "정보계 및 타 부서 시스템과 협의하여 탄소배출량 관련 인터페이스 정의 및 연계 데이터 항목 설계",
             "정보계 적재 및 가공 로직 설계, 배치 프로그램 개발 및 스케줄링 총괄",

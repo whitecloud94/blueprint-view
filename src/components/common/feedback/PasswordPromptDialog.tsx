@@ -83,7 +83,7 @@ export const PasswordPromptDialog = ({
           autoComplete="off"
           placeholder="작성 시 입력한 비밀번호"
           aria-invalid={Boolean(errorMessage)}
-          className={`block w-full px-4 py-3 bg-gray-50 dark:bg-black/20 border rounded-2xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white ${
+          className={`block w-full px-4 py-3 bg-gray-50 dark:bg-black/20 border rounded-2xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-accent-500/20 dark:text-white ${
             errorMessage ? 'border-red-500' : 'border-gray-100 dark:border-white/10'
           }`}
         />

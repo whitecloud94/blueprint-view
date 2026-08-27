@@ -9,7 +9,7 @@ export type DialogTone = 'danger' | 'warning' | 'neutral';
 const TONE_STYLES: Record<DialogTone, string> = {
   danger: 'bg-red-50 dark:bg-red-500/10 text-red-500',
   warning: 'bg-amber-50 dark:bg-amber-500/10 text-amber-500',
-  neutral: 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-500 dark:text-indigo-400',
+  neutral: 'bg-accent-50 dark:bg-accent-500/10 text-accent-500 dark:text-accent-400',
 };
 
 const STYLES = {

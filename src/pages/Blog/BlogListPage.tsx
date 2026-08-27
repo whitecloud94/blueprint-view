@@ -185,7 +185,7 @@ export default function BlogListPage() {
             whileTap={{ scale: 0.9 }}
             onClick={() => navigate('/blog/write')}
             aria-label="새 글 작성"
-            className={`fixed bottom-8 right-8 w-16 h-16 ${COMMON_STYLES.primaryButton} rounded-2xl shadow-2xl shadow-indigo-200 z-50`}
+            className={`fixed bottom-8 right-8 w-16 h-16 ${COMMON_STYLES.primaryButton} rounded-2xl shadow-2xl shadow-accent-200 z-50`}
           >
             <Pencil size={24} />
           </motion.button>

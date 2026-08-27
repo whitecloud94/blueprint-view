@@ -9,7 +9,7 @@ const STYLES = {
   // 줄바꿈만 보존한다. 마크다운을 허용하면 임의의 링크·이미지 삽입 경로가 열린다.
   content: 'text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap break-words',
   deleted: 'text-[15px] text-gray-400 dark:text-gray-600 italic',
-  action: 'flex items-center gap-1 text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors',
+  action: 'flex items-center gap-1 text-xs font-bold text-gray-400 dark:text-gray-500 hover:text-accent-600 dark:hover:text-accent-400 transition-colors',
 };
 
 interface CommentItemProps {

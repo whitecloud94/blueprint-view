@@ -52,7 +52,7 @@ export const TagInput = ({ tags, onChange }: TagInputProps) => {
       {tags.map((tag) => (
         <span
           key={tag}
-          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[13px] font-medium bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
+          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[13px] font-medium bg-accent-50 dark:bg-accent-500/10 text-accent-600 dark:text-accent-400"
         >
           #{tag}
           <button

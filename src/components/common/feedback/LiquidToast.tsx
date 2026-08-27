@@ -17,7 +17,7 @@ const TOAST_STYLES = {
 const VARIANT_CONFIG = {
     success: {
         icon: Check,
-        iconBox: "bg-indigo-600 shadow-indigo-200 dark:shadow-none",
+        iconBox: "bg-accent-600 shadow-accent-200 dark:shadow-none",
     },
     error: {
         icon: AlertTriangle,

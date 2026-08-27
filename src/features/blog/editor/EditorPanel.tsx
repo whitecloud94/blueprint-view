@@ -70,7 +70,7 @@ const EditorPanel = ({ className = '', isCompact = false, onError }: EditorPaneP
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           className={`w-full h-full bg-transparent border-none outline-none resize-none text-lg leading-relaxed text-gray-700 dark:text-gray-200 placeholder:text-gray-300 dark:placeholder:text-gray-600 min-h-[400px] font-mono transition-colors ${
-            isDraggingOver ? 'bg-indigo-50/60 dark:bg-indigo-500/10 rounded-2xl' : ''
+            isDraggingOver ? 'bg-accent-50/60 dark:bg-accent-500/10 rounded-2xl' : ''
           }`}
         />
 

@@ -150,7 +150,7 @@ export default function PostDetailPage() {
                             <div className="flex items-center justify-between gap-4">
                                 <button
                                     onClick={() => navigate('/blog')}
-                                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-bold text-sm"
+                                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors font-bold text-sm"
                                 >
                                     <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                                     Back to List
@@ -161,7 +161,7 @@ export default function PostDetailPage() {
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => navigate(`/blog/${post.postId}/edit`)}
-                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white/60 dark:hover:bg-white/5 transition-colors"
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-accent-600 dark:hover:text-accent-400 hover:bg-white/60 dark:hover:bg-white/5 transition-colors"
                                         >
                                             <Pencil size={15} /> 수정
                                         </button>
@@ -177,7 +177,7 @@ export default function PostDetailPage() {
 
                             <div className="space-y-4">
                                 {relatedProject && (
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-black uppercase tracking-wider">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent-50 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400 rounded-full text-xs font-black uppercase tracking-wider">
                                         <LinkIcon size={12} />
                                         Related Project: {relatedProject.title}
                                     </div>
@@ -213,7 +213,7 @@ export default function PostDetailPage() {
 
                         {/* 본문 콘텐츠 */}
                         <div className={`${GLASS_STYLES.card} bg-white/80 dark:bg-gray-900/40 p-8 sm:p-12`}>
-                            <div className="prose prose-indigo dark:prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
+                            <div className="prose prose-sky dark:prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
                                 <MarkdownContent>{post.content}</MarkdownContent>
                             </div>
 

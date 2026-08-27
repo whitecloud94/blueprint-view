@@ -39,7 +39,7 @@ export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) =
         <button
           type="button"
           onClick={handleProjectClick}
-          className="absolute top-0 right-0 px-4 py-2 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest rounded-bl-2xl flex items-center gap-1.5 hover:bg-indigo-700 transition-colors z-10"
+          className="absolute top-0 right-0 px-4 py-2 bg-accent-600 text-white text-[10px] font-black uppercase tracking-widest rounded-bl-2xl flex items-center gap-1.5 hover:bg-accent-700 transition-colors z-10"
         >
           <Briefcase size={12} />
           View Project
@@ -61,7 +61,7 @@ export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) =
               e.stopPropagation();
               onPublish(post.postId ?? 0);
             }}
-            className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-600 text-white font-black tracking-wider hover:bg-indigo-700 transition-colors"
+            className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-accent-600 text-white font-black tracking-wider hover:bg-accent-700 transition-colors"
           >
             <Send size={10} /> 발행
           </button>
@@ -90,7 +90,7 @@ export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) =
         </span>
       </div>
 
-      <h2 className={`${GLASS_STYLES.heading} text-2xl mb-3 group-hover:text-indigo-600 transition-colors`}>
+      <h2 className={`${GLASS_STYLES.heading} text-2xl mb-3 group-hover:text-accent-600 transition-colors`}>
         {post.titleName}
       </h2>
       <p className={`${GLASS_STYLES.subtext} leading-relaxed mb-6 line-clamp-2`}>
@@ -103,7 +103,7 @@ export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) =
             <TagChip key={tag.slug} tag={tag} />
           ))}
         </div>
-        <div className="w-8 h-8 rounded-full bg-white dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+        <div className="w-8 h-8 rounded-full bg-white dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:bg-accent-600 group-hover:text-white transition-all duration-300">
           <ArrowUpRight size={16} />
         </div>
       </div>

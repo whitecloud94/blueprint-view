@@ -1,3 +1,4 @@
+import colors from 'tailwindcss/colors';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,6 +9,10 @@ export default {
     ],
     theme: {
         extend: {
+            colors: {
+                // Brand accent — IDE syntax-blue. Swap this one entry to rebrand the whole site.
+                accent: colors.sky,
+            },
             keyframes: {
                 marquee: {
                     '0%': { transform: 'translateX(0%)' },

@@ -46,7 +46,7 @@ export const EditorHeader = ({
                             <button
                                 onClick={() => setMode('edit')}
                                 className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
-                                    mode === 'edit' ? 'bg-white dark:bg-white/10 shadow-sm dark:shadow-none text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
+                                    mode === 'edit' ? 'bg-white dark:bg-white/10 shadow-sm dark:shadow-none text-accent-600 dark:text-accent-400' : 'text-gray-500 dark:text-gray-400'
                                 }`}
                             >
                                 <Edit3 size={16}/> Edit
@@ -54,7 +54,7 @@ export const EditorHeader = ({
                             <button
                                 onClick={() => setMode('split')}
                                 className={`hidden md:flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
-                                    mode === 'split' ? 'bg-white dark:bg-white/10 shadow-sm dark:shadow-none text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
+                                    mode === 'split' ? 'bg-white dark:bg-white/10 shadow-sm dark:shadow-none text-accent-600 dark:text-accent-400' : 'text-gray-500 dark:text-gray-400'
                                 }`}
                             >
                                 <div className="flex gap-0.5">
@@ -66,7 +66,7 @@ export const EditorHeader = ({
                             <button
                                 onClick={() => setMode('preview')}
                                 className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
-                                    mode === 'preview' ? 'bg-white dark:bg-white/10 shadow-sm dark:shadow-none text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
+                                    mode === 'preview' ? 'bg-white dark:bg-white/10 shadow-sm dark:shadow-none text-accent-600 dark:text-accent-400' : 'text-gray-500 dark:text-gray-400'
                                 }`}
                             >
                                 <Eye size={16}/> Preview
@@ -84,7 +84,7 @@ export const EditorHeader = ({
                         <button
                             onClick={onPublish}
                             disabled={isSubmitting}
-                            className={`${COMMON_STYLES.primaryButton} dark:bg-white dark:text-black px-6 py-2 text-sm shadow-indigo-200 dark:shadow-none disabled:opacity-50`}
+                            className={`${COMMON_STYLES.primaryButton} dark:bg-white dark:text-black px-6 py-2 text-sm shadow-accent-200 dark:shadow-none disabled:opacity-50`}
                         >
                             <Send size={16}/> 발행
                         </button>

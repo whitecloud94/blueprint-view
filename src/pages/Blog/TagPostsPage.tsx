@@ -80,7 +80,7 @@ export default function TagPostsPage() {
       <div className="space-y-6">
         <button
           onClick={() => navigate('/blog')}
-          className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-bold text-sm"
+          className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors font-bold text-sm"
         >
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
           전체 글 보기
@@ -88,7 +88,7 @@ export default function TagPostsPage() {
 
         <div className="mb-8 ml-2">
           <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-            <Hash size={26} className="text-indigo-500" aria-hidden="true" />
+            <Hash size={26} className="text-accent-500" aria-hidden="true" />
             {displayName}
           </h1>
           <p className="text-gray-500 dark:text-gray-400">

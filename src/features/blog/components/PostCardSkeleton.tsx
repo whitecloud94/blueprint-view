@@ -3,7 +3,7 @@ import {COMMON_STYLES} from '../../../constants/styles';
 
 export const PostCardSkeleton = () => {
     return (
-        <div className={`${COMMON_STYLES.card} p-6 sm:p-8 animate-pulse`}>
+        <div className={`${COMMON_STYLES.card} bg-white dark:bg-white/[0.02] p-6 sm:p-8 animate-pulse`}>
             {/* Meta info skeleton */}
             <div className="flex items-center gap-3 mb-4">
                 <div className="w-24 h-4 bg-gray-200 dark:bg-gray-800 rounded" />

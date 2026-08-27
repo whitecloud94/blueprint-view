@@ -27,7 +27,7 @@ const EditorPreview = ({ className = '', showLiveBadge = false }: PreviewPanePro
           <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
             {titleName || 'Untitled Post'}
           </h1>
-          <div className="prose prose-indigo prose-lg dark:prose-invert max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
+          <div className="prose prose-sky prose-lg dark:prose-invert max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
             {content ? (
               <MarkdownContent>{content}</MarkdownContent>
             ) : (

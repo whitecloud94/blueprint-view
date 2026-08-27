@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {motion, Variants} from 'framer-motion';
+import {motion} from 'framer-motion';
 import {Copy, Plus} from 'lucide-react';
 import {COMMON_STYLES} from "../../../constants/styles.ts";
 import {LiquidToast} from "../../../components/common/feedback/LiquidToast.tsx";
@@ -16,37 +16,6 @@ export const FooterCTA = () => {
     const [showCopyToast, setShowCopyToast] = useState(false);
 
     const text = "저의 기술적 여정이 귀사에 가치를 더할 수 있기를 기대합니다."
-    const sentenceVariants: Variants = {
-        hidden: {opacity: 1},
-        visible: {
-            opacity: 1,
-            transition: {
-                delay: 0.3,
-                staggerChildren: 0.06,
-            },
-        },
-    };
-
-    const letterVariants: Variants = {
-        hidden: {
-            opacity: 0,
-            y: 8,
-            color: "rgb(79 70 229)", // indigo-600
-            filter: "blur(4px)"
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            color: "currentColor", // 부모 요소의 텍스트 색상을 따르도록 변경
-            filter: "blur(0px)",
-            transition: {
-                type: "spring",
-                stiffness: 150,
-                damping: 15,
-                color: {duration: 1.0} // 색상이 서서히 변하도록 설정
-            }
-        },
-    };
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText(import.meta.env.VITE_CONTACT_EMAIL).then(() => {
@@ -59,23 +28,19 @@ export const FooterCTA = () => {
         <div className={STYLES.wrapper}>
             <motion.h2
                 className={STYLES.title}
-                variants={sentenceVariants}
-                initial="hidden"
-                whileInView="visible"
+                initial={{opacity: 0, y: 12}}
+                whileInView={{opacity: 1, y: 0}}
+                transition={{duration: 0.5, ease: "easeOut"}}
                 viewport={{once: true}}
             >
-                {text.split("").map((char, index) => (
-                    <motion.span key={index} variants={letterVariants}>
-                        {char === "\n" ? <br/> : char}
-                    </motion.span>
-                ))}
+                {text}
             </motion.h2>
 
             <motion.div
                 className={STYLES.buttonGroup}
-                initial={{opacity: 0, scale: 0.95}}
-                whileInView={{opacity: 1, scale: 1}}
-                transition={{delay: 2.5, type: "spring", stiffness: 100}}
+                initial={{opacity: 0, y: 12}}
+                whileInView={{opacity: 1, y: 0}}
+                transition={{duration: 0.5, delay: 0.15, ease: "easeOut"}}
                 viewport={{once: true}}
             >
 

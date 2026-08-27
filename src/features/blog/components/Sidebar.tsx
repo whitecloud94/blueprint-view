@@ -11,7 +11,7 @@ const STYLES = {
   sectionLabel:
     'text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest px-3 mb-2',
   item: 'relative flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-xl transition-colors z-10 text-left',
-  itemActive: 'text-indigo-600 dark:text-indigo-400',
+  itemActive: 'text-accent-600 dark:text-accent-400',
   itemIdle: 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white',
   count: 'ml-auto text-xs tabular-nums opacity-60',
   // 태그가 늘어나도 사이드바가 화면 밖으로 밀려나지 않도록 목록만 스크롤시킨다.
@@ -37,7 +37,7 @@ const NavItem = ({ icon: Icon, label, count, isActive, onSelect }: NavItemProps)
     {isActive && (
       <motion.div
         layoutId="sidebar-active"
-        className="absolute inset-0 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl -z-10"
+        className="absolute inset-0 bg-accent-50 dark:bg-accent-900/30 rounded-xl -z-10"
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       />
     )}
@@ -73,11 +73,11 @@ export const Sidebar = () => {
         className="flex items-center gap-3 px-2 cursor-pointer group"
         onClick={() => navigate('/')}
       >
-        <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-sm group-hover:bg-indigo-600 dark:group-hover:bg-indigo-500 group-hover:text-white transition-all">
+        <div className="w-10 h-10 rounded-full bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center text-accent-600 dark:text-accent-400 font-bold text-sm group-hover:bg-accent-600 dark:group-hover:bg-accent-500 group-hover:text-white transition-all">
           DK
         </div>
         <div>
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
             Whitecloud
           </h3>
           <p className="text-xs text-gray-400 dark:text-gray-500">DAEKYOUNG KIM</p>
@@ -88,7 +88,7 @@ export const Sidebar = () => {
         onClick={() => navigate('/')}
         className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-white/5 border border-white/80 dark:border-white/10 rounded-xl hover:bg-white dark:hover:bg-white/10 hover:shadow-sm transition-all"
       >
-        <Home size={18} className="text-indigo-600 dark:text-indigo-400" />
+        <Home size={18} className="text-accent-600 dark:text-accent-400" />
         Back to Portfolio
       </button>
 
@@ -105,7 +105,7 @@ export const Sidebar = () => {
             <button
               type="button"
               onClick={retry}
-              className="flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+              className="flex items-center gap-1.5 text-xs font-bold text-accent-600 dark:text-accent-400 hover:underline"
             >
               <RotateCw size={13} aria-hidden="true" />
               다시 시도

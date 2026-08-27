@@ -47,17 +47,17 @@ const Select = ({
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-2 text-sm font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 ${
           isOpen
-            ? 'bg-white dark:bg-white/10 border-indigo-200 dark:border-indigo-500/50 text-indigo-600 dark:text-indigo-400 shadow-sm'
+            ? 'bg-white dark:bg-white/10 border-accent-200 dark:border-accent-500/50 text-accent-600 dark:text-accent-400 shadow-sm'
             : 'bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10'
         }`}
       >
-        {icon && <span className={isOpen ? 'text-indigo-500 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500'}>{icon}</span>}
+        {icon && <span className={isOpen ? 'text-accent-500 dark:text-accent-400' : 'text-gray-400 dark:text-gray-500'}>{icon}</span>}
         <span className="truncate max-w-[200px]">
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <ChevronDown
           size={14}
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-indigo-500 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500'}`}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-accent-500 dark:text-accent-400' : 'text-gray-400 dark:text-gray-500'}`}
         />
       </button>
 
@@ -81,7 +81,7 @@ const Select = ({
                   }}
                   className={`w-full flex items-center justify-between px-3 py-2 text-sm font-bold rounded-xl transition-all duration-200 ${
                     value === option.value
-                      ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
+                      ? 'bg-accent-50 dark:bg-accent-900/30 text-accent-600 dark:text-accent-400'
                       : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/10 hover:text-gray-700 dark:hover:text-gray-200'
                   }`}
                 >

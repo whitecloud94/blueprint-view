@@ -7,6 +7,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useBlogNavigation } from "../../blog/hooks/useBlogNavigation.ts";
 import { findTagForTech } from "../../blog/utils/techTag.ts";
+import { SectionMarker } from "../../../components/common/SectionMarker.tsx";
 
 const STYLES = {
     wrapper: `${COMMON_STYLES.glass} ${COMMON_STYLES.card}`,
@@ -15,12 +16,11 @@ const STYLES = {
     skillIcon: `${COMMON_STYLES.iconButton} text-lg sm:text-xl shadow-sm text-gray-900 dark:bg-white/[0.1] dark:text-white dark:border-white/[0.1]`,
     skillName: "text-[14px] sm:text-[15px] font-bold text-gray-900 dark:text-white",
     skillAction: "flex items-center gap-2 sm:gap-3 ml-2 shrink-0",
-    skillTag: `text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 dark:bg-white/5 backdrop-blur-sm px-2 py-1 rounded-md tracking-wider border border-black/5 dark:border-white/5`,
-    postCount: "text-[9px] sm:text-[10px] font-black text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/15 px-2 py-1 rounded-md tracking-wider tabular-nums",
+    skillTag: `font-mono text-[9px] sm:text-[10px] font-bold text-gray-400 bg-black/5 dark:bg-white/5 px-2 py-1 rounded-md tracking-wider border border-black/5 dark:border-white/5`,
+    postCount: "text-[9px] sm:text-[10px] font-black text-accent-600 dark:text-accent-400 bg-accent-50 dark:bg-accent-500/15 px-2 py-1 rounded-md tracking-wider tabular-nums",
     skillArrow: "text-gray-300 group-hover:text-black transition-colors",
-    header: `${COMMON_STYLES.sectionHeader} px-4 sm:px-6 py-4`,
+    header: "px-4 sm:px-6 py-4",
     listWrapper: "flex flex-col gap-1.5",
-    dot: COMMON_STYLES.dot,
 };
 
 interface SkillItemProps {
@@ -48,7 +48,7 @@ const SkillItem = ({ name, tag, icon, postCount, onClick }: SkillItemProps) => (
                     {postCount} {postCount === 1 ? 'post' : 'posts'}
                 </span>
             )}
-            <span className={STYLES.skillTag}>{tag}</span>
+            <span className={STYLES.skillTag}>^{tag}</span>
             <ArrowUpRight size={16} className={STYLES.skillArrow} />
         </div>
     </button>
@@ -105,8 +105,7 @@ export const Skills = () => {
     return (
         <section id="products" className={`${STYLES.wrapper} mb-12 sm:mb-16`}>
             <div className={STYLES.header}>
-                <div className={STYLES.dot} />
-                My available skills
+                <SectionMarker index="03" label="My available skills"/>
             </div>
             <div className={STYLES.listWrapper}>
                 {SKILLS.map((skill) => (

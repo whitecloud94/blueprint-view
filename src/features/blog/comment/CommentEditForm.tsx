@@ -78,7 +78,7 @@ export const CommentEditForm = ({
 };
 
 function inputClass(hasError: boolean) {
-  return `block w-full px-4 py-2.5 bg-gray-50 dark:bg-black/20 border rounded-2xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 ${
+  return `block w-full px-4 py-2.5 bg-gray-50 dark:bg-black/20 border rounded-2xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-accent-500/20 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 ${
     hasError ? 'border-red-500' : 'border-gray-100 dark:border-white/10'
   }`;
 }
