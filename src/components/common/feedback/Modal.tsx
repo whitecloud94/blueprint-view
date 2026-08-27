@@ -13,8 +13,13 @@ import {WindowFrame} from "../../../components/common/WindowFrame.tsx";
 const MODAL_STYLES = {
     overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/50 dark:bg-black/70 backdrop-blur-[5px]",
 
+    // isolate + mask-image: iOS Safari가 border-radius+overflow-hidden 클리핑을
+    // sticky/backdrop-filter 자식과 함께 있을 때 놓치는 버그가 있다(스크롤 바운스 중
+    // 내용이 프레임 밖으로 새어 보임). transform은 framer-motion이 인라인으로 이미
+    // 쓰고 있어 클래스로 덮어써봐야 no-op이라, mask-image로 강제 클리핑시킨다.
     container: `
-        relative w-full max-w-2xl max-h-[90vh] overflow-hidden
+        relative w-full max-w-2xl max-h-[90vh] overflow-hidden isolate
+        [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         bg-white/90 dark:bg-[#1A1A1A]/90 backdrop-blur-[80px] border border-white/60 dark:border-white/10
         rounded-[40px] sm:rounded-[48px]
         flex flex-col
@@ -23,7 +28,9 @@ const MODAL_STYLES = {
 
     // 실제 스크롤이 일어나는 영역. 애니메이션(transform)은 container(바깥)에 있고
     // 여기는 transform이 없어야 모바일에서 sticky 헤더가 스크롤 중 좌표를 잃지 않는다.
-    scrollArea: `flex-1 min-h-0 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`,
+    // overscroll-behavior-y:contain 은 상단/하단을 당겨 놓는 elastic 바운스를 막아
+    // 위 클리핑 버그가 트리거되는 상황 자체를 줄인다.
+    scrollArea: `flex-1 min-h-0 overflow-y-auto [overscroll-behavior-y:contain] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`,
 
     header: `sticky top-9 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/40 dark:bg-white/5 backdrop-blur-2xl border-b border-black/5 dark:border-white/10`,
     headerLeft: "flex-1 pr-6",
