@@ -32,15 +32,18 @@ const MODAL_STYLES = {
     // 위 클리핑 버그가 트리거되는 상황 자체를 줄인다.
     scrollArea: `flex-1 min-h-0 overflow-y-auto [overscroll-behavior-y:contain] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`,
 
-    header: `sticky top-9 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/40 dark:bg-white/5 backdrop-blur-2xl border-b border-black/5 dark:border-white/10`,
+    // backdrop-blur 없음(의도적): sticky + backdrop-filter는 iOS WebKit에서 스크롤
+    // 중 매 프레임 제대로 다시 그려지지 않고 이전 프레임이 반투명 "유령"으로 남는
+    // 버그가 있다. container가 이미 불투명에 가까워 블러 없이도 위화감이 적다.
+    header: `sticky top-9 z-10 px-8 sm:px-12 py-8 sm:py-10 flex justify-between items-start bg-white/95 dark:bg-[#1A1A1A]/95 border-b border-black/5 dark:border-white/10`,
     headerLeft: "flex-1 pr-6",
     badgeWrapper: "flex items-center gap-2 mb-2 sm:mb-3 font-mono",
     badgeBracket: "text-gray-300 dark:text-gray-600",
     badgeLabel: `${COMMON_STYLES.badgeText} text-gray-400 dark:text-white/40`,
     title: `${COMMON_STYLES.modalTitle} mb-3`,
-    periodWrapper: "inline-flex items-center px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/20 backdrop-blur-md",
+    periodWrapper: "inline-flex items-center px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/20",
     period: "text-[11px] sm:text-[12px] font-black text-gray-700 dark:text-white/90 tracking-[0.1em]",
-    closeButton: "w-9 h-9 sm:w-10 sm:h-10 bg-black/5 dark:bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-gray-500 dark:text-white/60 border border-black/5 dark:border-white/20 transition-all duration-300 hover:bg-black/10 dark:hover:bg-white/20 hover:text-gray-900 dark:hover:text-white hover:scale-110 active:scale-95 group",
+    closeButton: "w-9 h-9 sm:w-10 sm:h-10 bg-black/5 dark:bg-white/10 rounded-full flex items-center justify-center text-gray-500 dark:text-white/60 border border-black/5 dark:border-white/20 transition-all duration-300 hover:bg-black/10 dark:hover:bg-white/20 hover:text-gray-900 dark:hover:text-white hover:scale-110 active:scale-95 group",
 
     content: "px-8 sm:px-12 py-10 sm:py-14 space-y-12",
     section: "relative",
