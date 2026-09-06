@@ -10,6 +10,7 @@ import {postService} from "../../services/postService.ts";
 import {Post} from "../../schemas/postSchema.ts";
 import {PostDetailSkeleton} from "../../features/blog/components/PostDetailSkeleton";
 import {MarkdownContent} from "../../features/blog/components/MarkdownContent";
+import {SampleContentNotice} from "../../features/blog/components/SampleContentNotice";
 import {useViewCount} from "../../features/blog/hooks/useViewCount";
 import {useReadTimeTracker} from "../../features/blog/hooks/useReadTimeTracker";
 import {TagChip} from "../../features/blog/components/TagChip";
@@ -210,6 +211,8 @@ export default function PostDetailPage() {
                                 </div>
                             </div>
                         </div>
+
+                        <SampleContentNotice />
 
                         {/* 본문 콘텐츠 */}
                         <div className={`${GLASS_STYLES.card} bg-white/80 dark:bg-gray-900/40 p-8 sm:p-12`}>
