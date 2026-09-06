@@ -36,7 +36,7 @@ const STYLES = {
     mainContent: "space-y-6 w-full",
     textGroup: "space-y-3",
     title: `text-[32px] sm:text-[42px] leading-tight ${COMMON_STYLES.title} font-title text-[#1A1A1A] dark:text-white`,
-    description: `${COMMON_STYLES.body} dark:text-gray-400 text-[15px] sm:text-[17px] leading-[1.6] max-w-[380px] mx-auto sm:mx-0 font-sans font-medium`,
+    description: `${COMMON_STYLES.body} dark:text-gray-400 text-[15px] sm:text-[17px] leading-[1.6] max-w-[460px] mx-auto sm:mx-0 font-sans font-medium`,
     highlight: "relative ml-1.5 inline-block",
     highlightText: "relative z-10 text-accent-600 dark:text-accent-400 font-bold",
     highlightBg: "absolute bottom-0.5 left-0 w-full h-[8px] bg-accent-50 dark:bg-accent-900/30 -rotate-1",
@@ -92,13 +92,14 @@ export const Hero = () => {
                             김대경 입니다.
                         </h1>
                         <p className={STYLES.description}>
-                            현상의
+                            2022년부터 금융권 SI 프로젝트에서
                             <span className={STYLES.highlight}>
-                                <span className={STYLES.highlightText}>본질 </span>
+                                <span className={STYLES.highlightText}>대용량 배치 처리</span>
                                 <span className={STYLES.highlightBg}></span>
                             </span>
-                            에 집중하며, 단순한 코드가 아닌 '가치'를 사용자에게 전달하고자 노력합니다. 
-                            끊임없는 호기심으로 더 나은 해결책을 탐구하고 기록하는 여정을 즐깁니다.
+                            와 데이터 연계 시스템을 설계·구축해왔습니다.
+                            현재는 캐피탈 Core 시스템 운영관리를 맡아, 안정성과 정합성이 중요한
+                            금융 시스템을 다루는 백엔드 엔지니어입니다.
                         </p>
                     </div>
 
