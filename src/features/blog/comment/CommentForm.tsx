@@ -88,7 +88,7 @@ export const CommentForm = ({ parentId, onSubmit, onCancel, onInvalid }: Comment
         <input
           {...register('guestPassword')}
           type="password"
-          placeholder="비밀번호 (수정·삭제용)"
+          placeholder="비밀번호"
           autoComplete="new-password"
           aria-label="비밀번호"
           aria-invalid={Boolean(errors.guestPassword)}
