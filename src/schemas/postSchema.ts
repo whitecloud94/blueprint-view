@@ -54,6 +54,14 @@ export const postSummarySchema = postSchema.omit({ content: true, likedByMe: tru
   // 서버가 조회 시점에 세어 내려준다. 비정규화 카운터가 아니라 드리프트가 없다.
   commentCount: z.number().int().nonnegative(),
   /**
+   * 목록 카드의 대표 이미지. 본문 첫 이미지에서 서버가 저장 시점에 뽑아 둔 값이다.
+   *
+   * 호스트 없는 경로(/uploads/...)이거나 외부 절대 URL 이다. 이미지가 없는 글은
+   * 값이 없으며(저장하지 않은 옛 글은 필드 자체가 없을 수 있어 nullish), 이때
+   * 카드는 기존 텍스트 레이아웃을 그대로 쓴다.
+   */
+  thumbnailUrl: z.string().nullish(),
+  /**
    * 방문자들이 실제로 머문 시간의 평균(ms).
    *
    * 아직 아무도 읽지 않았으면 null 이다. 0 과 구분해야 화면이 "기록 없음"을

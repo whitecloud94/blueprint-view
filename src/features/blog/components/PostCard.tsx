@@ -1,8 +1,10 @@
 ﻿import { ArrowUpRight, Briefcase, Calendar, Clock, Eye, Heart, MessageCircle, Send } from 'lucide-react';
+import { useState } from 'react';
 import { GLASS_STYLES } from '../../../constants/styles';
 import { TagChip } from './TagChip';
 import { formatReadTime } from '../utils/readTime';
 import { useNavigate } from 'react-router-dom';
+import { resolveAssetUrl } from '../../../api/assetUrl';
 import type { PostSummary } from '../../../schemas/postSchema';
 
 export interface PostCardProps {
@@ -15,6 +17,12 @@ export interface PostCardProps {
 export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) => {
   const navigate = useNavigate();
   const postId = post.postId ?? 0;
+  // 참조하던 업로드가 지워진 글은 썸네일 요청이 깨진다. 그때는 이미지 영역을
+  // 통째로 접고 기존 텍스트 카드로 되돌린다.
+  const [thumbnailFailed, setThumbnailFailed] = useState(false);
+  const thumbnailSrc = post.thumbnailUrl && !thumbnailFailed
+    ? resolveAssetUrl(post.thumbnailUrl)
+    : undefined;
   const date = post.createdAt
     ? new Date(post.createdAt).toLocaleDateString()
     : new Date().toLocaleDateString();
@@ -44,6 +52,20 @@ export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) =
           <Briefcase size={12} />
           View Project
         </button>
+      )}
+
+      {thumbnailSrc && (
+        // 본문 첫 이미지를 대표 이미지로 카드 상단 전체 폭에 얹는다. 카드가
+        // overflow-hidden 이라 둥근 모서리에 맞춰 잘린다.
+        <div className="-mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6">
+          <img
+            src={thumbnailSrc}
+            alt=""
+            loading="lazy"
+            onError={() => setThumbnailFailed(true)}
+            className="w-full h-44 sm:h-52 object-cover"
+          />
+        </div>
       )}
 
       <div className="flex items-center gap-3 text-xs text-gray-400 mb-4 font-mono">
