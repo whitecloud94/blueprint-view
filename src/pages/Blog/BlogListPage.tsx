@@ -95,7 +95,9 @@ export default function BlogListPage() {
           <p className="text-gray-500 dark:text-gray-400">최신 포스트를 조회합니다.</p>
         </div>
 
-        <SampleContentNotice className="mb-8" />
+        {/* 샘플 글이 목록에 하나라도 있으면 노출한다. 전부 실제 글로 교체되면
+            스트립도 자연히 사라진다. */}
+        {posts.some((post) => post.sample) && <SampleContentNotice className="mb-8" />}
 
         <AnimatePresence mode="wait">
           {isLoading ? (

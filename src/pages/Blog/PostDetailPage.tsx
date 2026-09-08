@@ -212,7 +212,7 @@ export default function PostDetailPage() {
                             </div>
                         </div>
 
-                        <SampleContentNotice />
+                        {post.sample && <SampleContentNotice />}
 
                         {/* 본문 콘텐츠 */}
                         <div className={`${GLASS_STYLES.card} bg-white/80 dark:bg-gray-900/40 p-8 sm:p-12`}>

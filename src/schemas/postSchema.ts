@@ -38,6 +38,13 @@ export const postSchema = z
     viewCount: z.number().optional(),
     likeCount: z.number().int().nonnegative(),
     likedByMe: z.boolean().optional(),
+    /**
+     * 포트폴리오 시연용 샘플 글인지. true 인 글에만 "샘플 콘텐츠" 고지를 노출한다.
+     *
+     * 서버 배포 전 옛 응답에는 이 필드가 없을 수 있어 기본값을 false 로 둔다
+     * (없으면 고지를 띄우지 않는 쪽이 안전한 실패다).
+     */
+    sample: z.boolean().default(false),
     tags: z.array(tagSchema).default([]),
   })
   .extend(auditFieldsSchema.shape);
