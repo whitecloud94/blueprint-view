@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { PostCard } from '../../features/blog/components/PostCard';
 import { PostCardSkeleton } from '../../features/blog/components/PostCardSkeleton';
 import { BlogLayout } from '../../features/blog/components/BlogLayout';
-import { SampleContentNotice } from '../../features/blog/components/SampleContentNotice';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Loader2, Pencil, PlugZap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -94,10 +93,6 @@ export default function BlogListPage() {
           <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-2">Latest Posts</h1>
           <p className="text-gray-500 dark:text-gray-400">최신 포스트를 조회합니다.</p>
         </div>
-
-        {/* 샘플 글이 목록에 하나라도 있으면 노출한다. 전부 실제 글로 교체되면
-            스트립도 자연히 사라진다. */}
-        {posts.some((post) => post.sample) && <SampleContentNotice className="mb-8" />}
 
         <AnimatePresence mode="wait">
           {isLoading ? (

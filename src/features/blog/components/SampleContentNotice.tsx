@@ -8,16 +8,16 @@ import { COMMON_STYLES } from '../../../constants/styles';
  * 내용은 데모를 위해 채워 둔 것이다. 면접관·독자가 이를 실제 발행 글로 오인하지
  * 않도록 고지한다.
  *
- * <p><b>노출 조건</b>은 글 단위다. 서버의 {@code post.sample} 이 true 인 글에만
- * 붙는다. 상세 페이지는 해당 글이 샘플일 때, 목록 페이지는 현재 목록에 샘플 글이
- * 하나라도 있을 때 호출부가 이 컴포넌트를 렌더한다. 샘플 여부 토글은 DB 에서 한다
- * (에디터 UI 없음).
+ * <p><b>노출 조건</b>은 글 단위다. 서버의 {@code post.sample} 이 true 인 글의
+ * 상세 페이지에서만 호출부가 이 컴포넌트를 렌더한다. 목록 화면에는 두지 않는다 —
+ * 고지는 실제로 샘플 본문을 읽는 자리에서만 의미가 있다. 샘플 여부 토글은 DB 에서
+ * 한다(에디터 UI 없음).
  *
  * <p><b>제거 방법</b>
  * <ol>
  *   <li>일시적으로 전부 끄려면 {@link NOTICE_ENABLED} 를 false 로 둔다.
- *   <li>샘플 글이 모두 사라지면 이 파일과, 렌더하는 두 곳(BlogListPage,
- *       PostDetailPage)의 import·호출, 그리고 스키마의 {@code sample} 필드를 정리한다.
+ *   <li>샘플 글이 모두 사라지면 이 파일과 PostDetailPage 의 import·호출,
+ *       그리고 스키마의 {@code sample} 필드를 정리한다.
  * </ol>
  */
 const NOTICE_ENABLED = true;
