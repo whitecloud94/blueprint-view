@@ -10,20 +10,35 @@ import {useAuthActions, useAuthStatus, useCurrentUser} from "../../store/useAuth
 
 const STYLES = {
     wrapper: `w-full transition-all duration-500`,
+    // 가로 스크롤은 최후의 안전장치다. 스크롤바를 숨겨 두었기 때문에 여기로
+    // 넘친 항목은 사실상 사라진 것처럼 보인다. 항목을 추가할 때는 가장 좁은
+    // 바(포트폴리오 640px)에 들어가는지 먼저 확인한다.
     container: `${COMMON_STYLES.glassMuted} dark:bg-black/40 dark:border-white/10 rounded-[24px] p-2 pl-3 sm:pl-6 pr-2 flex justify-between items-center relative gap-2
         overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`,
     iconGroup: `flex gap-1 sm:gap-6 text-gray-400 relative z-10 shrink-0`,
     navIcon: `sm:w-5 sm:h-5`,
     actionGroup: `flex items-center gap-1 sm:gap-3 shrink-0`,
     themeButton: `text-gray-400 hover:text-black dark:hover:text-white transition-transform p-1.5 sm:p-2 hover:rotate-12 duration-300 shrink-0`,
-    userName: `hidden sm:inline max-w-[120px] truncate text-[12px] font-bold text-gray-500 dark:text-gray-400`,
+    userName: `hidden lg:inline max-w-[120px] truncate text-[12px] font-bold text-gray-500 dark:text-gray-400`,
     hireButton: `${COMMON_STYLES.glassDark} dark:bg-white dark:text-black dark:border-white/20 px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-[14px] sm:rounded-[16px] text-[11px] sm:text-[13px] font-bold flex items-center gap-1.5 sm:gap-2 hover:bg-black dark:hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all shrink-0`,
     plusIconWrapper: "bg-white/20 dark:bg-black/10 rounded-full p-0.5",
     hireMeLabel: "hidden sm:inline",
     hireLabel: "sm:hidden",
 };
 
-export const Navigation = () => {
+/**
+ * 바가 쓸 수 있는 가로 공간. 폭을 정하는 SharedLayout 이 넘겨준다.
+ *
+ * <p>compact 는 포트폴리오의 640px 바다. 남는 자리가 50px 남짓이라
+ * 아이콘 버튼 외의 요소를 더 넣을 수 없다.
+ */
+export type NavigationWidth = 'compact' | 'wide';
+
+interface NavigationProps {
+    width?: NavigationWidth;
+}
+
+export const Navigation = ({width = 'compact'}: NavigationProps) => {
     const navigate = useNavigate(); // 페이지 이동 함수
     const location = useLocation(); // 현재 URL 정보
     const {theme, toggleTheme} = useTheme();
@@ -33,6 +48,10 @@ export const Navigation = () => {
     const isAuthenticated = authStatus === 'authenticated';
 
     const isBlog = location.pathname.startsWith('/blog');
+
+    // 이름표는 넓은 바에서만 자리를 얻는다. 좁은 바에 그대로 두면 오른쪽 끝의
+    // Hire Me 가 스크롤 영역 밖으로 밀려 잘린다.
+    const showUserName = isAuthenticated && width === 'wide';
 
     // 현재 URL(location.pathname)에 따라 활성화될 탭 자동 결정
     const activeTab = useMemo(() => {
@@ -104,7 +123,7 @@ export const Navigation = () => {
                     {/* 검색 영역 (블로그 페이지에서만 노출) */}
                     {isBlog && <SearchBar />}
 
-                    {isAuthenticated && (
+                    {showUserName && (
                         <span className={STYLES.userName} title={currentUser?.userName}>
                             {currentUser?.userName}
                         </span>
@@ -113,7 +132,9 @@ export const Navigation = () => {
                     <button
                         className={STYLES.themeButton}
                         onClick={() => (isAuthenticated ? signOut() : navigate('/login'))}
-                        aria-label={isAuthenticated ? '로그아웃' : '로그인'}
+                        // 이름표가 보이지 않는 폭에서도 누구로 로그인했는지 읽을 수 있어야 한다.
+                        aria-label={isAuthenticated ? `로그아웃 (${currentUser?.userName ?? ''})` : '로그인'}
+                        title={isAuthenticated ? currentUser?.userName : undefined}
                     >
                         {isAuthenticated ? (
                             <LogOut size={18} className={STYLES.navIcon} />
