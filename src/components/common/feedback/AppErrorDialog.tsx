@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PlugZap, ShieldAlert, TriangleAlert } from 'lucide-react';
 import { DIALOG_BUTTON_STYLES, Dialog, type DialogTone } from './Dialog';
 import { useAppError, useErrorActions, useErrorRetry } from '../../../store/useErrorStore';
@@ -11,6 +11,7 @@ import { useAppError, useErrorActions, useErrorRetry } from '../../../store/useE
  */
 export const AppErrorDialog = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const error = useAppError();
   const onRetry = useErrorRetry();
   const { clearError } = useErrorActions();
@@ -26,7 +27,17 @@ export const AppErrorDialog = () => {
 
   const handleSignIn = () => {
     clearError();
-    navigate('/login');
+
+    // 이미 로그인 화면이면 그대로 둔다. 관리자 화면에서 세션이 끊기면 라우트
+    // 가드가 먼저 이리로 보내면서 돌아갈 곳을 함께 넘겨 둔다. 여기서 한 번 더
+    // 이동하면 그 기록을 빈 값으로 덮어써, 로그인 뒤 목록으로 떨어진다.
+    if (location.pathname === '/login') {
+      return;
+    }
+
+    // 로그인 뒤 하던 일로 돌아온다. 세션이 끊긴 자리가 글 편집기라면, 로그인만
+    // 하고 목록으로 떨어지는 것은 작업을 다시 찾아 들어가라는 뜻이 된다.
+    navigate('/login', { state: { from: location } });
   };
 
   return (

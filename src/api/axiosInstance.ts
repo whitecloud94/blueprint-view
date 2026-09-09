@@ -2,6 +2,7 @@ import axios, { type AxiosError } from 'axios';
 import { tokenStorage } from './tokenStorage';
 import { toErrorMessage } from './errorPolicy';
 import { ensureFreshToken, isRefreshRequest } from './tokenRefresh';
+import { notifySessionExpired } from './sessionEvents';
 
 /**
  * API 기본 주소.
@@ -48,6 +49,9 @@ axiosInstance.interceptors.response.use(
     // 이후 모든 요청이 같은 이유로 실패한다.
     if (error.response?.status === 401) {
       tokenStorage.clear();
+      // 토큰만 버리면 화면은 여전히 로그인 상태로 보인다. 네비게이션에 사용자
+      // 이름과 로그아웃 버튼이 남아 있는 채로 무엇을 눌러도 다시 401 이 난다.
+      notifySessionExpired();
     }
     return Promise.reject(error);
   },
