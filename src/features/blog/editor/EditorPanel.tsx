@@ -9,9 +9,16 @@ interface EditorPaneProps {
   isCompact?: boolean;
   /** 이미지 업로드 실패 등 사용자에게 알릴 내용. 토스트는 페이지가 소유한다. */
   onError?: (message: string) => void;
+  /**
+   * 실제로 스크롤되는 요소를 바깥에 알린다.
+   *
+   * <p>본문은 textarea 자신이 스크롤한다. 감싼 div 도 overflow-y-auto 지만 안내
+   * 문구 높이만큼만 움직이므로, 미리보기와 맞출 대상은 textarea 다.
+   */
+  scrollRef?: (element: HTMLTextAreaElement | null) => void;
 }
 
-const EditorPanel = ({ className = '', isCompact = false, onError }: EditorPaneProps) => {
+const EditorPanel = ({ className = '', isCompact = false, onError, scrollRef }: EditorPaneProps) => {
   const {
     register,
     setValue,
@@ -61,9 +68,11 @@ const EditorPanel = ({ className = '', isCompact = false, onError }: EditorPaneP
           aria-invalid={Boolean(errors.content)}
           {...contentField}
           ref={(element) => {
-            // react-hook-form 의 ref 와 커서 제어용 ref 를 함께 연결한다.
+            // react-hook-form 의 ref, 커서 제어용 ref, 스크롤 동기화용 통로를
+            // 함께 연결한다.
             registerContentRef(element);
             textareaRef.current = element;
+            scrollRef?.(element);
           }}
           onPaste={handlePaste}
           onDrop={handleDrop}

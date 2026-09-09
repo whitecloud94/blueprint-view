@@ -33,6 +33,8 @@ interface AuthActions {
   initialize: () => Promise<void>;
   signIn: (input: SignInInput) => Promise<void>;
   signOut: () => void;
+  /** 서버가 세션을 거부했을 때. 사용자가 요청한 로그아웃과 구분한다. */
+  expireSession: () => void;
   resetError: () => void;
 }
 
@@ -88,6 +90,21 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
     tokenStorage.clear();
     set({ status: 'unauthenticated', user: null, error: null });
   },
+
+  /**
+   * 401 을 받아 세션이 끝났을 때 화면 상태를 맞춘다.
+   *
+   * <p>토큰은 이미 응답 인터셉터가 버렸다. 여기서는 화면이 실제 권한과 어긋나
+   * 보이지 않게 하는 일만 한다. error 는 건드리지 않는다. 무슨 일이 있었는지는
+   * 그 요청을 시작한 화면이 오류 대화상자로 이미 알리고 있다.
+   *
+   * <p>로그인 상태였을 때만 바꾼다. 비로그인 방문자의 요청에서도 401 은 나올 수
+   * 있고, 그때마다 상태를 다시 쓰면 의미 없는 리렌더가 생긴다.
+   */
+  expireSession: () =>
+    set((state) =>
+      state.status === 'authenticated' ? { status: 'unauthenticated', user: null } : state,
+    ),
 }));
 
 export const useAuthStatus = () => useAuthStore((state) => state.status);
@@ -105,6 +122,7 @@ export const useAuthActions = () =>
       initialize: state.initialize,
       signIn: state.signIn,
       signOut: state.signOut,
+      expireSession: state.expireSession,
       resetError: state.resetError,
     })),
   );

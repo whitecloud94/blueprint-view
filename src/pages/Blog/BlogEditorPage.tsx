@@ -9,6 +9,7 @@ import EditorPreview from '../../features/blog/editor/EditorPreview';
 import { EditorHeader } from '../../features/blog/editor/EditorHeader';
 import { useDraftAutosave, type DraftTarget } from '../../features/blog/editor/useDraftAutosave';
 import { DraftRestoreDialog } from '../../features/blog/editor/DraftRestoreDialog';
+import { useScrollSync } from '../../features/blog/editor/useScrollSync';
 import { TagInput } from '../../features/blog/editor/TagInput';
 import {
   postFormSchema,
@@ -48,6 +49,10 @@ export default function BlogEditorPage() {
   const isEditMode = postId !== undefined;
 
   const [mode, setMode] = useState<EditorMode>('split');
+  // ref 가 아니라 상태로 들고 있어야 창이 붙는 순간 동기화가 다시 걸린다. ref 는
+  // 값이 채워져도 리렌더를 일으키지 않아 효과가 그대로 지나간다.
+  const [editorScrollEl, setEditorScrollEl] = useState<HTMLTextAreaElement | null>(null);
+  const [previewScrollEl, setPreviewScrollEl] = useState<HTMLDivElement | null>(null);
   // 태그는 폼 필드가 아니라 별도 상태로 둔다. react-hook-form 의 배열 처리보다
   // 칩 UI 의 추가·삭제를 그대로 다루는 편이 단순하다.
   const [tags, setTags] = useState<string[]>([]);
@@ -75,6 +80,9 @@ export default function BlogEditorPage() {
     tags,
     onRestoreTags: setTags,
   });
+
+  // 두 창이 함께 보일 때만 맞춘다.
+  useScrollSync(editorScrollEl, previewScrollEl, mode === 'split');
 
   // 초안을 쓰기 시작할 때의 원본과 지금 원본이 다르면, 다른 곳에서 고쳐진 것이다.
   const isSourceChanged =
@@ -193,10 +201,12 @@ export default function BlogEditorPage() {
                   className={`${GLASS_STYLES.card} bg-white/70 dark:bg-white/[0.04]`}
                   isCompact
                   onError={showToast}
+                  scrollRef={setEditorScrollEl}
                 />
                 <EditorPreview
                   className={`${GLASS_STYLES.card} bg-white/80 dark:bg-white/[0.05]`}
                   showLiveBadge
+                  scrollRef={setPreviewScrollEl}
                 />
               </motion.div>
             ) : mode === 'edit' ? (

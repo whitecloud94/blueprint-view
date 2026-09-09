@@ -6,9 +6,11 @@ import type { PostFormData } from '../../../schemas/postSchema';
 interface PreviewPaneProps {
   className?: string;
   showLiveBadge?: boolean;
+  /** 실제로 스크롤되는 요소를 바깥에 알린다. 편집 창과 위치를 맞추는 데 쓴다. */
+  scrollRef?: (element: HTMLDivElement | null) => void;
 }
 
-const EditorPreview = ({ className = '', showLiveBadge = false }: PreviewPaneProps) => {
+const EditorPreview = ({ className = '', showLiveBadge = false, scrollRef }: PreviewPaneProps) => {
   const { control } = useFormContext<PostFormData>();
   const titleName = useWatch({ control, name: 'titleName' });
   const content = useWatch({ control, name: 'content' });
@@ -22,7 +24,7 @@ const EditorPreview = ({ className = '', showLiveBadge = false }: PreviewPanePro
           </h2>
         </div>
       )}
-      <div className="flex-1 overflow-y-auto p-8 sm:p-12 custom-scrollbar">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 sm:p-12 custom-scrollbar">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
             {titleName || 'Untitled Post'}
