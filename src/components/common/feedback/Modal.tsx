@@ -1,5 +1,5 @@
 import {BookOpen} from "lucide-react";
-import {useEffect} from "react";
+import {useEffect, useId, useRef} from "react";
 import {createPortal} from "react-dom";
 import {motion} from "framer-motion";
 import {COMMON_STYLES} from "../../../constants/styles.ts";
@@ -9,6 +9,7 @@ import {useBlogNavigation} from "../../../features/blog/hooks/useBlogNavigation.
 import {findTagsForTechStack} from "../../../features/blog/utils/techTag.ts";
 import {SectionMarker} from "../../../components/common/SectionMarker.tsx";
 import {WindowFrame} from "../../../components/common/WindowFrame.tsx";
+import {useFocusTrap} from "../../../hooks/useFocusTrap.ts";
 
 const MODAL_STYLES = {
     overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/50 dark:bg-black/70 backdrop-blur-[5px]",
@@ -77,6 +78,12 @@ interface ModalProps {
 
 export const Modal = ({project, onClose}: ModalProps) => {
     const {state} = useBlogNavigation();
+    const containerRef = useRef<HTMLDivElement>(null);
+    // 제목을 대화상자의 이름으로 삼는다. 한 화면에 여러 모달이 뜨지는 않지만
+    // 아이디를 고정 문자열로 두면 다른 대화상자와 부딪힐 수 있다.
+    const titleId = useId();
+
+    useFocusTrap(containerRef);
 
     // 프로젝트의 기술 스택과 겹치는 태그. 겹치는 글이 없으면 빈 배열이라 섹션이 사라진다.
     // 아직 글을 쓰지 않은 프로젝트에 "관련 글" 버튼만 덩그러니 남는 것을 막는다.
@@ -130,7 +137,12 @@ export const Modal = ({project, onClose}: ModalProps) => {
             onClick={onClose}
         >
             <motion.div
-                className={MODAL_STYLES.container}
+                ref={containerRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={titleId}
+                tabIndex={-1}
+                className={`${MODAL_STYLES.container} outline-none`}
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{
                     opacity: 1,
@@ -165,7 +177,7 @@ export const Modal = ({project, onClose}: ModalProps) => {
                             <span className={MODAL_STYLES.badgeLabel}>PROJECT DETAILS</span>
                             <span className={MODAL_STYLES.badgeBracket}>]</span>
                         </div>
-                        <h2 className={MODAL_STYLES.title}>
+                        <h2 id={titleId} className={MODAL_STYLES.title}>
                             {project.title}
                         </h2>
                         {project.period && (
