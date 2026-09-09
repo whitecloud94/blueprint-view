@@ -7,7 +7,8 @@ import { GLASS_STYLES } from '../../constants/styles';
 import EditorPanel from '../../features/blog/editor/EditorPanel';
 import EditorPreview from '../../features/blog/editor/EditorPreview';
 import { EditorHeader } from '../../features/blog/editor/EditorHeader';
-import { useDraftAutosave } from '../../features/blog/editor/useDraftAutosave';
+import { useDraftAutosave, type DraftTarget } from '../../features/blog/editor/useDraftAutosave';
+import { DraftRestoreDialog } from '../../features/blog/editor/DraftRestoreDialog';
 import { TagInput } from '../../features/blog/editor/TagInput';
 import {
   postFormSchema,
@@ -51,6 +52,10 @@ export default function BlogEditorPage() {
   // 칩 UI 의 추가·삭제를 그대로 다루는 편이 단순하다.
   const [tags, setTags] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(isEditMode);
+  // 수정 글은 원본을 받아 봐야 어느 초안을 찾을지 정해진다. 그때까지 null 로 둔다.
+  const [draftTarget, setDraftTarget] = useState<DraftTarget | null>(
+    isEditMode ? null : { mode: 'create' },
+  );
 
   const methods = useForm<PostFormData>({
     resolver: zodResolver(postFormSchema),
@@ -64,7 +69,18 @@ export default function BlogEditorPage() {
     formState: { isSubmitting },
   } = methods;
 
-  const { clearDraft } = useDraftAutosave(methods, !isEditMode);
+  const { pendingDraft, restorePendingDraft, discardPendingDraft, clearDraft } = useDraftAutosave({
+    form: methods,
+    target: draftTarget,
+    tags,
+    onRestoreTags: setTags,
+  });
+
+  // 초안을 쓰기 시작할 때의 원본과 지금 원본이 다르면, 다른 곳에서 고쳐진 것이다.
+  const isSourceChanged =
+    draftTarget?.mode === 'edit' && pendingDraft
+      ? pendingDraft.sourceUpdatedAt !== draftTarget.sourceUpdatedAt
+      : false;
 
   // 수정 모드에서는 서버의 현재 내용을 초기값으로 불러온다.
   useEffect(() => {
@@ -86,6 +102,14 @@ export default function BlogEditorPage() {
           excerpt: post.excerpt ?? '',
         });
         setTags(post.tags.map((tag) => tag.name));
+        // 폼과 태그를 채운 뒤에 대상을 정한다. 순서가 뒤바뀌면 자동저장이 원본을
+        // 읽기도 전의 빈 폼을 초안으로 남긴다.
+        setDraftTarget({
+          mode: 'edit',
+          postId,
+          loadedAt: new Date().toISOString(),
+          sourceUpdatedAt: post.updatedAt,
+        });
       } catch (error) {
         showToast(getAxiosErrorMessage(error, '글을 불러오지 못했습니다.'));
         navigate('/blog', { replace: true });
@@ -202,6 +226,12 @@ export default function BlogEditorPage() {
           </AnimatePresence>
         </main>
       </div>
+      <DraftRestoreDialog
+        draft={pendingDraft}
+        isSourceChanged={isSourceChanged}
+        onRestore={restorePendingDraft}
+        onDiscard={discardPendingDraft}
+      />
       <LiquidToast isVisible={isVisible} message={message} variant="error" />
     </FormProvider>
   );
