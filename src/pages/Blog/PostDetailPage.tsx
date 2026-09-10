@@ -20,6 +20,7 @@ import {LiquidToast} from "../../components/common/feedback/LiquidToast";
 import {useToast} from "../../hooks/useToast";
 import {ConfirmDialog} from "../../components/common/feedback/ConfirmDialog";
 import {ERROR_ACTION_STYLES, ErrorState} from "../../components/common/feedback/ErrorState";
+import {ScrollToTopButton} from "../../components/common/ScrollToTopButton";
 import {useIsAdmin} from "../../store/useAuthStore";
 import {useErrorActions} from "../../store/useErrorStore";
 
@@ -149,13 +150,10 @@ export default function PostDetailPage() {
                         {/* 상단 네비게이션 & 메타 */}
                         <div className="space-y-6">
                             <div className="flex items-center justify-between gap-4">
-                                <button
-                                    onClick={() => navigate('/blog')}
-                                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors font-bold text-sm"
-                                >
-                                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-                                    Back to List
-                                </button>
+                                {/* 글을 다 읽고 나서 가장 자주 찾는 동선이다. 맨 앞에 놓여 있어도
+                                    글자만 있으면 제목과 본문에 묻힌다. 표면을 줘서 누를 것으로 읽히게
+                                    하고, 옆의 관리자 버튼은 납작하게 두어 우선순위를 갈라 놓는다. */}
+                                <BackToListButton onClick={() => navigate('/blog')} />
 
                                 {/* 관리자에게만 노출한다. 노출 여부와 무관하게 실제 권한은 서버가 판정한다. */}
                                 {isAdmin && (
@@ -236,9 +234,17 @@ export default function PostDetailPage() {
                         {post.postId !== undefined && post.status === 'PUBLISHED' && (
                             <CommentSection postId={post.postId} onNotify={showToast} />
                         )}
+
+                        {/* 다 읽고 나면 목록으로 가는 길은 화면 밖에 있다. 위로 올라가
+                            찾게 하는 대신, 읽기가 끝나는 자리에 같은 문을 한 번 더 둔다. */}
+                        <div className="flex justify-center pt-2">
+                            <BackToListButton onClick={() => navigate('/blog')} />
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <ScrollToTopButton />
 
             <LiquidToast isVisible={isVisible} message={message} variant="error" />
 
@@ -254,6 +260,31 @@ export default function PostDetailPage() {
         </BlogLayout>
     );
 }
+
+/**
+ * 목록으로 돌아가는 버튼.
+ *
+ * <p>글 위와 아래 두 곳에 같은 모양으로 둔다. 위쪽은 잘못 들어왔을 때, 아래쪽은
+ * 다 읽고 났을 때 쓰인다. 생김새가 다르면 같은 문이라는 것이 읽히지 않는다.
+ */
+const BackToListButton = ({onClick}: { onClick: () => void }) => (
+    <button
+        type="button"
+        onClick={onClick}
+        className="group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold
+            border-gray-200 bg-white/80 text-gray-700 shadow-sm backdrop-blur-md
+            hover:border-accent-200 hover:bg-accent-50 hover:text-accent-700
+            dark:border-white/10 dark:bg-white/[0.06] dark:text-gray-200
+            dark:hover:border-accent-400/30 dark:hover:bg-accent-500/10 dark:hover:text-accent-300
+            active:scale-95 transition-all duration-300 motion-reduce:transition-none"
+    >
+        <ArrowLeft
+            size={16}
+            className="transition-transform duration-300 group-hover:-translate-x-0.5 motion-reduce:transition-none"
+        />
+        Back to List
+    </button>
+);
 
 /** 서버가 404 로 응답했는지. 연결 실패와 구분하기 위한 판별이다. */
 function isNotFound(error: unknown): boolean {

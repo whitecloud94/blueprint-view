@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { buildAnchors, mapPosition, type ScrollAnchor } from './sourceLineOffsets';
 
 /**
  * 따라간 쪽이 다시 상대를 미는 것을 막는 시간.
@@ -11,36 +12,52 @@ import { useEffect } from 'react';
 const HANDOVER_DELAY_MS = 150;
 
 /**
- * 두 스크롤 영역의 위치를 비율로 맞춘다.
+ * 편집 창과 미리보기를 지금 쓰고 있는 내용 기준으로 맞춘다.
  *
- * 결정      : 스크롤 비율(scrollTop / 최대 스크롤)을 그대로 옮긴다.
- * 이유      : 원문의 몇 번째 줄이 미리보기의 어느 요소인지는 마크다운을 렌더링해
- *             봐야 알 수 있고, 그 대응을 유지하려면 렌더 결과에서 줄 번호를
- *             역추적하는 장치가 필요하다.
- * 대안      : 줄 번호와 렌더된 요소를 대응시켜 구간별로 맞춘다.
- * 트레이드오프: 비율 방식은 한쪽에만 있는 덩어리(코드 블록, 이미지)를 지나갈 때
- *             두 창이 조금씩 어긋난다.
- * 선택 이유  : 어긋나도 "같은 부근"은 유지되고, 글을 쓰는 동안 필요한 것은 그
- *             정도다. 정확한 대응이 필요해지면 그때 줄 매핑으로 바꾼다.
+ * 결정      : 원문 줄과 미리보기 블록을 이어 그 사이만 비례로 채운다.
+ * 이유      : 길이 비만 맞추면 두 창의 총 길이만 같아진다. 한쪽에만 긴 덩어리가
+ *             있으면(코드블럭, 이미지, 표) 같은 비율이 서로 다른 내용을 가리킨다.
+ *             글이 길어질수록 어긋남이 쌓여, 아래쪽을 쓰는 동안 미리보기는 엉뚱한
+ *             곳을 보여준다.
+ * 대안      : 스크롤 비율을 그대로 옮긴다.
+ * 트레이드오프: 좌표표를 만들어야 하고, 그러려면 편집 창의 줄 위치를 재야 한다.
+ * 선택 이유  : 이 창을 나란히 두는 이유가 "지금 쓰는 줄이 어떻게 보이는지"를 보는
+ *             것이다. 그 하나를 못 하면 두 창을 띄울 이유가 없다.
  *
- * @param first     한쪽 스크롤 영역. 아직 붙지 않았으면 null.
- * @param second    반대쪽 스크롤 영역.
+ * <p>표는 스크롤이 시작될 때만 다시 만든다. 프레임마다 만들면 재는 비용이 그대로
+ * 스크롤에 얹히고, 한 번 굴리는 동안에는 내용이 바뀌지 않는다.
+ *
+ * @param editor    본문 textarea. 실제로 스크롤되는 요소다.
+ * @param preview   미리보기의 스크롤 영역.
  * @param isEnabled 두 창이 함께 보일 때만 켠다.
  */
 export function useScrollSync(
-  first: HTMLElement | null,
-  second: HTMLElement | null,
+  editor: HTMLTextAreaElement | null,
+  preview: HTMLElement | null,
   isEnabled: boolean,
 ) {
+  const anchorsRef = useRef<ScrollAnchor[] | null>(null);
+  /** 표를 만들 때의 미리보기 높이. 이 값이 달라졌다면 표가 낡았다는 뜻이다. */
+  const measuredHeightRef = useRef(0);
+
   useEffect(() => {
-    if (!isEnabled || !first || !second) return;
+    if (!isEnabled || !editor || !preview) return;
 
     /** 지금 스크롤을 끌고 있는 쪽. 반대쪽의 이벤트는 따라간 결과이므로 무시한다. */
     let driver: HTMLElement | null = null;
     let handoverTimer: ReturnType<typeof setTimeout> | undefined;
 
-    const sync = (source: HTMLElement, target: HTMLElement) => () => {
+    const sync = (source: HTMLElement, target: HTMLElement, from: 'editor' | 'preview') => () => {
       if (driver && driver !== source) return;
+
+      // 표를 다시 만들어야 하는 두 경우.
+      // 하나는 새로 시작된 스크롤이다. 그동안 글이 바뀌었을 수 있다.
+      // 다른 하나는 굴리는 도중에 미리보기 높이가 달라진 경우다. 본문 이미지는
+      // 화면에 들어와야 불러오므로, 내려가는 동안 아래쪽이 계속 늘어난다.
+      if (!driver || preview.scrollHeight !== measuredHeightRef.current) {
+        anchorsRef.current = buildAnchors(editor, preview);
+        measuredHeightRef.current = preview.scrollHeight;
+      }
 
       driver = source;
       clearTimeout(handoverTimer);
@@ -48,24 +65,28 @@ export function useScrollSync(
         driver = null;
       }, HANDOVER_DELAY_MS);
 
-      const sourceRange = source.scrollHeight - source.clientHeight;
       const targetRange = target.scrollHeight - target.clientHeight;
-      // 한쪽이 넘치지 않으면 맞출 위치가 없다. 0 으로 나누는 것도 함께 막는다.
-      if (sourceRange <= 0 || targetRange <= 0) return;
+      // 반대쪽이 넘치지 않으면 맞출 위치가 없다.
+      if (targetRange <= 0) return;
 
-      target.scrollTop = (source.scrollTop / sourceRange) * targetRange;
+      const anchors = anchorsRef.current;
+      const mapped = anchors ? mapPosition(anchors, from, source.scrollTop) : source.scrollTop;
+
+      target.scrollTop = Math.max(0, Math.min(mapped, targetRange));
     };
 
-    const onFirstScroll = sync(first, second);
-    const onSecondScroll = sync(second, first);
+    const onEditorScroll = sync(editor, preview, 'editor');
+    const onPreviewScroll = sync(preview, editor, 'preview');
 
-    first.addEventListener('scroll', onFirstScroll, { passive: true });
-    second.addEventListener('scroll', onSecondScroll, { passive: true });
+    editor.addEventListener('scroll', onEditorScroll, { passive: true });
+    preview.addEventListener('scroll', onPreviewScroll, { passive: true });
 
     return () => {
-      first.removeEventListener('scroll', onFirstScroll);
-      second.removeEventListener('scroll', onSecondScroll);
+      editor.removeEventListener('scroll', onEditorScroll);
+      preview.removeEventListener('scroll', onPreviewScroll);
       clearTimeout(handoverTimer);
+      anchorsRef.current = null;
+      measuredHeightRef.current = 0;
     };
-  }, [first, second, isEnabled]);
+  }, [editor, preview, isEnabled]);
 }
