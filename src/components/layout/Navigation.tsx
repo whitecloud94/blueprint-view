@@ -9,7 +9,9 @@ import {useTheme} from "../../context/ThemeContext.tsx";
 import {useAuthActions, useAuthStatus, useCurrentUser} from "../../store/useAuthStore";
 
 const STYLES = {
-    wrapper: `w-full transition-all duration-500`,
+    // 폭은 SharedLayout 이 스프링으로 그린다. 여기에 width 가 걸린 CSS 전환을
+    // 두면 바깥은 튕기며 늘어나는데 안쪽 유리판만 제 속도로 따라와 어긋난다.
+    wrapper: `w-full transition-colors duration-500`,
     // 가로 스크롤은 최후의 안전장치다. 스크롤바를 숨겨 두었기 때문에 여기로
     // 넘친 항목은 사실상 사라진 것처럼 보인다. 항목을 추가할 때는 가장 좁은
     // 바(포트폴리오 640px)에 들어가는지 먼저 확인한다.
@@ -120,8 +122,9 @@ export const Navigation = ({width = 'compact'}: NavigationProps) => {
 
                 {/* 우측 액션 버튼 영역 (기존 유지) */}
                 <div className={STYLES.actionGroup}>
-                    {/* 검색 영역 (블로그 페이지에서만 노출) */}
-                    {isBlog && <SearchBar />}
+                    {/* 검색 영역. 블로그이면서, 바가 넓어진 뒤에만 자리를 잡는다.
+                        늘어나는 도중에 들어오면 아직 좁은 바에서 오른쪽 끝이 잘린다. */}
+                    {isBlog && width === 'wide' && <SearchBar />}
 
                     {showUserName && (
                         <span className={STYLES.userName} title={currentUser?.userName}>
