@@ -149,11 +149,22 @@ export default function PostDetailPage() {
                         {/* 상단 네비게이션 & 메타 */}
                         <div className="space-y-6">
                             <div className="flex items-center justify-between gap-4">
+                                {/* 글을 다 읽고 나서 가장 자주 찾는 동선이다. 맨 앞에 놓여 있어도
+                                    글자만 있으면 제목과 본문에 묻힌다. 표면을 줘서 누를 것으로 읽히게
+                                    하고, 옆의 관리자 버튼은 납작하게 두어 우선순위를 갈라 놓는다. */}
                                 <button
                                     onClick={() => navigate('/blog')}
-                                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors font-bold text-sm"
+                                    className="group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold
+                                        border-gray-200 bg-white/80 text-gray-700 shadow-sm backdrop-blur-md
+                                        hover:border-accent-200 hover:bg-accent-50 hover:text-accent-700
+                                        dark:border-white/10 dark:bg-white/[0.06] dark:text-gray-200
+                                        dark:hover:border-accent-400/30 dark:hover:bg-accent-500/10 dark:hover:text-accent-300
+                                        active:scale-95 transition-all duration-300 motion-reduce:transition-none"
                                 >
-                                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                                    <ArrowLeft
+                                        size={16}
+                                        className="transition-transform duration-300 group-hover:-translate-x-0.5 motion-reduce:transition-none"
+                                    />
                                     Back to List
                                 </button>
 
