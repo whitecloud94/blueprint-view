@@ -58,6 +58,33 @@ const CODE_FRAME = `
   p-5 sm:p-6
   border-gray-200 bg-[#f3f4f6] text-gray-800
   dark:border-white/10 dark:bg-[#111111] dark:text-gray-200
+  [&_code]:!bg-transparent [&_code]:!border-0 [&_code]:!p-0 [&_code]:!font-normal
+`;
+
+/**
+ * 문장 안의 코드.
+ *
+ * <p>글꼴만으로는 코드인지 알아보기 어렵다. 본문이 이미 한글이라 모양 차이가
+ * 드러나지 않고, 색도 본문과 1.5:1 남짓밖에 벌어지지 않는다.
+ * `@DisallowConcurrentExecution` 처럼 긴 식별자가 문장 중간에 들어오면 그냥
+ * 굵은 낱말로 읽힌다.
+ *
+ * <p>그래서 배경을 깐다. 값은 코드블럭의 틀과 같은 계열로 맞춘다. 문장 안의
+ * 코드와 블럭이 서로 다른 색이면 같은 것의 두 표기로 읽히지 않는다.
+ *
+ * <p>강조색은 쓰지 않는다. prose-sky 에서 링크가 그 색을 쓰고 있어, 누를 수
+ * 있는 것처럼 보이게 된다.
+ *
+ * <p>위 CODE_FRAME 이 블럭 안에서 이 배경과 여백을 되돌린다. 코드블럭도 결국
+ * code 요소라 여기서 준 칩 모양이 블럭 안까지 따라 들어간다. 그 되돌림에는
+ * important 를 붙였다. 특이도로 이기려 하면 여기에 dark: 변형을 하나 더하는
+ * 순간(.dark .bg-... 는 클래스 두 개다) 조용히 뒤집힌다. 실제로 그렇게 뒤집혀
+ * 어두운 모드의 블럭 안 코드에만 칩 배경이 남았다.
+ */
+const INLINE_CODE = `
+  rounded-md border px-[0.35em] py-[0.15em]
+  border-gray-200 bg-[#f3f4f6] text-gray-800
+  dark:border-white/10 dark:bg-white/[0.1] dark:text-gray-100
 `;
 
 /** 하이라이터가 들고 있는 자체 배경·여백·글꼴을 걷어내고 틀에 맞춘다. */
@@ -118,7 +145,7 @@ const buildComponents = (theme: 'light' | 'dark'): Components => ({
     // 언어 지정이 없으면 인라인 코드로 본다.
     if (!match) {
       return (
-        <code className={className} {...props}>
+        <code className={`${INLINE_CODE} ${className ?? ''}`} {...props}>
           {children}
         </code>
       );
