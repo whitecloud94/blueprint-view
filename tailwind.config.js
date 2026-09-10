@@ -22,6 +22,18 @@ export default {
             animation: {
                 marquee: 'marquee 10s linear infinite',
             },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        // 타이포그래피 플러그인은 인라인 코드 양옆에 백틱을 그려 넣는다
+                        // (code::before/after 의 content). 마크다운 원문 표기를 결과
+                        // 화면에 한 번 더 보여주는 셈이라, 글에서는 `STARTED` 처럼
+                        // 읽힌다. 코드라는 사실은 글꼴과 색으로 이미 드러난다.
+                        'code::before': { content: 'none' },
+                        'code::after': { content: 'none' },
+                    },
+                },
+            },
             fontFamily: {
                 // 기본 본문용 (Pretendard 기반)
                 sans: ['Pretendard', 'ui-sans-serif', 'system-ui'],
