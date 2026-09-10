@@ -31,7 +31,8 @@ const EditorPreview = ({ className = '', showLiveBadge = false, scrollRef }: Pre
           </h1>
           <div className="prose prose-sky prose-lg dark:prose-invert max-w-none prose-headings:font-black prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
             {content ? (
-              <MarkdownContent>{content}</MarkdownContent>
+              // withSourceLines: 블록마다 원문 줄 번호를 남긴다. 편집 창과 스크롤을 맞출 때 쓰인다.
+              <MarkdownContent withSourceLines>{content}</MarkdownContent>
             ) : (
               <p className="text-gray-300 dark:text-gray-600 italic">Preview will appear here...</p>
             )}

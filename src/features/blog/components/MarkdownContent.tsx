@@ -167,16 +167,53 @@ const buildComponents = (theme: 'light' | 'dark'): Components => ({
   },
 });
 
-interface MarkdownContentProps {
-  children: string;
+/** 변환된 트리에서 필요한 부분만. hast 전체 타입을 끌어오지 않는다. */
+interface RenderedNode {
+  type: string;
+  position?: { start?: { line?: number } };
+  properties?: Record<string, unknown>;
+  children?: RenderedNode[];
 }
 
-export const MarkdownContent = ({ children }: MarkdownContentProps) => {
+/**
+ * 블록마다 원문 몇 번째 줄에서 시작했는지 남긴다.
+ *
+ * <p>편집기의 스크롤 맞추기가 이 값을 읽는다. 이 표시가 없으면 두 창을 이을
+ * 방법이 길이 비 말고는 없다.
+ *
+ * <p>최상위 자식만 표시한다. 안쪽까지 모두 달면 문단 하나에 수십 개가 붙는데,
+ * 스크롤을 맞추는 데 필요한 것은 블록이 시작하는 자리뿐이다.
+ */
+const rehypeSourceLine = () => (tree: RenderedNode) => {
+  for (const child of tree.children ?? []) {
+    const line = child.position?.start?.line;
+    if (child.type === 'element' && typeof line === 'number') {
+      child.properties = { ...child.properties, 'data-source-line': line };
+    }
+  }
+};
+
+interface MarkdownContentProps {
+  children: string;
+  /**
+   * 블록에 원문 줄 번호를 남길지.
+   *
+   * <p>편집기 미리보기에서만 켠다. 읽는 화면의 마크업에는 쓰이지 않는 값이 붙을
+   * 이유가 없다.
+   */
+  withSourceLines?: boolean;
+}
+
+export const MarkdownContent = ({ children, withSourceLines = false }: MarkdownContentProps) => {
   const { theme } = useTheme();
   const components = useMemo(() => buildComponents(theme), [theme]);
+  const rehypePlugins = useMemo(
+    () => (withSourceLines ? [rehypeSourceLine] : []),
+    [withSourceLines],
+  );
 
   return (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={rehypePlugins} components={components}>
       {children}
     </ReactMarkdown>
   );
