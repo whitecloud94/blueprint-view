@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GLASS_STYLES } from '../../../constants/styles';
 import { TagChip } from './TagChip';
 import { formatReadTime } from '../utils/readTime';
+import { toPlainExcerpt } from '../utils/excerpt';
 import { useNavigate } from 'react-router-dom';
 import { resolveAssetUrl } from '../../../api/assetUrl';
 import type { PostSummary } from '../../../schemas/postSchema';
@@ -28,6 +29,8 @@ export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) =
     : new Date().toLocaleDateString();
   // 아무도 읽지 않은 글에는 읽기 시간을 표시하지 않는다.
   const readTime = formatReadTime(post.averageReadMs);
+  // 요약은 본문 마크다운을 잘라 온 것이라 기호가 섞여 있다.
+  const excerpt = toPlainExcerpt(post.excerpt);
 
   const handleProjectClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -115,9 +118,11 @@ export const PostCard = ({ post, relatedProjectId, onPublish }: PostCardProps) =
       <h2 className={`${GLASS_STYLES.heading} text-2xl mb-3 group-hover:text-accent-600 transition-colors`}>
         {post.titleName}
       </h2>
-      <p className={`${GLASS_STYLES.subtext} leading-relaxed mb-6 line-clamp-2`}>
-        {post.excerpt ?? ''}
-      </p>
+      {/* 이미지만 있는 글은 걷어내고 나면 남는 글자가 없다. 빈 문단을 두면
+          아래 여백만 벌어진다. */}
+      {excerpt && (
+        <p className={`${GLASS_STYLES.subtext} leading-relaxed mb-6 line-clamp-2`}>{excerpt}</p>
+      )}
 
       <div className="flex items-center justify-between">
         <div className="flex flex-wrap gap-2">
