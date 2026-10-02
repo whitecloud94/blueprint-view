@@ -15,3 +15,6 @@ yarn-error.log*
 .idea/
 node_modules/
 dist/
+
+# 개인 참고용 메모 (public/에 두면 빌드 시 정적 파일로 그대로 배포됨)
+public/김대경_STAR정리.txt
